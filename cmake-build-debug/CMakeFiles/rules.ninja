@@ -6,7 +6,7 @@
 # It is included in the main 'build.ninja'.
 
 # =============================================================================
-# Project: TP
+# Project: Projet_Info_Snoopy
 # Configurations: Debug
 # =============================================================================
 # =============================================================================
@@ -42,7 +42,7 @@ rule CUSTOM_COMMAND
 # Rule for re-running cmake.
 
 rule RERUN_CMAKE
-  command = "C:\Program Files\JetBrains\CLion 2023.2.2\bin\cmake\win\x64\bin\cmake.exe" --regenerate-during-build -SC:\Users\herod\Documents\Projet-info-snoopy -BC:\Users\herod\Documents\Projet-info-snoopy\cmake-build-debug
+  command = "C:\Program Files\JetBrains\CLion 2023.2.2\bin\cmake\win\x64\bin\cmake.exe" --regenerate-during-build -SC:\Users\herod\Documents\Projet-info-snoopi -BC:\Users\herod\Documents\Projet-info-snoopi\cmake-build-debug
   description = Re-running CMake...
   generator = 1
 
