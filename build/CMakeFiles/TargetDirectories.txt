@@ -1,0 +1,3 @@
+C:/Users/ntrem/ECE/Info/Projet info/Projet-info-snoopy/build/CMakeFiles/game.dir
+C:/Users/ntrem/ECE/Info/Projet info/Projet-info-snoopy/build/CMakeFiles/edit_cache.dir
+C:/Users/ntrem/ECE/Info/Projet info/Projet-info-snoopy/build/CMakeFiles/rebuild_cache.dir
