@@ -10,6 +10,8 @@ set(CMAKE_DEPENDS_LANGUAGES
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
   "C:/Users/ntrem/ECE/Info/Projet info/Projet-info-snoopy/main.c" "CMakeFiles/game.dir/main.c.obj" "gcc" "CMakeFiles/game.dir/main.c.obj.d"
   "C:/Users/ntrem/ECE/Info/Projet info/Projet-info-snoopy/utils/color.c" "CMakeFiles/game.dir/utils/color.c.obj" "gcc" "CMakeFiles/game.dir/utils/color.c.obj.d"
+  "C:/Users/ntrem/ECE/Info/Projet info/Projet-info-snoopy/utils/keysHandler.c" "CMakeFiles/game.dir/utils/keysHandler.c.obj" "gcc" "CMakeFiles/game.dir/utils/keysHandler.c.obj.d"
+  "C:/Users/ntrem/ECE/Info/Projet info/Projet-info-snoopy/utils/size.c" "CMakeFiles/game.dir/utils/size.c.obj" "gcc" "CMakeFiles/game.dir/utils/size.c.obj.d"
   )
 
 # Targets to which this target links which contain Fortran sources.

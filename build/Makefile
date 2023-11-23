@@ -176,6 +176,54 @@ utils/color.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\game.dir\build.make CMakeFiles/game.dir/utils/color.c.s
 .PHONY : utils/color.c.s
 
+utils/keysHandler.obj: utils/keysHandler.c.obj
+.PHONY : utils/keysHandler.obj
+
+# target to build an object file
+utils/keysHandler.c.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\game.dir\build.make CMakeFiles/game.dir/utils/keysHandler.c.obj
+.PHONY : utils/keysHandler.c.obj
+
+utils/keysHandler.i: utils/keysHandler.c.i
+.PHONY : utils/keysHandler.i
+
+# target to preprocess a source file
+utils/keysHandler.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\game.dir\build.make CMakeFiles/game.dir/utils/keysHandler.c.i
+.PHONY : utils/keysHandler.c.i
+
+utils/keysHandler.s: utils/keysHandler.c.s
+.PHONY : utils/keysHandler.s
+
+# target to generate assembly for a file
+utils/keysHandler.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\game.dir\build.make CMakeFiles/game.dir/utils/keysHandler.c.s
+.PHONY : utils/keysHandler.c.s
+
+utils/size.obj: utils/size.c.obj
+.PHONY : utils/size.obj
+
+# target to build an object file
+utils/size.c.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\game.dir\build.make CMakeFiles/game.dir/utils/size.c.obj
+.PHONY : utils/size.c.obj
+
+utils/size.i: utils/size.c.i
+.PHONY : utils/size.i
+
+# target to preprocess a source file
+utils/size.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\game.dir\build.make CMakeFiles/game.dir/utils/size.c.i
+.PHONY : utils/size.c.i
+
+utils/size.s: utils/size.c.s
+.PHONY : utils/size.s
+
+# target to generate assembly for a file
+utils/size.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\game.dir\build.make CMakeFiles/game.dir/utils/size.c.s
+.PHONY : utils/size.c.s
+
 # Help Target
 help:
 	@echo The following are some of the valid targets for this Makefile:
@@ -191,6 +239,12 @@ help:
 	@echo ... utils/color.obj
 	@echo ... utils/color.i
 	@echo ... utils/color.s
+	@echo ... utils/keysHandler.obj
+	@echo ... utils/keysHandler.i
+	@echo ... utils/keysHandler.s
+	@echo ... utils/size.obj
+	@echo ... utils/size.i
+	@echo ... utils/size.s
 .PHONY : help
 
 
