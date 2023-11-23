@@ -167,10 +167,10 @@
 				},
 				{
 					"name" : "HELPSTRING",
-					"value" : "C compiler"
+					"value" : "No help, variable specified on the command line."
 				}
 			],
-			"type" : "STRING",
+			"type" : "FILEPATH",
 			"value" : "C:/mingw64/bin/gcc.exe"
 		},
 		{
@@ -747,7 +747,7 @@
 				}
 			],
 			"type" : "STATIC",
-			"value" : "TP"
+			"value" : "Projet_Info_Snoopy"
 		},
 		{
 			"name" : "CMAKE_PROJECT_VERSION",
@@ -1200,6 +1200,42 @@
 			],
 			"type" : "BOOL",
 			"value" : "FALSE"
+		},
+		{
+			"name" : "Projet_Info_Snoopy_BINARY_DIR",
+			"properties" : 
+			[
+				{
+					"name" : "HELPSTRING",
+					"value" : "Value Computed by CMake"
+				}
+			],
+			"type" : "STATIC",
+			"value" : "C:/Users/ntrem/ECE/Info/Projet info/Projet-info-snoopy/build"
+		},
+		{
+			"name" : "Projet_Info_Snoopy_IS_TOP_LEVEL",
+			"properties" : 
+			[
+				{
+					"name" : "HELPSTRING",
+					"value" : "Value Computed by CMake"
+				}
+			],
+			"type" : "STATIC",
+			"value" : "ON"
+		},
+		{
+			"name" : "Projet_Info_Snoopy_SOURCE_DIR",
+			"properties" : 
+			[
+				{
+					"name" : "HELPSTRING",
+					"value" : "Value Computed by CMake"
+				}
+			],
+			"type" : "STATIC",
+			"value" : "C:/Users/ntrem/ECE/Info/Projet info/Projet-info-snoopy"
 		},
 		{
 			"name" : "TP_BINARY_DIR",

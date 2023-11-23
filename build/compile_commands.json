@@ -4,5 +4,11 @@
   "command": "C:\\mingw64\\bin\\gcc.exe   -g -o CMakeFiles\\game.dir\\main.c.obj -c \"C:\\Users\\ntrem\\ECE\\Info\\Projet info\\Projet-info-snoopy\\main.c\"",
   "file": "C:/Users/ntrem/ECE/Info/Projet info/Projet-info-snoopy/main.c",
   "output": "CMakeFiles/game.dir/main.c.obj"
+},
+{
+  "directory": "C:/Users/ntrem/ECE/Info/Projet info/Projet-info-snoopy/build",
+  "command": "C:\\mingw64\\bin\\gcc.exe   -g -o CMakeFiles\\game.dir\\utils\\color.c.obj -c \"C:\\Users\\ntrem\\ECE\\Info\\Projet info\\Projet-info-snoopy\\utils\\color.c\"",
+  "file": "C:/Users/ntrem/ECE/Info/Projet info/Projet-info-snoopy/utils/color.c",
+  "output": "CMakeFiles/game.dir/utils/color.c.obj"
 }
 ]

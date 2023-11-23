@@ -1,6 +1,10 @@
 #include <stdio.h>
+#include "utils\color.h"
+
 
 int main(){
-    printf("Hello world");
+
+    colorPrintf(Red, "Hello world");
+
     return 0;
 }

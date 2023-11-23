@@ -152,6 +152,30 @@ main.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\game.dir\build.make CMakeFiles/game.dir/main.c.s
 .PHONY : main.c.s
 
+utils/color.obj: utils/color.c.obj
+.PHONY : utils/color.obj
+
+# target to build an object file
+utils/color.c.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\game.dir\build.make CMakeFiles/game.dir/utils/color.c.obj
+.PHONY : utils/color.c.obj
+
+utils/color.i: utils/color.c.i
+.PHONY : utils/color.i
+
+# target to preprocess a source file
+utils/color.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\game.dir\build.make CMakeFiles/game.dir/utils/color.c.i
+.PHONY : utils/color.c.i
+
+utils/color.s: utils/color.c.s
+.PHONY : utils/color.s
+
+# target to generate assembly for a file
+utils/color.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\game.dir\build.make CMakeFiles/game.dir/utils/color.c.s
+.PHONY : utils/color.c.s
+
 # Help Target
 help:
 	@echo The following are some of the valid targets for this Makefile:
@@ -164,6 +188,9 @@ help:
 	@echo ... main.obj
 	@echo ... main.i
 	@echo ... main.s
+	@echo ... utils/color.obj
+	@echo ... utils/color.i
+	@echo ... utils/color.s
 .PHONY : help
 
 
