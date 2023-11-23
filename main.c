@@ -1,34 +1,34 @@
 #include <stdio.h>
 #include "utils\color.h"
 #include "utils\size.h"
-#include <pthread.h>
+#include "utils\keysHandler.h"
 #include <unistd.h>
 
 
-typedef struct resizeEvent{
-    int size[2];
-    int shouldStop;
-} rsEvent;
+// typedef struct resizeEvent{
+//     int size[2];
+//     int shouldStop;
+// } rsEvent;
 
 
-void *updateSize(void *args){
-    rsEvent *arguments = (rsEvent *)args;
+// void *updateSize(void *args){
+//     rsEvent *arguments = (rsEvent *)args;
 
-    while (!arguments->shouldStop){
-        getSize(arguments->size);
+//     while (!arguments->shouldStop){
+//         getSize(arguments->size);
 
-        // if (arguments->c == 'q') arguments->shouldStop = 1;
-    }
+//         // if (arguments->c == 'q') arguments->shouldStop = 1;
+//     }
     
-    return NULL;
-}
+//     return NULL;
+// }
 
 
 
-void startResizeLoop(rsEvent* rse){
-    pthread_t thread_id; 
-    pthread_create(&thread_id, NULL, updateSize, (void *)rse); 
-}
+// void startResizeLoop(rsEvent* rse){
+//     pthread_t thread_id; 
+//     pthread_create(&thread_id, NULL, updateSize, (void *)rse); 
+// }
 
 
 int main(){
@@ -37,23 +37,20 @@ int main(){
 
     getSize(size);
 
-    colorPrintf(Red, "Hello world\n");
-    colorPrintf(BoldBlue, "Taile : %dx%d", size[0], size[1]);
+    kpStruct kps = {e, 0};
 
-    int oldsize[2];
+    getAsyncKey(&kps);
 
-    getSize(oldsize);
-
-    rsEvent rse = {size, 0};
-    startResizeLoop(&rse);
+    colorPrintf(Red, "Test pthread\n");
 
     while (1){
-        if (rse.size[0] != oldsize[0] || rse.size[1] != oldsize[1]) {
-            printf("changement taille\n");
-            oldsize[0] = rse.size[0];
-            oldsize[1] = rse.size[1];
+
+        if (kps.k == q){
+            kps.shouldStop = 1;
+            break;
+        } else {
+            printf("Log");
         }
-        printf("%dx%d\n", rse.size[0], rse.size[1]);
 
 
         sleep(1);

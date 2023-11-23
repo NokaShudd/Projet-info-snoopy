@@ -1,5 +1,5 @@
 #include <conio.h>
-#include <async.h>
+#include <pthread.h>
 #include "keysHandler.h"
 
 
