@@ -1,3 +1,3 @@
-C:/Users/herod/Documents/Projet-info-snoopi/cmake-build-debug/CMakeFiles/game.dir
-C:/Users/herod/Documents/Projet-info-snoopi/cmake-build-debug/CMakeFiles/edit_cache.dir
-C:/Users/herod/Documents/Projet-info-snoopi/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/Users/otnielsandeu/CLionProjects/Projet-info-snoopy/cmake-build-debug/CMakeFiles/game.dir
+/Users/otnielsandeu/CLionProjects/Projet-info-snoopy/cmake-build-debug/CMakeFiles/edit_cache.dir
+/Users/otnielsandeu/CLionProjects/Projet-info-snoopy/cmake-build-debug/CMakeFiles/rebuild_cache.dir
