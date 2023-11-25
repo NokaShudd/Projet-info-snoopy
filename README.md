@@ -22,7 +22,7 @@ Le but de se jeu, basé sur [*Snoopy's Magic Show*](https://en.wikipedia.org/wik
 
 > *Woodstock*, l'oiseaux dans snoopy et l'objectif du jeu.
 
-Chaques niveau est une grille 9x9, où l'on peut voir des balles rebondissantes, des murs, certains cassables ou déplacables, certains piégé, clignotants ou dissimulants des *power-ups*, des tapis roulants...
+Chaques niveau est un tableau de 10 lignes et 20 colonnes, où l'on peut voir des balles rebondissantes, des murs, certains cassables ou déplacables, certains piégé, clignotants ou dissimulants des *power-ups*, des tapis roulants...
 
 Le jeu se joue *contre-la-montre*, le joueur a $120s$ par niveau et $3$ vies par partie (❤️❤️❤️).
 
