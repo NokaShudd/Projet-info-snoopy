@@ -6,18 +6,30 @@
 
 int main(){
 
-    kpStruct kps = {none, 0};
+    // exemple
+    colorPrintf(newAttr(red, yellow), "test\n");
 
-    getAsyncKey(&kps);
-
-    while (1){
-        colorPrintf(newAttr(white, black), "Key pressed is : %c\n", keyToChar(kps.k));
-
-        if (kps.k == q) {kps.shouldStop = 1; break;}
-
-
-        sleep(1);
+    // toute les couleurs
+    for (int i = 0; i < 8; i++){
+        for (int j = 0; j < 8; j++){
+            colorPrintf(newAttr(i, j), "test");
+        }
+        printf("\n");
     }
+    
+
+    // kpStruct kps = {none, 0};
+
+    // getAsyncKey(&kps);
+
+    // while (1){
+    //     colorPrintf(newAttr(white, black), "Key pressed is : %c\n", keyToChar(kps.k));
+
+    //     if (kps.k == q) {kps.shouldStop = 1; break;}
+
+
+    //     sleep(1);
+    // }
     
 
     return 0;
