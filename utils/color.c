@@ -3,7 +3,7 @@
 #include <windows.h>
 #include "color.h"
 
-
+// transforme une couleur en 'code couleur' 
 WORD wFromColor(int color, short isBackground){
     switch (color){
         case red:
@@ -28,6 +28,7 @@ WORD wFromColor(int color, short isBackground){
     }
 }
 
+// génère un nouvel attribut couleur
 wTxtAtt newAttr(int fColor, int bColor){
     wTxtAtt attr = {
         fColor, bColor, 0, 0, 0
@@ -35,6 +36,7 @@ wTxtAtt newAttr(int fColor, int bColor){
     return attr;
 }
 
+// écrit sur la console en couleur
 int colorPrintf(wTxtAtt attr, char* format, ...){
     char buffer[256];
     va_list args;
@@ -71,6 +73,6 @@ int colorPrintf(wTxtAtt attr, char* format, ...){
         hndl,
         oldAttribute
     );
-    
+
     return 0;
 }
