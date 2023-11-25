@@ -33,29 +33,31 @@
 
 int main(){
 
+    wTxtAtt attr = newAttr(black, white);
+
     int size[2];
 
     getSize(size);
 
-    kpStruct kps = {e, 0};
-
-    getAsyncKey(&kps);
-
-    colorPrintf(Red, "Test pthread\n");
-
-    while (1){
-
-        if (kps.k == q){
-            kps.shouldStop = 1;
-            break;
-        } else {
-            printf("Log");
+    for (int i = 0; i < size[1]/2; i++){
+        for (int j = 0; j < size[0]/2; j++){
+            if ((j+i%2)%2) {
+                attr.bColors = cyan;
+            } else {
+                attr.bColors = yellow;
+            }
+            colorPrintf(attr, " ");
         }
-
-
-        sleep(1);
+        printf("\n");
+        
     }
     
+    horribleGotoXY(5, 9);
+
+    printf("123");
+
+    getChar();
+
 
     return 0;
 }
