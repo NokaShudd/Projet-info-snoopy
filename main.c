@@ -18,19 +18,20 @@ int main(){
     }
     
 
-    // kpStruct kps = {none, 0};
+    kpStruct kps = {none, 0};
 
-    // getAsyncKey(&kps);
+    void* hT = getAsyncKey(&kps);
 
-    // while (1){
-    //     colorPrintf(newAttr(white, black), "Key pressed is : %c\n", keyToChar(kps.k));
+    while (1){
+        colorPrintf(newAttr(white, black), "Key pressed is : %c\n", keyToChar(kps.k));
 
-    //     if (kps.k == q) {kps.shouldStop = 1; break;}
+        if (kps.k == q) {kps.shouldStop = 1; break;}
 
 
-    //     sleep(1);
-    // }
+        sleep(1);
+    }
     
+    closeThread(hT);
 
     return 0;
 }

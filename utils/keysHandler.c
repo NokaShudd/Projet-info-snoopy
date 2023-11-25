@@ -1,5 +1,5 @@
 #include <conio.h>
-#include <pthread.h>
+#include <windows.h>
 #include "keysHandler.h"
 
 
@@ -92,6 +92,16 @@ char keyToChar(key k_){
     }
 }
 
+DWORD WINAPI updateCharPressedW(LPVOID lpParam){
+    cpStruct *arguments = (cpStruct *)lpParam;
+
+    while (!arguments->shouldStop){
+        arguments->c = (unsigned char) getch();
+        // if (arguments->c == 'q') arguments->shouldStop = 1;
+    }
+    
+    return 0;
+}
 
 
 void *updateCharPressed(void *args){
@@ -105,6 +115,17 @@ void *updateCharPressed(void *args){
     return NULL;
 }
 
+DWORD WINAPI updateKeyPressedW(LPVOID lpParam){
+    kpStruct *arguments = (kpStruct *)lpParam;
+
+    while (!arguments->shouldStop){
+        arguments->k =charToKey(getch());
+        // if (arguments->c == 'q') arguments->shouldStop = 1;
+    }
+    
+    return 0;
+}
+
 void *updateKeyPressed(void *args){
     kpStruct *arguments = (kpStruct *)args;
 
@@ -116,17 +137,19 @@ void *updateKeyPressed(void *args){
     return NULL;
 }
 
-void getAsyncChar(cpStruct* cps){
-    pthread_t thread_id; 
-    pthread_create(&thread_id, NULL, updateCharPressed, (void *)cps); 
+
+HANDLE getAsyncChar(cpStruct* cps){
+    return CreateThread(
+        NULL, 0, updateCharPressedW, (void *)cps, 0, NULL
+    );
 }
 
-
-
-void getAsyncKey(kpStruct* kps){
-    pthread_t thread_id; 
-    pthread_create(&thread_id, NULL, updateKeyPressed, (void *)kps); 
+HANDLE getAsyncKey(kpStruct* kps){
+    return CreateThread(
+        NULL, 0, updateKeyPressedW, (void *)kps, 0, NULL
+    );
 }
+
 
 
 key getKey(){
@@ -144,4 +167,8 @@ char getChar(){
         }
     }
     return v;
+}
+
+void closeThread(void* ht){
+    CloseHandle(ht);
 }

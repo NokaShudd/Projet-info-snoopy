@@ -25,6 +25,8 @@ char    keyToChar       (key);
 key     getKey          ();
 char    getChar         ();
 
-void    getAsyncKey     (kpStruct*);
-void    getAsyncChar    (cpStruct*);
+void*   getAsyncKey     (kpStruct*);
+void*   getAsyncChar    (cpStruct*);
+
+void    closeThread(void *);
 #endif 
