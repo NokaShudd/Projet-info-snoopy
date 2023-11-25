@@ -18,9 +18,9 @@ WORD wFromColor(int color, short isBackground){
             return isBackground ? 0x30 : 0x3;
         case magenta:
             return isBackground ? 0x50 : 0x5;
-        case black:
-            return isBackground ? 0x70 : 0x7;
         case white:
+            return isBackground ? 0x70 : 0x7;
+        case black:
             return 0x0;
 
         default :
