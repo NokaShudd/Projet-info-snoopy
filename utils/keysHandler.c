@@ -5,7 +5,7 @@
 
 #else
 
-#include <curse.h>
+#include <curses.h>
 #include <pthread.h>
 
 #endif
@@ -101,6 +101,8 @@ char keyToChar(key k_){
     }
 }
 
+#ifdef _WIN32
+
 // récupère le charactère pressé en boucle (Windows)
 DWORD WINAPI updateCharPressedW(LPVOID lpParam){
     cpStruct *arguments = (cpStruct *)lpParam;
@@ -111,18 +113,6 @@ DWORD WINAPI updateCharPressedW(LPVOID lpParam){
     }
     
     return 0;
-}
-
-// récupère le charactère pressé en boucle (MacOs)
-void *updateCharPressedM(void* lpParam){
-    cpStruct *arguments = (cpStruct *)lpParam;
-
-    while (!arguments->shouldStop){
-        arguments->c = (unsigned char) getch();
-        // if (arguments->c == 'q') arguments->shouldStop = 1;
-    }
-    
-    return NULL;
 }
 
 // récupère la touche pressé en boucle (Windows)
@@ -137,21 +127,6 @@ DWORD WINAPI updateKeyPressedW(LPVOID lpParam){
     return 0;
 }
 
-
-// récupère le charactère pressé en boucle (MacOs)
-void *updateKeyPressedM(void* lpParam){
-        kpStruct *arguments = (kpStruct *)lpParam;
-
-    while (!arguments->shouldStop){
-        arguments->k =charToKey(getch());
-        // if (arguments->c == 'q') arguments->shouldStop = 1;
-    }
-    
-    return NULL;
-}
-
-#ifdef _WIN32
-
 // récupère en boucle et de façon non-bloquante les charactères rentrés
 HANDLE getAsyncChar(cpStruct* cps){
     return CreateThread(
@@ -165,18 +140,48 @@ HANDLE getAsyncKey(kpStruct* kps){
     );
 }
 
-#else 
 
-void getAsyncChar(cpStruct* cps){
+#else
+
+// récupère le charactère pressé en boucle (MacOs)
+void *updateCharPressedM(void* lpParam){
+    cpStruct *arguments = (cpStruct *)lpParam;
+
+    while (!arguments->shouldStop){
+        arguments->c = (unsigned char) getch();
+        // if (arguments->c == 'q') arguments->shouldStop = 1;
+    }
+    
+    return NULL;
+}
+
+
+// récupère le charactère pressé en boucle (MacOs)
+void *updateKeyPressedM(void* lpParam){
+    kpStruct *arguments = (kpStruct *)lpParam;
+
+    while (!arguments->shouldStop){
+        arguments->k =charToKey(getch());
+        // if (arguments->c == 'q') arguments->shouldStop = 1;
+    }
+    
+}
+
+
+void* getAsyncChar(cpStruct* cps){
     pthread_t tId;
     pthread_create(&tId, NULL, &updateCharPressedM, (void *)cps);
+    return NULL;
+
 }
 
-void getAsyncKey(kpStruct* kps){
+void* getAsyncKey(kpStruct* kps){
     pthread_t tId;
     pthread_create(&tId, NULL, &updateKeyPressedM, (void *)kps);
-}
 
+    return NULL;
+
+}
 
 #endif
 
