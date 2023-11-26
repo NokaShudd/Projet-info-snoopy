@@ -24,7 +24,7 @@ Le but de ce jeu, basé sur [*Snoopy's Magic Show*](https://en.wikipedia.org/wik
 
 Chaque niveau est un tableau de 10 lignes et 20 colonnes, où l'on peut voir des balles rebondissantes, des murs, certains cassables ou déplacables, certains piégé, clignotants ou dissimulants des *power-ups*, des tapis roulants...
 
-Le jeu se joue *contre-la-montre*, le joueur a $120s$ par niveau et $3$ vies par partie (❤️❤️❤️).
+Le jeu ce joue *contre-la-montre*, le joueur a $120s$ par niveau et $3$ vies par partie (❤️❤️❤️).
 
 ## Le projet en bref :
 
