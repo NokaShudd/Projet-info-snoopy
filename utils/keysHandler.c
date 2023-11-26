@@ -204,7 +204,23 @@ char getChar(){
     return v;
 }
 
+#ifdef _WIN32
+
 // arrète le thread
 void closeThread(void* ht){
     CloseHandle(ht);
 }
+
+#else 
+
+void closeThread(void* _){
+
+    /*
+        Ne fais rien, 
+        existe seulement pour pas faire d'erreurs à la compilation
+        Y'a interet que ça marche mtn     
+    */
+
+}
+
+#endif
