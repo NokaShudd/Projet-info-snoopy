@@ -13,16 +13,16 @@ L'exécutable n'est pas, pour l'instant, inclus sur le repo.
 
 ## But du jeu
 
-Le but de se jeu, basé sur [*Snoopy's Magic Show*](https://en.wikipedia.org/wiki/Snoopy's_Magic_Show), un jeu Gameboy des années 90, est de récupérer les quatres oiseaux dans chaque niveau.
+Le but de ce jeu, basé sur [*Snoopy's Magic Show*](https://en.wikipedia.org/wiki/Snoopy's_Magic_Show), un jeu Gameboy des années 90, est de récupérer les quatre oiseaux dans chaque niveau.
 <p>
   <a href="https://en.wikipedia.org/wiki/File:Woodstock.png#/media/File:Woodstock.png">
     <img title="Woodstock, Charle Schulz, United Feature Syndicate Inc, obtained from http://peanuts.wikia.com/wiki/File:Woodstock.png" src="https://upload.wikimedia.org/wikipedia/en/d/db/Woodstock.png" alt="Woodstock.png" height="82" width="76">
   </a>
 </p>
 
-> *Woodstock*, l'oiseaux dans snoopy et l'objectif du jeu.
+> *Woodstock*, l'oiseau dans snoopy et l'objectif du jeu.
 
-Chaques niveau est un tableau de 10 lignes et 20 colonnes, où l'on peut voir des balles rebondissantes, des murs, certains cassables ou déplacables, certains piégé, clignotants ou dissimulants des *power-ups*, des tapis roulants...
+Chaque niveau est un tableau de 10 lignes et 20 colonnes, où l'on peut voir des balles rebondissantes, des murs, certains cassables ou déplacables, certains piégé, clignotants ou dissimulants des *power-ups*, des tapis roulants...
 
 Le jeu se joue *contre-la-montre*, le joueur a $120s$ par niveau et $3$ vies par partie (❤️❤️❤️).
 
@@ -30,7 +30,7 @@ Le jeu se joue *contre-la-montre*, le joueur a $120s$ par niveau et $3$ vies par
 
 Le projet consiste à coder un jeu **console** en c. 
 
-Il suivra les mechanismes de *Snoopy's Magic Show*, avec un total de quatres niveaux (un par membre du groupe) de difficultés croissantes.
+Il suivra les mécanismes de *Snoopy's Magic Show*, avec un total de quatres niveaux (un par membre du groupe) de difficultés croissantes.
 Fini, le jeu contiendra :
 
 * Un menu permettant de :
@@ -42,16 +42,16 @@ Fini, le jeu contiendra :
   - Quitter le programme
 * Un système de sauvegarde de parties
 * Un système de scores notant la rapidité du joueur
-* Un système de chargements de niveaux à partir de fichiers ```.txt```
+* Un système de chargement de niveaux à partir de fichiers ```.txt```
 * Et, bien sûr, la possibilité de jouer aux niveaux (et un mode pause)
 
 ## En jeu :
 
 *(Temporaire, placeholders)*
 
-Le jeu, en console, est limité en termes de charactères, voici ceux utilisés, leurs significations et leurs effets :
+Le jeu, en console, est limité en termes de caractères, voici ceux utilisés, leurs significations et leurs effets :
 
-|Charactère|Signification|Effets
+|Caractère|Signification|Effets
 |:-:|:-|:-|
 |■|Mur|Infranchissable|
 |◄ / ▲ / ► / ▼| Tapis roulant|Décale le joueur dans la direction indiquée|
@@ -67,10 +67,10 @@ Le jeu, en console, est limité en termes de charactères, voici ceux utilisés,
 
 ## État du projet
 
-- [X] Listage des taches, identification des problématiques 
+- [X] Listage des tâches, identification des problématiques 
 - [ ] Partage des taches
 - [ ] Codage
-- [ ] Relecture, homogénéinisation
+- [ ] Relecture, homogénéisation
 - [ ] Préparation présentation finale
 
 
