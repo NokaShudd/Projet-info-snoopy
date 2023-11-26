@@ -5,8 +5,7 @@
 
 #else 
 
-#include <sys/ioctl.h>
-#include <unistd.h>
+#include <ncurses.h>
 
 #endif 
 
@@ -54,10 +53,9 @@ int gotoXY(int x, int y){
 
     #else 
 
-    WINDOW *win;
-    win = stdscr;
+    initscr();
 
-    wmove(win, x, y);
+    move(x, y);
 
     refresh();
 

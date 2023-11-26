@@ -63,7 +63,7 @@ char* stringFromAttr(wTxtAtt attr){
     strcat(str, ";");
     strcat(str, getColorNumber(attr.bColor, 1));
 
-    // TODO implémenter sougnler et intensité
+    // TODO implémenter souligner et intensité
 
 
     return str;
