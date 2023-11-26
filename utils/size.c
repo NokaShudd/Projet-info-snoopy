@@ -1,11 +1,25 @@
-#include <windows.h>
 #include <stdio.h>
+#ifdef _WIN32 
+
+#include <windows.h>
+
+#else 
+
+#include <sys/ioctl.h>
+#include <unistd.h>
+
+#endif 
+
 #include "size.h"
 
 
-// fait a partir de https://stackoverflow.com/a/12642749
+// fait a partir de https://stackoverflow.com/a/12642749 (windows)
+// et https://stackoverflow.com/a/1022961 (macos / linux)
 // récupère la taille de la console et l'écrit dans size (size[0] = largeur, size[1] = hauteur)
 int getSize(int size[2]) {
+    
+    #ifdef _WIN32    
+
     CONSOLE_SCREEN_BUFFER_INFO csbi;
 
     GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &csbi);
@@ -13,17 +27,43 @@ int getSize(int size[2]) {
     size[0] = csbi.srWindow.Right - csbi.srWindow.Left + 1;
     size[1] = csbi.srWindow.Bottom - csbi.srWindow.Top + 1;
 
+    #else 
+
+    struct winsize w;
+    ioctl(STDOUT_FILENO, TIOCGWINSZ, &w);
+
+    size[0] = w.ws_row;
+    size[0] = w.ws_col;
+
+    #endif
+
     return size[0]/size[1];
 }
 
 // positionne le curseur au points (x, y) dans la console
 int gotoXY(int x, int y){
+    
+    #ifdef _WIN32
+
     CONSOLE_SCREEN_BUFFER_INFO coninfo;
     HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
     GetConsoleScreenBufferInfo(hConsole, &coninfo);
     coninfo.dwCursorPosition.Y = y;
     coninfo.dwCursorPosition.X = x;
     SetConsoleCursorPosition(hConsole, coninfo.dwCursorPosition);
+
+    #else 
+
+    WINDOW *win;
+    win = stdscr;
+
+    wmove(win, x, y);
+
+    refresh();
+
+    #endif
+
+    return 0;
 }
 
 int sizeTest(){

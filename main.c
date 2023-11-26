@@ -4,7 +4,22 @@
 #include "utils\keysHandler.h"
 #include <unistd.h>
 
+// ne pas supprimer (support macos / linux (j'espère))
+#ifndef _WIN32
+
+#include <curses.h>
+
+#endif
+
+
 int main(){
+    // ne pas supprimer non plus
+    #ifndef _WIN32
+
+    initscr();
+    refresh();
+
+    #endif
 
     // exemple
     colorPrintf(newAttr(red, yellow), "test\n");
