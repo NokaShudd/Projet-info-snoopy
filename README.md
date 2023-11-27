@@ -68,7 +68,13 @@ Le jeu, en console, est limité en termes de caractères, voici ceux utilisés, 
 ## État du projet
 
 - [X] Listage des tâches, identification des problématiques 
-- [X] Partage des taches
+- [X] Partage des taches (répartition pour l'instant)
+
++ Hugo $\rightarrow$ Menu
++ Pierre $\rightarrow$ Mouvements Snoopy
++ Otniel $\rightarrow$ Plateau
++ Nicolas $\rightarrow$ Mouvements items
+
 - [ ] Codage
 - [ ] Relecture, homogénéisation
 - [ ] Préparation présentation finale
