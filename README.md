@@ -68,7 +68,7 @@ Le jeu, en console, est limité en termes de caractères, voici ceux utilisés, 
 ## État du projet
 
 - [X] Listage des tâches, identification des problématiques 
-- [ ] Partage des taches
+- [X] Partage des taches
 - [ ] Codage
 - [ ] Relecture, homogénéisation
 - [ ] Préparation présentation finale
