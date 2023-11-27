@@ -41,7 +41,10 @@ WORD wFromColor(int color, short isBackground){
     }
 }
 
+
+
 #else 
+
 
 char* getColorNumber(int color, int isBackground){
     switch(color){
@@ -54,19 +57,19 @@ char* getColorNumber(int color, int isBackground){
         case cyan:      return isBackground ? "46" : "36";
         default:        return isBackground ? "47" : "37";
     }
+
+    return "47";
 }
 
-char* stringFromAttr(wTxtAtt attr){
-    char* str = "\x1b[";
-
+void stringFromAttr(wTxtAtt attr, char *str){
+    strcat(str, "\x1b[");
     strcat(str, getColorNumber(attr.fColors, 0));
     strcat(str, ";");
-    strcat(str, getColorNumber(attr.bColors, 1));
+    strcat(str, getColorNumber(attr.bColors, 1)); 
+    strcat(str, "m");
+
 
     // TODO implémenter souligner et intensité
-
-
-    return str;
 }
 
 #endif
@@ -113,7 +116,10 @@ int colorPrintf(wTxtAtt attr, char* format, ...){
 
     #else
 
-    printf(stringFromAttr(attr));
+    char str[11];
+    stringFromAttr(attr, str);
+
+    printf(str);
 
     #endif
     
@@ -129,7 +135,7 @@ int colorPrintf(wTxtAtt attr, char* format, ...){
 
     #else 
 
-    printf("\x1b[37m");
+    printf("\x1b[37;40m");
 
     #endif
 
