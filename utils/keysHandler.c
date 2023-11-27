@@ -5,7 +5,7 @@
 
 #else
 
-#include <curses.h>
+#include <ncurses.h>
 #include <pthread.h>
 
 #endif
@@ -20,6 +20,8 @@ key handleArrow(){
         case 'M': return arrowRight;
         case 'K': return arrowLeft;
     }
+
+    return none;
 }
 
 // donne la key correspondant au charactère letter
@@ -164,7 +166,7 @@ void *updateKeyPressedM(void* lpParam){
         arguments->k =charToKey(getch());
         // if (arguments->c == 'q') arguments->shouldStop = 1;
     }
-    
+    return NULL;
 }
 
 
@@ -193,7 +195,7 @@ key getKey(){
 // renvoie le charactère pressé
 char getChar(){
     char v = getch();
-    if (v == 0 || v == 0xE0){
+    if (v == 0){
         switch (getch()){
             case 'H': return '^';
             case 'P': return 'v';
@@ -206,7 +208,7 @@ char getChar(){
 
 #ifdef _WIN32
 
-// arrète le thread
+// arrête le thread
 void closeThread(void* ht){
     CloseHandle(ht);
 }

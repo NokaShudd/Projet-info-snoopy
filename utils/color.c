@@ -45,7 +45,7 @@ WORD wFromColor(int color, short isBackground){
 
 char* getColorNumber(int color, int isBackground){
     switch(color){
-        case balck:     return isBackground ? "40" : "30";
+        case black:     return isBackground ? "40" : "30";
         case red:       return isBackground ? "41" : "31";
         case green:     return isBackground ? "42" : "32";
         case yellow:    return isBackground ? "43" : "33";
@@ -59,9 +59,9 @@ char* getColorNumber(int color, int isBackground){
 char* stringFromAttr(wTxtAtt attr){
     char* str = "\x1b[";
 
-    strcat(str, getColorNumber(attr.fColor, 0));
+    strcat(str, getColorNumber(attr.fColors, 0));
     strcat(str, ";");
-    strcat(str, getColorNumber(attr.bColor, 1));
+    strcat(str, getColorNumber(attr.bColors, 1));
 
     // TODO implémenter souligner et intensité
 

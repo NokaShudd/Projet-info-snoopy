@@ -6,6 +6,7 @@
 #else 
 
 #include <ncurses.h>
+#include <sys/ioctl.h>
 
 #endif 
 
@@ -29,7 +30,7 @@ int getSize(int size[2]) {
     #else 
 
     struct winsize w;
-    ioctl(STDOUT_FILENO, TIOCGWINSZ, &w);
+    ioctl(0, TIOCGWINSZ, &w);
 
     size[0] = w.ws_row;
     size[0] = w.ws_col;
