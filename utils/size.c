@@ -5,8 +5,8 @@
 
 #else 
 
+#include <ncurses.h>
 #include <sys/ioctl.h>
-#include <unistd.h>
 
 #endif 
 
@@ -30,7 +30,7 @@ int getSize(int size[2]) {
     #else 
 
     struct winsize w;
-    ioctl(STDOUT_FILENO, TIOCGWINSZ, &w);
+    ioctl(0, TIOCGWINSZ, &w);
 
     size[0] = w.ws_row;
     size[0] = w.ws_col;
@@ -54,10 +54,9 @@ int gotoXY(int x, int y){
 
     #else 
 
-    WINDOW *win;
-    win = stdscr;
+    initscr();
 
-    wmove(win, x, y);
+    move(x, y);
 
     refresh();
 
