@@ -1,18 +1,8 @@
-#ifdef _WIN32
-
 #include <conio.h>
 #include <windows.h>
-
-#else
-
-#include <curse.h>
-#include <pthread.h>
-
-#endif
-
 #include "keysHandler.h"
 
-// donne la key correspondante au flèches
+
 key handleArrow(){
     switch ( getch() ){
         case 'H': return arrowUp;
@@ -22,7 +12,7 @@ key handleArrow(){
     }
 }
 
-// donne la key correspondant au charactère letter
+
 key charToKey(unsigned char letter){
     switch (letter){
         case 0   :  return handleArrow();
@@ -53,7 +43,7 @@ key charToKey(unsigned char letter){
         case 'x' :  return x;         
         case 'y' :  return y;         
         case 'z' :  return z;
-        case '\r':  return enter; 
+        case '\n':  return enter;   // FIXME marche pas pour entrer 
 
         default:
             return none;
@@ -61,7 +51,8 @@ key charToKey(unsigned char letter){
 }
 
 
-// donne le charactère correspondant à la key
+
+
 char keyToChar(key k_){
     switch (k_){
         case arrowLeft  :  return '<';
@@ -101,7 +92,6 @@ char keyToChar(key k_){
     }
 }
 
-// récupère le charactère pressé en boucle (Windows)
 DWORD WINAPI updateCharPressedW(LPVOID lpParam){
     cpStruct *arguments = (cpStruct *)lpParam;
 
@@ -113,9 +103,9 @@ DWORD WINAPI updateCharPressedW(LPVOID lpParam){
     return 0;
 }
 
-// récupère le charactère pressé en boucle (MacOs)
-void *updateCharPressedM(void* lpParam){
-    cpStruct *arguments = (cpStruct *)lpParam;
+
+void *updateCharPressed(void *args){
+    cpStruct *arguments = (cpStruct *)args;
 
     while (!arguments->shouldStop){
         arguments->c = (unsigned char) getch();
@@ -125,7 +115,6 @@ void *updateCharPressedM(void* lpParam){
     return NULL;
 }
 
-// récupère la touche pressé en boucle (Windows)
 DWORD WINAPI updateKeyPressedW(LPVOID lpParam){
     kpStruct *arguments = (kpStruct *)lpParam;
 
@@ -137,55 +126,36 @@ DWORD WINAPI updateKeyPressedW(LPVOID lpParam){
     return 0;
 }
 
-
-// récupère le charactère pressé en boucle (MacOs)
-void *updateKeyPressedM(void* lpParam){
-        kpStruct *arguments = (kpStruct *)lpParam;
+void *updateKeyPressed(void *args){
+    kpStruct *arguments = (kpStruct *)args;
 
     while (!arguments->shouldStop){
-        arguments->k =charToKey(getch());
-        // if (arguments->c == 'q') arguments->shouldStop = 1;
+        arguments->k = charToKey(getch());
+        // if (arguments->k == q) arguments->shouldStop = 1;
     }
     
     return NULL;
 }
 
-#ifdef _WIN32
 
-// récupère en boucle et de façon non-bloquante les charactères rentrés
 HANDLE getAsyncChar(cpStruct* cps){
     return CreateThread(
         NULL, 0, updateCharPressedW, (void *)cps, 0, NULL
     );
 }
-// récupère en boucle et de façon non-bloquante les touches pressées
+
 HANDLE getAsyncKey(kpStruct* kps){
     return CreateThread(
         NULL, 0, updateKeyPressedW, (void *)kps, 0, NULL
     );
 }
 
-#else 
-
-void getAsyncChar(cpStruct* cps){
-    pthread_t tId;
-    pthread_create(&tId, NULL, &updateCharPressedM, (void *)cps);
-}
-
-void getAsyncKey(kpStruct* kps){
-    pthread_t tId;
-    pthread_create(&tId, NULL, &updateKeyPressedM, (void *)kps);
-}
 
 
-#endif
-
-// renvoie la touche pressée
 key getKey(){
     return charToKey((unsigned char) getch());
 }
 
-// renvoie le charactère pressé
 char getChar(){
     char v = getch();
     if (v == 0 || v == 0xE0){
@@ -199,7 +169,6 @@ char getChar(){
     return v;
 }
 
-// arrète le thread
 void closeThread(void* ht){
     CloseHandle(ht);
 }
