@@ -35,5 +35,7 @@ int main(){
 
 
 
+    grille();
+    Movement();
     return 0;
 }
