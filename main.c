@@ -1,8 +1,8 @@
-#include <stdio.h>
+// #include <unistd.h>
 #include "utils\color.h"
 #include "utils\size.h"
 #include "utils\keysHandler.h"
-#include <unistd.h>
+#include "utils\sleep.h"
 #include "Snoopy/snoopyMovement.h"
 #include "elements/elements.h"
 
@@ -13,7 +13,6 @@
 
 #endif
 
-
 int main(){
     // ne pas supprimer non plus
     #ifndef _WIN32
@@ -22,8 +21,19 @@ int main(){
     refresh();
 
     #endif
-    grille();
-    Movement();
+
+
+    colorPrintf(newAttr(white, black), "test\n");
+
+    Sleep(3500);
+
+    colorPrintf(newAttr(white, black), "test");
+
+    
+
+
+
+
 
     return 0;
 }

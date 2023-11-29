@@ -8,7 +8,8 @@ endif ()
 
 add_executable(
     game main.c
-    utils/color.h utils/color.c utils/size.h utils/size.c utils/keysHandler.h utils/keysHandler.c 
+    utils/color.h utils/color.c utils/size.h utils/size.c 
+    utils/keysHandler.h utils/keysHandler.c utils/sleep.h utils/sleep.c
     Snoopy/snoopyMovement.c Snoopy/snoopyMovement.h
     elements/elements.c elements/elements.h
 )
