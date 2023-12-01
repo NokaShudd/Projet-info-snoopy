@@ -1,19 +1,24 @@
-#include "sys/time.h"
+#ifdef WIN32
 
-long long timeInMilliseconds() {
-    struct timeval tv;
+#include <windows.h>
 
-    gettimeofday(&tv,NULL);
-    return (((long long)tv.tv_sec)*1000)+(tv.tv_usec/1000);
-}
+#else
 
-void Sleep(long millisecond){
-    long long oldTimer, currentTimer;
-    oldTimer = timeInMilliseconds();
-    while (1){
-        currentTimer = timeInMilliseconds();
-        if ((currentTimer - oldTimer) >= millisecond){
-            return;
-        };    
-    }
+#include <unistd.h>
+#include <stdio.h>
+
+#endif
+
+
+// from https://stackoverflow.com/a/28827188
+// sleep en millisecondes qui supporte unix et windows
+void sleep_ms(int milliseconds){ 
+    #ifdef WIN32
+        Sleep(milliseconds);
+    #else
+        fflush(stdout);
+        if (milliseconds >= 1000)
+        sleep(milliseconds / 1000);
+        usleep((milliseconds % 1000) * 1000);
+    #endif
 }

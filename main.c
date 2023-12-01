@@ -1,8 +1,9 @@
 // #include <unistd.h>
-#include "utils\color.h"
-#include "utils\size.h"
-#include "utils\keysHandler.h"
-#include "utils\sleep.h"
+// #include "utils\color.h"
+// #include "utils\size.h"
+// #include "utils\keysHandler.h"
+#include "stdio.h"
+#include "utils/sleep.h"
 #include "Snoopy/snoopyMovement.h"
 #include "elements/elements.h"
 
@@ -23,19 +24,14 @@ int main(){
     #endif
 
 
-    colorPrintf(newAttr(white, black), "test\n");
+    printf("test");
 
-    Sleep(3500);
+    sleep_ms(3500);
 
-    colorPrintf(newAttr(white, black), "test");
-
+    printf("test");
     
-
-
-
-
-
-    grille();
-    Movement();
+    
+    
+    
     return 0;
 }

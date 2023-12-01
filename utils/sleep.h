@@ -1,7 +1,7 @@
 #ifndef SLEEP
 #define SLEEP
 
-void Sleep(long long);
+void sleep_ms(long long);
 
 
 
