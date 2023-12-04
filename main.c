@@ -24,6 +24,8 @@ int main(){
     // ne pas supprimer non plus
     #ifndef _WIN32
 
+
+
     initscr();
     refresh();
 
