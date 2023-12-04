@@ -5,6 +5,12 @@
 #include <unistd.h>
 #include "Snoopy/snoopyMovement.h"
 #include "elements/elements.h"
+#include "utils\sleep.h"
+
+#define max_x  60
+#define max_y  12
+#define min_x  0
+#define min_y  1
 
 // ne pas supprimer (support macos / linux (j'espère))
 #ifndef _WIN32
@@ -36,12 +42,15 @@ int main(){
     key oldval = none;
 
     while(1){
-        key currentk = kps.k;
-        Movement(def_case, currentk,&x, &y,&valeur);
+        // mettre un if pour le mouvement
+        if (kps.k != none) {
+            Movement(def_case, keyToChar(kps.k),&x, &y,&valeur);
+            kps.k = none;
+        }
         if (kps.k == p) {kps.shouldStop = 1; break;}
-        if (currentk == oldval) kps.k = none;
-        oldval = kps.k;
     }
     closeThread(hT);
     return 0;
+
 }
+
