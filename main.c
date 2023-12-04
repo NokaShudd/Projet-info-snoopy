@@ -13,35 +13,20 @@
 
 #endif
 
+#include "menu/mainmenu.h"
 
-int main(){
+int main() {
     // ne pas supprimer non plus
-    #ifndef _WIN32
+#ifndef _WIN32
 
     initscr();
     refresh();
 
-    #endif
-    value_case def_case[10][20];
+#endif
 
-    grille(def_case);
 
     kpStruct kps = {none, 0};
-    void* hT = getAsyncKey(&kps);
-    int x=2, y=2;
-    int valeur = 1;
-    gotoXY(x,y);
-    afficherSnoopy(valeur);
+    getAsyncKey(&kps);
 
-    key oldval = none;
-
-    while(1){
-        key currentk = kps.k;
-        Movement(def_case, currentk,&x, &y,&valeur);
-        if (kps.k == p) {kps.shouldStop = 1; break;}
-        if (currentk == oldval) kps.k = none;
-        oldval = kps.k;
-    }
-    closeThread(hT);
-    return 0;
+    menu(kps.k);
 }
