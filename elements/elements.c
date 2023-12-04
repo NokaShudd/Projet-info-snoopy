@@ -197,6 +197,7 @@ void display(int grille[10][20]){
                 case Air:
                 case BlinkingWall1:
                     colorPrintf(newAttr(black, black), " ");
+
                     continue;
                 case Wall:
                     colorPrintf(newAttr(black, white), " ");

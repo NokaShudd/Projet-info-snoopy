@@ -3,6 +3,7 @@
 #include "..\utils\color.h"
 #include "..\utils\keysHandler.h"
 #include "..\utils\size.h"
+#include "..\elements\elements.h"
 
 int couleur_case[10][20];
 
@@ -46,12 +47,39 @@ void grille(value_case def_case[10][20]){
     }
 }
 
-void Movement(value_case def_case[10][20], key k, int* x, int* y, int* valeur){  //value_case
+void Movement(value_case def_case[10][20], char k, int* x, int* y, int* valeur){  //value_case
     // toute les couleur
-
-
-        if (k == d){
+    //colorPrintf(newAttr(red,black),"%c",k);
+    int action;
+        if (k == 'd'){
             if (*x+3 < max_x) {
+                switch (def_case[*y-2][(*x+3-2)/3].object) {
+                    case 0 :
+                    case 1 :
+                        break;
+                    case 2 :
+                        action = MoveWallRight;
+                        //lancer la fonction move wall Right avec x et y
+                    case 4 :
+                    case 5 :
+                    case 6 :
+                    case 7 :
+                    case 8 :
+                    case 9 :
+                    case 10 :
+                        //perte vie
+                        break;
+                    case 11 :
+                        //conveyor up
+                    case 12 :
+                        //conveyor left
+                    case 13 :
+                        //conveyor down
+                    case 14 :
+                        //conveyor right
+                    case 16 :
+                        //gagner une vie
+                }
                 *x=*x+3;
                 *valeur = def_case[*y-2][(*x-2)/3].color;
                 gotoXY(*x-3, *y);
@@ -65,8 +93,35 @@ void Movement(value_case def_case[10][20], key k, int* x, int* y, int* valeur){ 
                 afficherSnoopy(*valeur);
             }
         }
-        if (k == s){
+        if (k == 's'){
             if (*y+1<max_y) {
+                switch (def_case[*y+1-2][(*x-2)/3].object) {
+                    case 0 :
+                    case 1 :
+                        break;
+                    case 2 :
+                        action = MoveWallDown;
+                        //lancer la fonction move wall Right avec x et y
+                    case 4 :
+                    case 5 :
+                    case 6 :
+                    case 7 :
+                    case 8 :
+                    case 9 :
+                    case 10 :
+                        //perte vie
+                        break;
+                    case 11 :
+                        //conveyor up
+                    case 12 :
+                        //conveyor left
+                    case 13 :
+                        //conveyor down
+                    case 14 :
+                        //conveyor right
+                    case 16 :
+                        //gagner une vie
+                }
                 *y=*y+1;
                 *valeur = def_case[*y-2][(*x-2)/3].color;
                 gotoXY(*x, *y-1);
@@ -80,8 +135,35 @@ void Movement(value_case def_case[10][20], key k, int* x, int* y, int* valeur){ 
                 afficherSnoopy(*valeur);
             }
         }
-        if (k == z){
+        if (k == 'z'){
             if (*y-1>min_y) {
+                switch (def_case[*y-1-2][(*x+3-2)/3].object) {
+                    case 0 :
+                    case 1 :
+                        break;
+                    case 2 :
+                        action = MoveWallUp;
+                        //lancer la fonction move wall Right avec x et y
+                    case 4 :
+                    case 5 :
+                    case 6 :
+                    case 7 :
+                    case 8 :
+                    case 9 :
+                    case 10 :
+                        //perte vie
+                        break;
+                    case 11 :
+                        //conveyor up
+                    case 12 :
+                        //conveyor left
+                    case 13 :
+                        //conveyor down
+                    case 14 :
+                        //conveyor right
+                    case 16 :
+                        //gagner une vie
+                }
                 *y=*y-1;
                 *valeur = def_case[*y-2][(*x-2)/3].color;
                 gotoXY(*x, *y+1);
@@ -95,8 +177,35 @@ void Movement(value_case def_case[10][20], key k, int* x, int* y, int* valeur){ 
                 afficherSnoopy(*valeur);
             }
         }
-        if (k == q) {
+        if (k == 'q') {
             if (*x-3>min_x) {
+                switch (def_case[*y-2][(*x-3-2)/3].object) {
+                    case 0 :
+                    case 1 :
+                        break;
+                    case 2 :
+                        action = MoveWallLeft;
+                        //lancer la fonction move wall Right avec x et y
+                    case 4 :
+                    case 5 :
+                    case 6 :
+                    case 7 :
+                    case 8 :
+                    case 9 :
+                    case 10 :
+                        //perte vie
+                        break;
+                    case 11 :
+                        //conveyor up
+                    case 12 :
+                        //conveyor left
+                    case 13 :
+                        //conveyor down
+                    case 14 :
+                        //conveyor right
+                    case 16 :
+                        //gagner une vie
+                }
                 *x = *x - 3;
                 *valeur = def_case[*y-2][(*x-2)/3].color;
                 gotoXY(*x+3, *y);
@@ -110,6 +219,7 @@ void Movement(value_case def_case[10][20], key k, int* x, int* y, int* valeur){ 
                 afficherSnoopy(*valeur);
             }
         }
+
 }
 
 /* recupere valeur de la case puis switch pour chaque différente case (par exemple bloc => il faut le deplacé*/
