@@ -44,7 +44,6 @@ int main(){
     key oldval = none;
 
     while(1){
-        // mettre un if pour le mouvement
         if (kps.k != none) {
             Movement(def_case, keyToChar(kps.k),&x, &y,&valeur);
             kps.k = none;
