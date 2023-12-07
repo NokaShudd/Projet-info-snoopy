@@ -19,6 +19,7 @@
 
 #endif
 
+#define DATA_SIZE 10000
 
 int main(){
     // ne pas supprimer non plus
@@ -51,6 +52,27 @@ int main(){
         if (kps.k == p) {kps.shouldStop = 1; break;}
     }
     closeThread(hT);
+
+
+
+
+
+    char data[DATA_SIZE];
+
+    /* File pointer to hold reference to our file */
+    FILE * fPtr;
+    /*
+     * Open file in w (write) mode.
+     * "data/file1.txt" is complete path to create file
+     */
+    fPtr = fopen("stockage\\data.txt", "w");
+
+    // writing to file
+    fwrite(&def_case, sizeof(def_case), 1, fPtr);
+
+    // close file
+    fclose(fPtr);
+
     return 0;
 
 }
