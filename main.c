@@ -6,6 +6,7 @@
 #include "Snoopy/snoopyMovement.h"
 #include "elements/elements.h"
 #include "utils\sleep.h"
+#include "stockage/save.h"
 
 #define max_x  60
 #define max_y  12
@@ -31,16 +32,39 @@ int main(){
     refresh();
 
     #endif
-    value_case def_case[10][20];
 
-    grille(def_case);
-
-    kpStruct kps = {none, 0};
-    void* hT = getAsyncKey(&kps);
+    int variable = 0;
     int x=2, y=2;
     int valeur = 1;
-    gotoXY(x,y);
-    afficherSnoopy(valeur);
+    int info_mdp =0;
+    value_case def_case[10][20];
+    grille(def_case);
+
+    //gestion mdp
+    if (info_mdp != 0) {
+        if (info_mdp ==1) {
+            //reading fichier 1
+        }
+        else if (info_mdp ==2) {
+            //reading fichier 2
+        }
+        else if (info_mdp ==3) {
+            //reading fichier 3
+        }
+    }
+
+
+    //si dans menu appuie sur relancer partie renvoie une valeur spécifique
+    if (variable == 1 ) {
+        //lancer la sauvegarde (vérifié si il y a une sauvegarde
+        //changer le x y de snoopy seulement
+    }
+    else {
+        gotoXY(x,y);
+        afficherSnoopy(valeur);
+    }
+    kpStruct kps = {none, 0};
+    void* hT = getAsyncKey(&kps);
 
     key oldval = none;
 
@@ -49,31 +73,22 @@ int main(){
             Movement(def_case, keyToChar(kps.k),&x, &y,&valeur);
             kps.k = none;
         }
-        if (kps.k == p) {kps.shouldStop = 1; break;}
+        if (kps.k == p) {
+            //sauvegarde donné
+            kps.shouldStop = 1; break;
+        }
     }
+
+
+
+
+
+
+
+
     closeThread(hT);
 
 
-
-
-
-    char data[DATA_SIZE];
-
-    /* File pointer to hold reference to our file */
-    FILE * fPtr;
-    /*
-     * Open file in w (write) mode.
-     * "data/file1.txt" is complete path to create file
-     */
-    fPtr = fopen("stockage\\data.txt", "w");
-
-    // writing to file
-    fwrite(&def_case, sizeof(def_case), 1, fPtr);
-
-    // close file
-    fclose(fPtr);
-
-    return 0;
 
 }
 
