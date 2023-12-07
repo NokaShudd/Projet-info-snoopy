@@ -35,6 +35,7 @@ int main(){
 
     int variable = 0;
     int x=2, y=2;
+    int snoopx =2, snoopy = 2;
     int valeur = 1;
     int info_mdp =0;
     value_case def_case[10][20];
