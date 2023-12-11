@@ -1,10 +1,7 @@
 cmake_minimum_required(VERSION 3.5.0)
-project(Projet_Info_Snoopy VERSION 0.1.0 LANGUAGES C)
+project(game C)
 
-if (UNIX)
-    find_package(Curses REQUIRED)
-    include_directories(${CURSES_INCLUDE_DIR})
-endif ()
+set(CMAKE_C_STANDARD 99)
 
 add_executable(
     game main.c
@@ -14,10 +11,4 @@ add_executable(
     elements/elements.c elements/elements.h
         stockage/save.h
         stockage/save.c
-        menu/mainmenu.h
-        menu/mainmenu.c
 )
-
-if (UNIX)
-    target_link_libraries(game ${CURSES_LIBRARIES})
-endif()

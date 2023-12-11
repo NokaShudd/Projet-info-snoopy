@@ -53,5 +53,5 @@ dkms.conf
 
 # Fichier Clion/VsCode
 .idea/
-cmake-build-debug/
+cmake-build-*
 build/
