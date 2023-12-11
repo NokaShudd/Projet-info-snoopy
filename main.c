@@ -6,7 +6,7 @@
 #include "Snoopy/snoopyMovement.h"
 #include "elements/elements.h"
 #include "utils\sleep.h"
-#include "stockage/save.h"
+#include "stockage\save.h"
 
 #define max_x  60
 #define max_y  12
@@ -35,7 +35,6 @@ int main(){
 
     int variable = 0;
     int x=2, y=2;
-    int snoopx =2, snoopy = 2;
     int valeur = 1;
     int info_mdp =0;
     value_case def_case[10][20];
@@ -80,15 +79,12 @@ int main(){
         }
     }
 
-
-
-
-
-
-
-
     closeThread(hT);
 
+    //gestion defaite => supprimer fichier de jeu
+    // remove (data.txt)
+
+    sauve(def_case, x, y);
 
 
 }

@@ -1,28 +1,26 @@
 #include "save.h"
 #include <stdio.h>
+#include "string.h"
 #include <unistd.h>
 #include "save.h"
 
-int reading(int level, value_case def_case[10][20]){
+void reading(int level, value_case def_case[10][20]){
+    //test partie enregistré sinon lancé sur partie 1
+    char info[11];
 
-    char* info[11];
-
+    if (level == 0){
+        strncpy(info,"data.txt", 11);
+    }
     if (level == 1){
-        *info = "level1.txt";
+        strncpy(info,"level1.txt", 11);
     }
     if (level == 2){
-        *info = "level2.txt";
-    }
+        strncpy(info,"level1.txt", 11);    }
+
     if (level == 3){
-        *info = "level3.txt";
-    }
+        strncpy(info,"level1.txt", 11);    }
 
     FILE* fptr = fopen(info, "r");
-
-    if (fptr == NULL) {
-        printf("Pas de ficher\n");
-        return 0;
-    }
 
     fseek(fptr, 0L, SEEK_END);
     long int res = ftell(fptr);
@@ -99,6 +97,30 @@ int reading(int level, value_case def_case[10][20]){
 
 
 
-int sauvegarde(){
+void sauve(value_case def_case[10][20], int x, int y) {
+    FILE* fptr = fopen("data.txt", "w");
+    fputchar(x);
+    fputs(" ", fptr);
+    fputchar(y);
+    fputs("\n",fptr);
+    for (int i = 0; i < 10; i++) {
+        for (int j = 0; j < 20; j++) {
+            fputs(" ", fptr);
+            fputchar(def_case[i][j].x);
+            fputs(" ", fptr);
+            fputchar(def_case[i][j].y);
+            fputs(" ", fptr);
+            fputchar(def_case[i][j].color);
+            fputs(" ", fptr);
+            fputchar(def_case[i][j].object);
+            fputs(" ", fptr);
+        }
+        fputs("|", fptr);
 
+    }
+    fputs("\n", fptr);
+
+
+    /* Close file to save file data */
+    fclose(fptr);
 }
