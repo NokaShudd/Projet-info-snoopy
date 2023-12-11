@@ -22,7 +22,7 @@
 
 #define DATA_SIZE 10000
 
-int main(){
+int main() {
     // ne pas supprimer non plus
     #ifndef _WIN32
 
@@ -88,4 +88,3 @@ int main(){
 
 
 }
-
