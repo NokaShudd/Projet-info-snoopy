@@ -51,15 +51,18 @@ int main() {
         else if (info_mdp ==3) {
             //reading fichier 3
         }
+    }
 
+
+    //si dans menu appuie sur relancer partie renvoie une valeur spécifique
+    if (variable == 1 ) {
+        //lancer la sauvegarde (vérifié si il y a une sauvegarde
+        //changer le x y de snoopy seulement
     }
     else {
-        reading(0,def_case,&x,&y);
-        printf("%d %d",x,y);
         gotoXY(x,y);
-        afficherSnoopy(def_case[y][x].color);
+        afficherSnoopy(valeur);
     }
-
     kpStruct kps = {none, 0};
     void* hT = getAsyncKey(&kps);
 
@@ -71,6 +74,7 @@ int main() {
             kps.k = none;
         }
         if (kps.k == p) {
+            //sauvegarde donné
             kps.shouldStop = 1; break;
         }
     }
@@ -79,6 +83,8 @@ int main() {
 
     //gestion defaite => supprimer fichier de jeu
     // remove (data.txt)
-    //sauve(def_case, x, y);
+
+    sauve(def_case, x, y);
+
 
 }
