@@ -4,7 +4,7 @@
 #include "utils\keysHandler.h"
 #include <unistd.h>
 #include "Snoopy/snoopyMovement.h"
-#include "elements/elements.h"
+#include "elements\elements.h"
 #include "utils\sleep.h"
 #include "stockage/save.h"
 
@@ -23,15 +23,7 @@
 #define DATA_SIZE 10000
 
 int main(){
-    // ne pas supprimer non plus
-    #ifndef _WIN32
-
-
-
-    initscr();
-    refresh();
-
-    #endif
+    system("cls");
 
     int variable = 0;
     int x=2, y=2;
@@ -41,18 +33,19 @@ int main(){
     value_case def_case[10][20];
     grille(def_case);
 
-    //gestion mdp
-    if (info_mdp != 0) {
-        if (info_mdp ==1) {
-            //reading fichier 1
+    for (int i = 0; i < 10; i++) {
+        for (int j = 0; j < 20; j++) {
+            def_case[i][j].object = Air;
         }
-        else if (info_mdp ==2) {
-            //reading fichier 2
-        }
-        else if (info_mdp ==3) {
-            //reading fichier 3
-        }
+        
     }
+
+    def_case[5][9].object = BlinkingWall1;
+    def_case[5][10].object = Wall;
+    def_case[5][8].object = BombWall;
+    def_case[4][9].object = BlinkingWall1;
+
+    display(def_case);
 
 
     //si dans menu appuie sur relancer partie renvoie une valeur spécifique
@@ -63,31 +56,26 @@ int main(){
     else {
         gotoXY(x,y);
         afficherSnoopy(valeur);
+        startIntervals(def_case);
     }
     kpStruct kps = {none, 0};
     void* hT = getAsyncKey(&kps);
 
     key oldval = none;
 
+
     while(1){
         if (kps.k != none) {
             Movement(def_case, keyToChar(kps.k),&x, &y,&valeur);
+            updateElement(x, y, def_case, None);
             kps.k = none;
         }
         if (kps.k == p) {
             //sauvegarde donné
             kps.shouldStop = 1; break;
         }
+
     }
-
-
-
-
-
-
-
-
-    closeThread(hT);
 
 
 

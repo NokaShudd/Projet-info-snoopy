@@ -1,4 +1,4 @@
-#ifdef WIN32
+#ifdef _WIN32
 
 #include <windows.h>
 
@@ -12,8 +12,8 @@
 
 // from https://stackoverflow.com/a/28827188
 // sleep en millisecondes qui supporte unix et windows
-void sleep_ms(int milliseconds){ 
-    #ifdef WIN32
+void sleep_ms(unsigned long milliseconds){ 
+    #ifdef _WIN32
         Sleep(milliseconds);
     #else
         fflush(stdout);

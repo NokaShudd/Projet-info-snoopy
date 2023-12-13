@@ -1,206 +1,309 @@
 #include "elements.h"
 #include "..\utils\size.h"
 #include "..\utils\color.h"
+#include "..\Snoopy\snoopyMovement.h"
+#include "..\utils\sleep.h"
+#include <windows.h>
 
-int setBallDirection(int grille[10][20], int x, int y){
+
+value_case *geneDef_case[10][20];
+
+int setBallDirection(value_case *grille[10][20], int x, int y){
     if (
-        grille[y][x-1] < 10 && 
-        grille[y][x+1] < 10 && 
-        grille[y-1][x] < 10 && 
-        grille[y+1][x] < 10 
+        (*grille[y][x-1]).object < 10 && 
+        (*grille[y][x+1]).object < 10 && 
+        (*grille[y-1][x]).object < 10 && 
+        (*grille[y+1][x]).object < 10 
         ){
-        grille[y][x] = Ball4;
+        (*grille[y][x]).object = Ball4;
         return 0;
     }
-    switch (grille[y][x]) {
-    case Ball0:
-        if (x == 0 || grille[y][x-1] < 10) {
-            grille[y][x] = Ball3;
-            return setBallDirection(grille, x, y);
-        } 
-        if (y == 0 || grille[y-1][x] < 10){
-            grille[y][x] = Ball1;
-            return setBallDirection(grille, x, y);
-        }
-        if (grille[y-1][x-1] < 10) {
-            grille[y][x] = Ball2;
-        }
-        break;
-    case Ball1:
-        if (x == 0 || grille[y][x-1] < 10) {
-            grille[y][x] = Ball2;
-            return setBallDirection(grille, x, y);
-        } 
-        if (y == 9 || grille[y+1][x] < 10){
-            grille[y][x] = Ball0;
-            return setBallDirection(grille, x, y);
-        }
-        if (grille[y+1][x-1] < 10) {
-            grille[y][x] = Ball3;
-        }
-        break;
+    switch ((*grille[y][x]).object) {
+        case Ball0:
+            if (x == 0 || (*grille[y][x-1]).object < 10) {
+                (*grille[y][x]).object = Ball3;
+                return setBallDirection(grille, x, y);
+            } 
+            if (y == 0 || (*grille[y-1][x]).object < 10){
+                (*grille[y][x]).object = Ball1;
+                return setBallDirection(grille, x, y);
+            }
+            if ((*grille[y-1][x-1]).object < 10) {
+                (*grille[y][x]).object = Ball2;
+            }
+            break;
+        case Ball1:
+            if (x == 0 || (*grille[y][x-1]).object < 10) {
+                (*grille[y][x]).object = Ball2;
+                return setBallDirection(grille, x, y);
+            } 
+            if (y == 9 || (*grille[y+1][x]).object < 10){
+                (*grille[y][x]).object = Ball0;
+                return setBallDirection(grille, x, y);
+            }
+            if ((*grille[y+1][x-1]).object < 10) {
+                (*grille[y][x]).object = Ball3;
+            }
+            break;
+            
+        case Ball2:
+            if (x == 19 || (*grille[y][x+1]).object < 10) {
+                (*grille[y][x]).object = Ball1;
+                return setBallDirection(grille, x, y);
+            } 
+            if (y == 9 || (*grille[y+1][x]).object < 10){
+                (*grille[y][x]).object = Ball3;
+                return setBallDirection(grille, x, y);
+            }
+            
+            if ((*grille[y+1][x+1]).object < 10) {
+                (*grille[y][x]).object = Ball0;
+            }
+            break;
+            
+        case Ball3:
+            if (x == 19 || (*grille[y][x+1]).object < 10) {
+                (*grille[y][x]).object = Ball0;
+                return setBallDirection(grille, x, y);
+            } 
+            if (y == 0 || (*grille[y-1][x]).object < 10){
+                (*grille[y][x]).object = Ball2;
+                return setBallDirection(grille, x, y);
+            }
+            if ((*grille[y-1][x+1]).object < 10) {
+                (*grille[y][x]).object = Ball1;
+            }
+            break;
         
-    case Ball2:
-        if (x == 19 || grille[y][x+1] < 10) {
-            grille[y][x] = Ball1;
-            return setBallDirection(grille, x, y);
-        } 
-        if (y == 9 || grille[y+1][x] < 10){
-            grille[y][x] = Ball3;
-            return setBallDirection(grille, x, y);
-        }
-        
-        if (grille[y+1][x+1] < 10) {
-            grille[y][x] = Ball0;
-        }
-        break;
-        
-    case Ball3:
-        if (x == 19 || grille[y][x+1] < 10) {
-            grille[y][x] = Ball0;
-            return setBallDirection(grille, x, y);
-        } 
-        if (y == 0 || grille[y-1][x] < 10){
-            grille[y][x] = Ball2;
-            return setBallDirection(grille, x, y);
-        }
-        if (grille[y-1][x+1] < 10) {
-            grille[y][x] = Ball1;
-        }
-        break;
-    
-    default:
-        break;
+        default:
+            break;
+    }
+}
+
+char objectToChar(int object){
+    switch (object){
+        case Wall:
+        case Air:
+        case BlinkingWall1:
+        case BlinkingWall0: 
+        case BombWall:
+            return ' ';
+        case MouvableWall:
+            return ' ';
+        case BrakableWall:
+            return ' ';
+        case Ball0:
+        case Ball1:
+        case Ball2:
+        case Ball3:
+        case Ball4:
+            return 'o';
+        case ConveyorBeltDown:
+            return 'v';
+        case ConveyorBeltLeft:
+            return '<';
+        case ConveyorBeltRight:
+            return '>';
+        case ConveyorBeltUp:
+            return '^';
+        case Bird: 
+            return '*';
+    }
+}
+
+wTxtAtt objectBackground(int object, int color){
+    switch (object){
+        case ConveyorBeltDown:
+        case ConveyorBeltUp:
+        case ConveyorBeltLeft:
+        case ConveyorBeltRight:
+            return newAttr(white, cyan);
+        case BombWall:
+            return newAttr(red, red);
+        case Air:
+        case BlinkingWall1:
+            return newAttr(white, color);
+        case BrakableWall:
+            return newAttr(yellow, color);
+        case Wall:
+        case BlinkingWall0:
+        case MouvableWall:
+            return newAttr(white, white);
+        case Ball0:
+        case Ball1:
+        case Ball2:
+        case Ball3:
+        case Ball4:
+            return newAttr(red, color);
+        case Bird:
+            return newAttr(yellow, black);
     }
 }
 
 
-void checkElements(int grille[10][20], int x, int y, char blinkUpdate, char ticked, int action){
-    int bufferBallePositions[200];
-    int nbBalles = 0;
-    for (int i = 0; i < 10; i++){
-        for (int j = 0; j < 20; j++){
-            switch (grille[i][j]){
-                case BlinkingWall0 :
-                    if (blinkUpdate) grille[i][j] = BlinkingWall1;
-                    continue;
-                case BlinkingWall1:
-                    if (blinkUpdate) grille[i][j] = BlinkingWall0;
-                    continue;
-                case MouvableWall:
-                    if (x - i + y - j != 1 && x - i + y - j != -1) continue;
-                    switch (action){
-                        case MoveWallUp:
-                            if (i > 0 && grille[i-1][j] == Air) {
-                                grille[i-1][j] = Wall;
-                                grille[i][j] = Air;
-                            }
-                            break;
-                        case MoveWallLeft:
-                            if (j > 0 && grille[i][j-1] == Air) {
-                                grille[i][j-1] = Wall;
-                                grille[i][j] = Air;
-                            }
-                            break;
-                        case MoveWallDown:
-                            if (i < 9 && grille[i+1][j] == Air) {
-                                grille[i+1][j] = Wall;
-                                grille[i][j] = Air;
-                            }
-                            break;
-                        case MoveWallRight:
-                            if (j < 19 && grille[i][j+1] == Air) {
-                                grille[i][j+1] = Wall;
-                                grille[i][j] = Air;
-                            } 
-                            break;
-                        default: continue;
-                    }
-                case Ball0:
-                case Ball1:
-                case Ball2:
-                case Ball3:
-                case Ball4:
-                    bufferBallePositions[nbBalles*2] = j;
-                    bufferBallePositions[nbBalles*2 + 1] = i;
-                    nbBalles++;
-                    continue;
-                default:
-                    break;
+
+void drawElement(int x, int y, int object, int color){
+    gotoXY(x, y);
+    if (object == Air) {
+        colorPrintf(newAttr(white, color), "   ");
+        return;
+    }
+    colorPrintf(newAttr(white, color), " ");
+    colorPrintf(objectBackground(object, color), "%c", objectToChar(object));
+    colorPrintf(newAttr(white, color), " ");
+}
+
+
+void drawCase(value_case kase){
+    drawElement(
+        kase.x, kase.y, kase.object, kase.color
+    );
+}
+
+void moveBall(value_case *grille[10][20]){
+    int xBuffer[200];
+    int yBuffer[200];
+    int numbPair = 0;
+
+
+
+    for (int i = 0; i < 10; i++) {
+        for (int j = 0; j < 20; j++) {
+            if ((*grille[i][j]).object > 4 && (*grille[i][j]).object < 10) {
+                xBuffer[numbPair]   = (*grille[i][j]).x;
+                yBuffer[numbPair++] = (*grille[i][j]).y;
             }
         }
-    }   
-
-    for (int i = 0; i < nbBalles*2; i += 2){
-        setBallDirection(grille, bufferBallePositions[i], bufferBallePositions[i+1]);
-        switch (grille[bufferBallePositions[i+1]][bufferBallePositions[i]]) {
-            case Ball4:
-                continue;
-            case Ball0:
-                grille[bufferBallePositions[i+1]][bufferBallePositions[i]] = Air;
-                grille[bufferBallePositions[i+1]-1][bufferBallePositions[i]-1] = Ball0;
-                continue;
-            case Ball1:
-                grille[bufferBallePositions[i+1]][bufferBallePositions[i]] = Air;
-                grille[bufferBallePositions[i+1]+1][bufferBallePositions[i]-1] = Ball1;
-                continue;
-            case Ball2:
-                grille[bufferBallePositions[i+1]][bufferBallePositions[i]] = Air;
-                grille[bufferBallePositions[i+1]+1][bufferBallePositions[i]+1] = Ball2;
-                continue;
-            case Ball3:
-                grille[bufferBallePositions[i+1]][bufferBallePositions[i]] = Air;
-                grille[bufferBallePositions[i+1]-1][bufferBallePositions[i]+1] = Ball3;
-                continue;
-        }
+        
     }
+
+    for (int i = 0; i < numbPair; i++) {
+        setBallDirection(grille, xBuffer[i], yBuffer[i]);
+        switch ((*grille[yBuffer[i]][xBuffer[i]]).object) {
+            case Ball0:
+                (*grille[yBuffer[i]-1][xBuffer[i]-1]).object = Ball0;
+                drawCase(*grille[yBuffer[i]-1][xBuffer[i]-1]);
+                break;
+            case Ball1:
+                (*grille[yBuffer[i]+1][xBuffer[i]-1]).object = Ball1;
+                drawCase(*grille[yBuffer[i]+1][xBuffer[i]-1]);
+                break;
+            case Ball2:
+                (*grille[yBuffer[i]+1][xBuffer[i]+1]).object = Ball2;
+                drawCase(*grille[yBuffer[i]+1][xBuffer[i]+1]);
+                break;
+            case Ball3:
+                (*grille[yBuffer[i]-1][xBuffer[i]+1]).object = Ball3;
+                drawCase(*grille[yBuffer[i]-1][xBuffer[i]+1]);
+                break;
+        }
+        if ((*grille[yBuffer[i]][xBuffer[i]]).object != Ball4) (*grille[yBuffer[i]][xBuffer[i]]).object = Air;
+        drawCase(*grille[yBuffer[i]][xBuffer[i]]);
+    }
+    
     
 }
 
-/*
+
+void changeBlinkState(value_case *grille[10][20]){
+    for (int i = 0; i < 10; i++) {
+        for (int j = 0; j < 20; j++) {
+            if ((*grille[i][j]).object == BlinkingWall0) {
+                (*grille[i][j]).object = BlinkingWall1;
+                drawCase(*grille[i][j]);
+            }
+            else if ((*grille[i][j]).object == BlinkingWall1) {
+                (*grille[i][j]).object = BlinkingWall0;
+                gotoXY((*grille[i][j]).x, (*grille[i][j]).y);
+                colorPrintf(newAttr(white, white), "   ");
+            }
+        }
+    }
+}
+
+DWORD WINAPI changeAfterInterval(LPVOID lparam) {
+    int numb = 0;
+
+    while (1){
+        sleep_ms(500);
+        
+        
+        moveBall(geneDef_case);
+
+        if (numb == 3) changeBlinkState(geneDef_case);
+
+        numb = ++numb % 4;
+    }
+    
+    return 0;
+}
 
 
-    int grille[10][20];
+HANDLE startIntervals(value_case def_case[10][20]) {
+    for (int i = 0; i < 10; i++) {
+        for (int j = 0; j < 20; j++) {
+            geneDef_case[i][j] = &def_case[i][j]; 
+        }
+    }
+    
+    return CreateThread(
+        NULL, 0, changeAfterInterval,NULL, 0, NULL
+    );
+}
 
-    for (int i = 0; i < 10; i++){
-        for (int j = 0; j < 20; j++){
-            grille[i][j] = Air;
+
+
+void updateElement(int x, int y, value_case def_case[10][20], int action){
+    if (action == Punch) {
+        for (int i = -1; i <= 1; i++) {
+            for (int j = -1; j <= 1; j++) {
+                if (y+i < 0)    continue;
+                if (y+i >= 10)  continue;
+                if (x+j < 0)    continue;
+                if (x+j >= 20)  continue;
+
+                if (def_case[y+i][x+j].object == BrakableWall) {
+                    def_case[y+i][x+j].object = Air;
+                }
+            }
+            
         }
         
+        return;
     }
-    
-
-    grille[4][9] = Ball1;
-    grille[9][5] = Ball0;
-    grille[3][8] = Wall;
-    grille[3][9] = Wall;
-    grille[3][11] = Wall;
-    grille[3][12] = Wall;
-    
-    display(grille);
-
-    for (int i = 0; i < 1000; i++){
-        checkElements(grille, 0, 0, 1, 1, 0);
-        display(grille);
-        // sleep(1);
+    switch (def_case[y][x].object) {
+        case Bird:
+            def_case[y][x].object = Air;
+            break;
+        case MouvableWall:
+            if (action == MoveWallUp) {
+                drawElement(def_case[y-1][x].x, def_case[y-1][x].y, Wall, def_case[y-1][x].color);
+            } else if (action == MoveWallDown){ 
+                drawElement(def_case[y+1][x].x, def_case[y+1][x].y, Wall, def_case[y+1][x].color);
+            } else if (action == MoveWallRight) {
+                drawElement(def_case[y][x+1].x, def_case[y][x+1].y, Wall, def_case[y][x+1].color);
+            } else {
+                drawElement(def_case[y][x-1].x, def_case[y][x-1].y, Wall, def_case[y][x-1].color);
+            }
+            def_case[y][x].object = Air;
+            break;
     }
+};
 
-*/
 
-void display(int grille[10][20]){
-
-    gotoXY(0, 2);
+void display(value_case grille[10][20]){
     for (int i = 0; i < 10; i++){
         for (int j = 0; j < 20; j++){
             // colorPrintf(newAttr(green, black), "|");
-            switch (grille[i][j]){
+            switch (grille[i][j].object){
                 case Air:
                 case BlinkingWall1:
-                    colorPrintf(newAttr(black, black), " ");
-
+                    gotoXY(grille[i][j].x, grille[i][j].y);
+                    colorPrintf(newAttr(black, grille[i][j].color), "   ");
                     continue;
                 case Wall:
-                    colorPrintf(newAttr(black, white), " ");
+                    gotoXY(grille[i][j].x, grille[i][j].y);
+                    colorPrintf(newAttr(black, white), "   ");
                     continue;
                     
                 case Ball0:
@@ -208,17 +311,15 @@ void display(int grille[10][20]){
                 case Ball2:
                 case Ball3:
                 case Ball4:
-                    colorPrintf(newAttr(red, black), "o");
+                    gotoXY(grille[i][j].x, grille[i][j].y);
+                    colorPrintf(newAttr(red, grille[i][j].color), " o ");
                     continue;
 
                 default:
-                    colorPrintf(newAttr(black, black), " ");
+                    gotoXY(grille[i][j].x+1, grille[i][j].y);
+                    colorPrintf(newAttr(black, grille[i][j].color), "   ");
             }
         }
-        // colorPrintf(newAttr(green, black), "|");
-        // colorPrintf(newAttr(white, white), "\n");
-        // for (int i = 0; i < 40; i++) colorPrintf(newAttr(green, black), "=");
-        colorPrintf(newAttr(white, white), "\n");
 
         
     }
