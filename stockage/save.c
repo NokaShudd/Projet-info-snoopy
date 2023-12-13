@@ -4,7 +4,7 @@
 #include <unistd.h>
 #include "save.h"
 
-void reading(int level, value_case def_case[10][20],int*X,int *Y) {
+void reading(int level, value_case def_case[10][20],int*X,int *Y, long long * timer) {
     //test partie enregistré sinon lancé sur partie 1
     char info[25];
 
@@ -44,6 +44,7 @@ void reading(int level, value_case def_case[10][20],int*X,int *Y) {
 
     int SnoopX = -1;
     int SnoopY = -1;
+    long long tim = -1;
 
     while (fgets(text, res, fptr)) {
         ind = 0;
@@ -55,9 +56,10 @@ void reading(int level, value_case def_case[10][20],int*X,int *Y) {
             } else if (letter == ' ' && previous >= 0) {
                 if (text[0] == '#') {
                     if (SnoopX < 0) SnoopX = previous;
-                    else SnoopY = previous;
+                    else if (SnoopY < 0) SnoopY = previous;
+                    else tim = previous; 
                     previous = -1;
-                    if (SnoopY != -1) break;
+                    if (tim != -1) break;
                     continue;
                 }
                 if (ind == 0) {
@@ -90,6 +92,7 @@ void reading(int level, value_case def_case[10][20],int*X,int *Y) {
 
     *X = SnoopX;
     *Y = SnoopY;
+    *timer = tim;
 }
 
 

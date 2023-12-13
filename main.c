@@ -55,6 +55,8 @@ int main(){
     def_case[0][11].object = ConveyorBeltRight;
     def_case[0][12].object = Bird;
 
+    time_t time_left = 120, variable_timer;
+
     display(def_case);
 
     //si dans menu appuie sur relancer partie renvoie une valeur spécifique
@@ -63,7 +65,7 @@ int main(){
         //changer le x y de snoopy seulement
     }
     else {
-        reading(0, def_case, &x, &y);
+        reading(0, def_case, &x, &y, &time_left);
 
         gotoXY(x,y);
         afficherSnoopy(def_case[y-2][(x-2)/3].color);
@@ -74,7 +76,7 @@ int main(){
 
     key oldval = none;
 
-    time_t time_left = 120, variable_timer;
+    
     Start_timer(&time_left);
 
     while(1) {
