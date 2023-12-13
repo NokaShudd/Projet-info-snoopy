@@ -6,7 +6,8 @@
 #ifndef PROJET_INFO_SNOOPY_SAVE_H
 #define PROJET_INFO_SNOOPY_SAVE_H
 
-int reading(int level, value_case[10][20]);
+void reading(int level, value_case[10][20]);
+void sauve(value_case[10][20], int x, int y);
 
 
 #endif //PROJET_INFO_SNOOPY_SAVE_H
