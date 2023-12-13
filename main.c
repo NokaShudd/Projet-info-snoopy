@@ -7,6 +7,7 @@
 #include "elements/elements.h"
 #include "utils\sleep.h"
 #include "stockage\save.h"
+#include "score\score.h"
 
 #define max_x  60
 #define max_y  12
@@ -19,8 +20,6 @@
 #include <curses.h>
 
 #endif
-
-#define DATA_SIZE 10000
 
 int main() {
     // ne pas supprimer non plus
@@ -39,6 +38,7 @@ int main() {
     int info_mdp =0;
     value_case def_case[10][20];
     grille(def_case);
+    int time_left = 120;
 
     //gestion mdp
     if (info_mdp != 0) {
@@ -69,6 +69,10 @@ int main() {
     key oldval = none;
 
     while(1){
+        //affichage score
+        timer(&time_left);
+        gotoXY(17,1);
+        printf("%d", time_left*10);
         if (kps.k != none) {
             Movement(def_case, keyToChar(kps.k),&x, &y,&valeur);
             kps.k = none;

@@ -11,4 +11,6 @@ add_executable(
     elements/elements.c elements/elements.h
         stockage/save.h
         stockage/save.c
+        score/score.h
+        score/score.c
 )
