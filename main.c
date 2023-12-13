@@ -13,14 +13,7 @@
 #define min_x  0
 #define min_y  1
 
-// ne pas supprimer (support macos / linux (j'espère))
-#ifndef _WIN32
 
-#include <curses.h>
-
-#endif
-
-#define DATA_SIZE 10000
 
 int main(){
     system("cls");
@@ -39,13 +32,20 @@ int main(){
         
     }
 
-    def_case[5][9].object = BlinkingWall1;
-    def_case[5][10].object = Wall;
-    def_case[5][8].object = BombWall;
-    def_case[4][9].object = BlinkingWall1;
+    def_case[0][1].object = Air;
+    def_case[0][2].object = Wall;
+    def_case[0][3].object = BlinkingWall0;
+    def_case[0][4].object = BlinkingWall1;
+    def_case[0][5].object = MouvableWall;
+    def_case[0][6].object = BrakableWall;
+    def_case[0][7].object = BombWall;
+    def_case[0][8].object = ConveyorBeltUp;
+    def_case[0][9].object = ConveyorBeltDown;
+    def_case[0][10].object = ConveyorBeltLeft;
+    def_case[0][11].object = ConveyorBeltRight;
+    def_case[0][12].object = Bird;
 
     display(def_case);
-
 
     //si dans menu appuie sur relancer partie renvoie une valeur spécifique
     if (variable == 1 ) {
@@ -65,17 +65,20 @@ int main(){
 
     while(1){
         if (kps.k != none) {
+            if (kps.k == p) {
+                kps.shouldStop = 1;
+                break;
+            }
             Movement(def_case, keyToChar(kps.k),&x, &y,&valeur);
             updateElement(x, y, def_case, None);
             kps.k = none;
         }
-        if (kps.k == p) {
-            //sauvegarde donné
-            kps.shouldStop = 1; break;
-        }
+        
 
     }
 
+
+    sauve(def_case, x, y);
 
 
 }

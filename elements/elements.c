@@ -113,16 +113,6 @@ char objectToChar(int object){
 
 wTxtAtt objectBackground(int object, int color){
     switch (object){
-        case ConveyorBeltDown:
-        case ConveyorBeltUp:
-        case ConveyorBeltLeft:
-        case ConveyorBeltRight:
-            return newAttr(white, cyan);
-        case BombWall:
-            return newAttr(red, red);
-        case Air:
-        case BlinkingWall1:
-            return newAttr(white, color);
         case BrakableWall:
             return newAttr(yellow, color);
         case Wall:
@@ -144,13 +134,66 @@ wTxtAtt objectBackground(int object, int color){
 
 void drawElement(int x, int y, int object, int color){
     gotoXY(x, y);
-    if (object == Air) {
-        colorPrintf(newAttr(white, color), "   ");
+    switch (object) {
+        case Air:
+            colorPrintf(newAttr(white, color), "   ");
         return;
+        
+        case BlinkingWall0:
+            colorPrintf(newAttr(blue, color),"%c%c%c", 0xB2, 0xB2, 0xB2);
+        return;
+
+        case BlinkingWall1:
+            colorPrintf(newAttr(cyan, color),"%c%c%c", 0xB0, 0xB0, 0xB0);
+        return;
+
+        case BombWall:
+            colorPrintf(newAttr(red, red), "   ");
+        return;
+
+        case Wall:
+            colorPrintf(newAttr(white, white), "   ");
+        return;
+        
+        case ConveyorBeltDown:
+            colorPrintf(newAttr(cyan, color), " %c ", 0x1F);
+        return;
+        case ConveyorBeltUp:
+            colorPrintf(newAttr(cyan, color), " %c ", 0x1E);
+        return;
+        case ConveyorBeltLeft:
+            colorPrintf(newAttr(cyan, color), " %c ", 0x10);
+        return;
+        case ConveyorBeltRight:
+            colorPrintf(newAttr(cyan, color), " %c ", 0x11);
+        return;
+
+        case BrakableWall:
+            colorPrintf(newAttr(yellow, color), "%c%c%c", 0xB1, 0xB1, 0xB1);
+        return;
+        
+        case Ball0:
+        case Ball1:
+        case Ball2:
+        case Ball3:
+        case Ball4:
+            colorPrintf(newAttr(red, color), " o ");
+        return;
+        
+        case MouvableWall:
+            colorPrintf(newAttr(white, white), " %c ", 0x09);
+        return;
+
+        
+        case Bird:
+            colorPrintf(newAttr(yellow, color), " %c ", 0x0F);
+        return;
+
+
+
+        default:
+            break;
     }
-    colorPrintf(newAttr(white, color), " ");
-    colorPrintf(objectBackground(object, color), "%c", objectToChar(object));
-    colorPrintf(newAttr(white, color), " ");
 }
 
 
@@ -164,8 +207,6 @@ void moveBall(value_case *grille[10][20]){
     int xBuffer[200];
     int yBuffer[200];
     int numbPair = 0;
-
-
 
     for (int i = 0; i < 10; i++) {
         for (int j = 0; j < 20; j++) {
@@ -227,7 +268,6 @@ DWORD WINAPI changeAfterInterval(LPVOID lparam) {
     while (1){
         sleep_ms(500);
         
-        
         moveBall(geneDef_case);
 
         if (numb == 3) changeBlinkState(geneDef_case);
@@ -247,7 +287,7 @@ HANDLE startIntervals(value_case def_case[10][20]) {
     }
     
     return CreateThread(
-        NULL, 0, changeAfterInterval,NULL, 0, NULL
+        NULL, 0, changeAfterInterval, NULL, 0, NULL
     );
 }
 
@@ -294,31 +334,8 @@ void updateElement(int x, int y, value_case def_case[10][20], int action){
 void display(value_case grille[10][20]){
     for (int i = 0; i < 10; i++){
         for (int j = 0; j < 20; j++){
-            // colorPrintf(newAttr(green, black), "|");
-            switch (grille[i][j].object){
-                case Air:
-                case BlinkingWall1:
-                    gotoXY(grille[i][j].x, grille[i][j].y);
-                    colorPrintf(newAttr(black, grille[i][j].color), "   ");
-                    continue;
-                case Wall:
-                    gotoXY(grille[i][j].x, grille[i][j].y);
-                    colorPrintf(newAttr(black, white), "   ");
-                    continue;
-                    
-                case Ball0:
-                case Ball1:
-                case Ball2:
-                case Ball3:
-                case Ball4:
-                    gotoXY(grille[i][j].x, grille[i][j].y);
-                    colorPrintf(newAttr(red, grille[i][j].color), " o ");
-                    continue;
-
-                default:
-                    gotoXY(grille[i][j].x+1, grille[i][j].y);
-                    colorPrintf(newAttr(black, grille[i][j].color), "   ");
-            }
+            drawCase(grille[i][j]);
+            
         }
 
         
