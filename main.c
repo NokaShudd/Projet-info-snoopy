@@ -4,9 +4,10 @@
 #include "utils\keysHandler.h"
 #include <unistd.h>
 #include "Snoopy/snoopyMovement.h"
-#include "elements\elements.h"
+#include "elements/elements.h"
 #include "utils\sleep.h"
 #include "stockage\save.h"
+#include "score\score.h"
 
 #define max_x  60
 #define max_y  12
@@ -25,11 +26,17 @@ int main(){
     value_case def_case[10][20];
     grille(def_case);
 
-    for (int i = 0; i < 10; i++) {
-        for (int j = 0; j < 20; j++) {
-            def_case[i][j].object = Air;
+    //gestion mdp
+    if (info_mdp != 0) {
+        if (info_mdp ==1) {
+            //reading fichier 1
         }
-        
+        else if (info_mdp ==2) {
+            //reading fichier 2
+        }
+        else if (info_mdp ==3) {
+            //reading fichier 3
+        }
     }
 
     def_case[0][1].object = Air;
@@ -62,24 +69,27 @@ int main(){
 
     key oldval = none;
 
+    time_t time_left = 120, variable_timer;
+    Start_timer(&time_left);
 
-    while(1){
+    while(1) {
         if (kps.k != none) {
             if (kps.k == p) {
                 kps.shouldStop = 1;
                 break;
             }
-            Movement(def_case, keyToChar(kps.k),&x, &y,&valeur);
+            Movement(def_case, keyToChar(kps.k), &x, &y, &valeur);
             updateElement(x, y, def_case, None);
             kps.k = none;
         }
-        
+
+
+
+        //gestion defaite => supprimer fichier de jeu
+        // remove (data.txt)
+
+        sauve(def_case, x, y);
 
     }
-
-
-    sauve(def_case, x, y);
-
-
 }
 

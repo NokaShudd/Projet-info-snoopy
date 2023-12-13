@@ -6,6 +6,6 @@
 #define GAME_SCORE_H
 
 
-void timer(int *);
+void* Start_timer(long long *);
 
 #endif //GAME_SCORE_H
