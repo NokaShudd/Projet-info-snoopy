@@ -96,7 +96,7 @@ int main(){
 
     }
     system("cls");
-    sauve(def_case, x, y);
+    sauve(def_case, x, y, time_left);
 
 }
 
