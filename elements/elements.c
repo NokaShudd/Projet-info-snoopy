@@ -80,56 +80,6 @@ int setBallDirection(value_case *grille[10][20], int x, int y){
     }
 }
 
-char objectToChar(int object){
-    switch (object){
-        case Wall:
-        case Air:
-        case BlinkingWall1:
-        case BlinkingWall0: 
-        case BombWall:
-            return ' ';
-        case MouvableWall:
-            return ' ';
-        case BrakableWall:
-            return ' ';
-        case Ball0:
-        case Ball1:
-        case Ball2:
-        case Ball3:
-        case Ball4:
-            return 'o';
-        case ConveyorBeltDown:
-            return 'v';
-        case ConveyorBeltLeft:
-            return '<';
-        case ConveyorBeltRight:
-            return '>';
-        case ConveyorBeltUp:
-            return '^';
-        case Bird: 
-            return '*';
-    }
-}
-
-wTxtAtt objectBackground(int object, int color){
-    switch (object){
-        case BrakableWall:
-            return newAttr(yellow, color);
-        case Wall:
-        case BlinkingWall0:
-        case MouvableWall:
-            return newAttr(white, white);
-        case Ball0:
-        case Ball1:
-        case Ball2:
-        case Ball3:
-        case Ball4:
-            return newAttr(red, color);
-        case Bird:
-            return newAttr(yellow, black);
-    }
-}
-
 
 
 void drawElement(int x, int y, int object, int color){
@@ -265,6 +215,9 @@ void changeBlinkState(value_case *grille[10][20]){
 DWORD WINAPI changeAfterInterval(LPVOID lparam) {
     int numb = 0;
 
+    sleep_ms(14);
+
+
     while (1){
         sleep_ms(500);
         
@@ -335,11 +288,6 @@ void display(value_case grille[10][20]){
     for (int i = 0; i < 10; i++){
         for (int j = 0; j < 20; j++){
             drawCase(grille[i][j]);
-            
         }
-
-        
     }
-    
-
 }

@@ -3,16 +3,23 @@
 #include <time.h>
 #include <conio.h>
 #include <windows.h>
+#include "..\utils\color.h"
 #include "..\utils\sleep.h"
 #include "..\utils\size.h"
 
 
 DWORD WINAPI timer_score (LPVOID timeur) {
     long long * time_left = (long long *)timeur;
+
+    wTxtAtt attr = newAttr(white, magenta);
+
+    attr.underscore = 1;
+    attr.fInt = 1;
+
     while (*time_left > 0) {
         *time_left = *time_left - 1;
         gotoXY(28,1);
-        printf("%lld   ", *time_left *100);
+        colorPrintf(attr," %lld ", *time_left *100);
         sleep_ms(1000);
     }
 }

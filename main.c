@@ -24,6 +24,9 @@ int main(){
     int valeur = 1;
     int info_mdp =0;
     value_case def_case[10][20];
+
+
+
     grille(def_case);
 
     //gestion mdp
@@ -60,8 +63,10 @@ int main(){
         //changer le x y de snoopy seulement
     }
     else {
+        reading(0, def_case, &x, &y);
+
         gotoXY(x,y);
-        afficherSnoopy(valeur);
+        afficherSnoopy(def_case[y-2][(x-2)/3].color);
         startIntervals(def_case);
     }
     kpStruct kps = {none, 0};
@@ -88,8 +93,10 @@ int main(){
         //gestion defaite => supprimer fichier de jeu
         // remove (data.txt)
 
-        sauve(def_case, x, y);
 
     }
+    system("cls");
+    sauve(def_case, x, y);
+
 }
 

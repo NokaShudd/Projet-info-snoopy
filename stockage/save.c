@@ -6,27 +6,26 @@
 
 void reading(int level, value_case def_case[10][20],int*X,int *Y) {
     //test partie enregistré sinon lancé sur partie 1
-    char info[11];
+    char info[25];
 
     if (level == 0) {
-        strncpy(info, "..\\stockage\\data.txt", 11);
+        strncpy(info, "..\\stockage\\data.txt", 25);
     }
     if (level == 1) {
-        strncpy(info, "..\\stockage\\level1.txt", 11);
+        strncpy(info, "..\\stockage\\level1.txt", 25);
     }
     if (level == 2) {
-        strncpy(info, "..\\stockage\\level2.txt", 11);
+        strncpy(info, "..\\stockage\\level2.txt", 25);
     }
 
     if (level == 3) {
-        strncpy(info, "..\\stockage\\level3.txt", 11);
+        strncpy(info, "..\\stockage\\level3.txt", 25);
     }
+
 
     FILE *fptr = fopen(info, "r");
 
-    fseek(fptr, 0L, SEEK_END);
-    long int res = ftell(fptr);
-    fseek(fptr, 0L, SEEK_SET);
+    long int res = 100000;
 
     char text[res];
     char letter;
@@ -37,14 +36,14 @@ void reading(int level, value_case def_case[10][20],int*X,int *Y) {
 
     int ind = 0;
 
-
     int pos10 = 0;
     int pos20 = 0;
 
     int SnoopX = -1;
     int SnoopY = -1;
 
-    while (fgets(text, res, fptr)) {
+
+    while (fgets(text, res, fptr) != NULL) {
         ind = 0;
         for (int i = 0; text[i] != '\0'; i++) {
             letter = text[i];
@@ -52,7 +51,6 @@ void reading(int level, value_case def_case[10][20],int*X,int *Y) {
                 if (previous >= 0) previous = previous * 10 + (int) letter - 48;
                 else previous = (int) letter - 48;
             } else if (letter == ' ' && previous >= 0) {
-                printf("%c", text[0]);
                 if (text[0] == '#') {
                     if (SnoopX < 0) SnoopX = previous;
                     else SnoopY = previous;
@@ -75,8 +73,8 @@ void reading(int level, value_case def_case[10][20],int*X,int *Y) {
                 def_case[pos10][pos20++] = (value_case) {
                         x, y, color, object
                 };
-                x = 0;
-                y = 0;
+                x = 2;
+                y = 2;
                 color = 0;
                 object = 0;
             }
@@ -88,14 +86,14 @@ void reading(int level, value_case def_case[10][20],int*X,int *Y) {
     }
 
 
-    *Y = SnoopX;
-    *X = SnoopY;
+    *X = SnoopX;
+    *Y = SnoopY;
 }
 
 
 void sauve(value_case def_case[10][20], int x, int y) {
     FILE* fptr = fopen("..\\stockage\\data.txt", "w");
-    fprintf(fptr, "%d ",x);
+    fprintf(fptr, "# %d ",x);
     fprintf(fptr, "%d ",y);
     fprintf(fptr, "\n");
     for (int i = 0; i < 10; i++) {
