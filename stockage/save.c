@@ -25,7 +25,9 @@ void reading(int level, value_case def_case[10][20],int*X,int *Y) {
 
     FILE *fptr = fopen(info, "r");
 
-    long int res = 100000;
+    fseek(fptr, 0L, SEEK_END);
+    long int res = ftell(fptr);
+    fseek(fptr, 0L, SEEK_SET);
 
     char text[res];
     char letter;
@@ -36,14 +38,14 @@ void reading(int level, value_case def_case[10][20],int*X,int *Y) {
 
     int ind = 0;
 
+
     int pos10 = 0;
     int pos20 = 0;
 
     int SnoopX = -1;
     int SnoopY = -1;
 
-
-    while (fgets(text, res, fptr) != NULL) {
+    while (fgets(text, res, fptr)) {
         ind = 0;
         for (int i = 0; text[i] != '\0'; i++) {
             letter = text[i];
@@ -91,10 +93,11 @@ void reading(int level, value_case def_case[10][20],int*X,int *Y) {
 }
 
 
-void sauve(value_case def_case[10][20], int x, int y) {
+void sauve(value_case def_case[10][20], int x, int y, long long timer) {
     FILE* fptr = fopen("..\\stockage\\data.txt", "w");
     fprintf(fptr, "# %d ",x);
     fprintf(fptr, "%d ",y);
+    fprintf(fptr, "%lld ", timer);
     fprintf(fptr, "\n");
     for (int i = 0; i < 10; i++) {
         for (int j = 0; j < 20; j++) {
