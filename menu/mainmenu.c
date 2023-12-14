@@ -1,4 +1,3 @@
-
 #include "stdlib.h"
 #include "stdio.h"
 #include "../utils/sleep.h"
@@ -56,7 +55,7 @@ void voirCredit(){
     system("cls");
 }
 
-void choisirNiveau(int mdp){
+int choisirNiveau(int mdp){
     system("cls");
     sleep_ms(100);
     cadre(40,6);
@@ -130,20 +129,19 @@ menu:
             kps.k=none;
             switch (choix) {
                 case 0:
-                    break;
+                    return 0; 
                 case 1:
                 int mdp=0;
                 choisirNiveau(mdp);
-                switch (mdp)
-                    {
+                switch (mdp) {
                     case 1:
-                        break;
+                        return 1;
                     case 2:
-                        break;
+                        return 2;
                     case 3:
-                        break;
+                        return 3;
                     case 4:
-                        break;
+                        return 4;
                     default:
                         colorPrintf(couleur3,"Ce mot de passe est faux.");
                         sleep_ms(1000);
@@ -162,5 +160,5 @@ menu:
                 case 5:;
             }
         }
-    }while(1);
+    } while(1);
 }
