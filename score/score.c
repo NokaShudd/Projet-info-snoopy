@@ -29,3 +29,8 @@ HANDLE Start_timer(long long * time_left){
             NULL, 0, timer_score, (void *)time_left, 0, NULL
     );
 }
+
+void affichage_vie(int vie_restante){
+    gotoXY(70,10);
+    colorPrintf(newAttr(white,magenta),"%d",vie_restante);
+}

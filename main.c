@@ -44,7 +44,7 @@ int launchGame(int level){
 
     key oldval = none;
 
-    
+    affichage_vie(3);
     Start_timer(&time_left);
 
     while(1) {

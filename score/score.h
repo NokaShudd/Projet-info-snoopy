@@ -7,5 +7,6 @@
 
 
 void* Start_timer(long long *);
+void affichage_vie(int);
 
 #endif //GAME_SCORE_H
