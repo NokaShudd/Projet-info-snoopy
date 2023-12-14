@@ -4,7 +4,9 @@
 #include "..\utils\keysHandler.h"
 #include "..\utils\size.h"
 #include "..\elements\elements.h"
+#include "..\score\score.h"
 
+int vie = 3;
 
 #define max_x  60
 #define max_y  12
@@ -51,21 +53,22 @@ void Movement(value_case def_case[10][20], char k, int* x, int* y/*, int* valeur
                 switch (def_case[*y-2][(*x+3-2)/3].object) {
                     case 0 :
                     case 1 :
-                        break;
+                    case 3 :
+                        goto feur;
                     case 2 :
                         action = MoveWallRight;
-                        //lancer la fonction move wall Right avec x et y
+                        updateElement((*x+3-2)/3,*y-2,def_case,action);
                     case 4 :
                     case 5 :
                     case 6 :
                     case 7 :
                     case 8 :
                     case 9 :
-                    case 10 :
-                        //perte vie
-                        break;
+                        vie = vie - 1;
+                        affichage_vie(vie) ;
+                        goto feur;
                     case 11 :
-                        //conveyor up
+
                     case 12 :
                         //conveyor left
                     case 13 :
@@ -73,7 +76,7 @@ void Movement(value_case def_case[10][20], char k, int* x, int* y/*, int* valeur
                     case 14 :
                         //conveyor right
                     case 16 :
-                        //gagner une vie
+                        //gagne 1 bird
                 }
                 *x=*x+3;
                 valeur = def_case[*y-2][(*x-2)/3].color;
@@ -93,10 +96,11 @@ void Movement(value_case def_case[10][20], char k, int* x, int* y/*, int* valeur
                 switch (def_case[*y+1-2][(*x-2)/3].object) {
                     case 0 :
                     case 1 :
-                        break;
+                    case 3:
+                        goto feur;
                     case 2 :
                         action = MoveWallDown;
-                        //lancer la fonction move wall Right avec x et y
+                        updateElement((*x-2)/3,*y+1-2,def_case,action);
                     case 4 :
                     case 5 :
                     case 6 :
@@ -104,8 +108,9 @@ void Movement(value_case def_case[10][20], char k, int* x, int* y/*, int* valeur
                     case 8 :
                     case 9 :
                     case 10 :
-                        //perte vie
-                        break;
+                        vie = vie - 1;
+                        affichage_vie(vie) ;
+                        goto feur;
                     case 11 :
                         //conveyor up
                     case 12 :
@@ -135,10 +140,11 @@ void Movement(value_case def_case[10][20], char k, int* x, int* y/*, int* valeur
                 switch (def_case[*y-1-2][(*x+3-2)/3].object) {
                     case 0 :
                     case 1 :
-                        break;
+                    case 3:
+                        goto feur;
                     case 2 :
                         action = MoveWallUp;
-                        //lancer la fonction move wall Right avec x et y
+                        updateElement((*x+3-2)/3,*y-1-2,def_case,action);
                     case 4 :
                     case 5 :
                     case 6 :
@@ -146,8 +152,9 @@ void Movement(value_case def_case[10][20], char k, int* x, int* y/*, int* valeur
                     case 8 :
                     case 9 :
                     case 10 :
-                        //perte vie
-                        break;
+                        vie = vie - 1;
+                        affichage_vie(vie) ;
+                        goto feur;
                     case 11 :
                         //conveyor up
                     case 12 :
@@ -177,10 +184,11 @@ void Movement(value_case def_case[10][20], char k, int* x, int* y/*, int* valeur
                 switch (def_case[*y-2][(*x-3-2)/3].object) {
                     case 0 :
                     case 1 :
-                        break;
+                    case 3:
+                        goto feur;
                     case 2 :
                         action = MoveWallLeft;
-                        //lancer la fonction move wall Right avec x et y
+                        updateElement((*x-3-2)/3,*y-2,def_case,action);
                     case 4 :
                     case 5 :
                     case 6 :
@@ -188,8 +196,9 @@ void Movement(value_case def_case[10][20], char k, int* x, int* y/*, int* valeur
                     case 8 :
                     case 9 :
                     case 10 :
-                        //perte vie
-                        break;
+                        vie = vie - 1;
+                        affichage_vie(vie) ;
+                        goto feur;
                     case 11 :
                         //conveyor up
                     case 12 :
@@ -214,7 +223,7 @@ void Movement(value_case def_case[10][20], char k, int* x, int* y/*, int* valeur
                 afficherSnoopy(def_case[*y-2][(*x-2)/3].color);
             }
         }
-
+    feur :
 }
 
 /* recupere valeur de la case puis switch pour chaque différente case (par exemple bloc => il faut le deplacé*/
