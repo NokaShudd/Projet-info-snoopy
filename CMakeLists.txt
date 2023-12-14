@@ -9,6 +9,8 @@ add_executable(
     utils/keysHandler.h utils/keysHandler.c utils/sleep.h utils/sleep.c
     Snoopy/snoopyMovement.c Snoopy/snoopyMovement.h
     elements/elements.c elements/elements.h
-        stockage/save.h
-        stockage/save.c
+    stockage/save.h
+    stockage/save.c
+    menu/mainmenu.c
+    menu/mainmenu.h
 )

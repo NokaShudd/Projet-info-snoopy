@@ -4,9 +4,10 @@
 #include "utils\keysHandler.h"
 #include <unistd.h>
 #include "Snoopy/snoopyMovement.h"
-#include "elements/elements.h"
+#include "elements/elements.h"*
 #include "utils\sleep.h"
 #include "stockage\save.h"
+#include "menu/mainmenu.h"
 
 #define max_x  60
 #define max_y  12
@@ -32,8 +33,9 @@ int main() {
     refresh();
 
     #endif
+    menu();
 
-    int variable = 0;
+    /*int variable = 0;
     int x=2, y=2;
     int valeur = 1;
     int info_mdp =0;
@@ -86,5 +88,5 @@ int main() {
 
     sauve(def_case, x, y);
 
-
+*/
 }

@@ -6,9 +6,9 @@
 #include "../utils/size.h"
 #include "../utils/keysHandler.h"
 
+#define couleur3 newAttr(red, black)
 
 void cadre(int longueur, int largeur){
-    wTxtAtt couleur3 = newAttr(red, black); //haut
 
     for(int i=1; i<longueur; i++){
         gotoXY(i, 0);
@@ -37,22 +37,37 @@ void cadre(int longueur, int largeur){
 void voirCredit(){
     system("cls");
     sleep_ms(100);
-    cadre(40,13);
+    cadre(40,12);
     gotoXY(2, 2);
-    printf("Jeu realise par :\n ");
+    colorPrintf(couleur3,"Jeu realise par :");
     sleep_ms(1000);
+    gotoXY(2, 4);
+    colorPrintf(couleur3,"- Hugo Roure ");
+    sleep_ms(1000);
+    gotoXY(2, 6);
+    colorPrintf(couleur3,"- Pierre Juramie ");
+    sleep_ms(1000);
+    gotoXY(2, 8);
+    colorPrintf(couleur3,"- Otniel 102");
+    sleep_ms(1000);
+    gotoXY(2, 10);
+    colorPrintf(couleur3,"- Nicolas Tremblay");
+    sleep_ms(1000);
+    system("cls");
+}
+
+void choisirNiveau(int mdp){
+    system("cls");
+    sleep_ms(100);
+    cadre(40,6);
     gotoXY(2, 2);
-    printf("- Hugo Roure \n");
-    sleep_ms(1000);
-    gotoXY(2, 2);
-    printf("- Pierre Juramie \n ");
-    sleep_ms(1000);
-    gotoXY(2, 2);
-    printf("- Otniel \n");
-    sleep_ms(1000);
-    gotoXY(2, 2);
-    printf("- Nicolas \n");
-    sleep_ms(1000);
+    colorPrintf(couleur3,"Veuillez rentrer le mot de passe :");
+    gotoXY(2,4);
+    colorPrintf(couleur3, "Mot de Passe:");
+    gotoXY(17, 4);
+    mdp=0;
+    scanf("%d", &mdp);
+    return mdp;
 }
 
 
@@ -62,20 +77,19 @@ int menu() {
     getAsyncKey(&kps);
 
 
-
+menu:
 
 
     int longueur = 45;
-    wTxtAtt couleur = newAttr(red, black);
     system("cls");
     sleep_ms(100);
     gotoXY(0,2);
-    colorPrintf(couleur, "  %c  : Commencer / reprendre une partie \n\n", 0xDB);
-    colorPrintf(couleur, "  %c  : Acceder a un niveau specifique \n\n", 0xDB);
-    colorPrintf(couleur, "  %c  : Voir tes meilleurs scores \n\n", 0xDB);
-    colorPrintf(couleur, "  %c  : Credits \n\n", 0xDB);
-    colorPrintf(couleur, "  %c  : Parametres \n\n", 0xDB);
-    colorPrintf(couleur, "  %c  : Quitter le jeu \n\n", 0xDB);
+    colorPrintf(couleur3, "  %c  : Commencer / reprendre une partie \n\n", 0xDB);
+    colorPrintf(couleur3, "  %c  : Acceder a un niveau specifique \n\n", 0xDB);
+    colorPrintf(couleur3, "  %c  : Voir tes meilleurs scores \n\n", 0xDB);
+    colorPrintf(couleur3, "  %c  : Credits \n\n", 0xDB);
+    colorPrintf(couleur3, "  %c  : Parametres \n\n", 0xDB);
+    colorPrintf(couleur3, "  %c  : Quitter le jeu \n\n", 0xDB);
     cadre(longueur, 14);
 
     int choix=0;
@@ -118,12 +132,30 @@ int menu() {
                 case 0:
                     break;
                 case 1:
+                int mdp=0;
+                choisirNiveau(mdp);
+                switch (mdp)
+                    {
+                    case 1:
+                        break;
+                    case 2:
+                        break;
+                    case 3:
+                        break;
+                    case 4:
+                        break;
+                    default:
+                        colorPrintf(couleur3,"Ce mot de passe est faux.");
+                        sleep_ms(1000);
+                        goto menu;
+                    }
                     break;
+                    mdp=0;
                 case 2:
                     break;
                 case 3:
                     voirCredit();
-                    menu();
+                    goto menu;
                     break;
                 case 4:
                     break;
