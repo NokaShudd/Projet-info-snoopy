@@ -11,6 +11,8 @@ add_executable(
     elements/elements.c elements/elements.h
     stockage/save.h
     stockage/save.c
+    score/score.c
+    score/score.h
     menu/mainmenu.c
     menu/mainmenu.h
 )

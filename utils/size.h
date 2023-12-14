@@ -1,5 +1,5 @@
-#ifndef SIZE
-#define SIZE
+#ifndef SIZESCREEN
+#define SIZESCREEN
 
 int     getSize             (int[2]);
 int     sizeTest            ();

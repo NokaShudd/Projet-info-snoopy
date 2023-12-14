@@ -14,7 +14,7 @@ int couleur_case[10][20];
 
 // structure avec les 3 tableau
 void afficherSnoopy(int valeur){
-    colorPrintf(newAttr(red,valeur), " %c ", 0x03);
+    colorPrintf(newAttr(red, valeur), " %c ", 0x03);
 }
 
 

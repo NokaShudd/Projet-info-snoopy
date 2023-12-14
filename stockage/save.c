@@ -4,23 +4,24 @@
 #include <unistd.h>
 #include "save.h"
 
-void reading(int level, value_case def_case[10][20]) {
+void reading(int level, value_case def_case[10][20],int*X,int *Y, long long * timer) {
     //test partie enregistré sinon lancé sur partie 1
-    char info[11];
+    char info[25];
 
     if (level == 0) {
-        strncpy(info, "data.txt", 11);
+        strncpy(info, "..\\stockage\\data.txt", 25);
     }
     if (level == 1) {
-        strncpy(info, "level1.txt", 11);
+        strncpy(info, "..\\stockage\\level1.txt", 25);
     }
     if (level == 2) {
-        strncpy(info, "level1.txt", 11);
+        strncpy(info, "..\\stockage\\level2.txt", 25);
     }
 
     if (level == 3) {
-        strncpy(info, "level1.txt", 11);
+        strncpy(info, "..\\stockage\\level3.txt", 25);
     }
+
 
     FILE *fptr = fopen(info, "r");
 
@@ -43,6 +44,7 @@ void reading(int level, value_case def_case[10][20]) {
 
     int SnoopX = -1;
     int SnoopY = -1;
+    long long tim = -1;
 
     while (fgets(text, res, fptr)) {
         ind = 0;
@@ -54,9 +56,10 @@ void reading(int level, value_case def_case[10][20]) {
             } else if (letter == ' ' && previous >= 0) {
                 if (text[0] == '#') {
                     if (SnoopX < 0) SnoopX = previous;
-                    else SnoopY = previous;
+                    else if (SnoopY < 0) SnoopY = previous;
+                    else tim = previous; 
                     previous = -1;
-                    if (SnoopY != -1) break;
+                    if (tim != -1) break;
                     continue;
                 }
                 if (ind == 0) {
@@ -74,8 +77,8 @@ void reading(int level, value_case def_case[10][20]) {
                 def_case[pos10][pos20++] = (value_case) {
                         x, y, color, object
                 };
-                x = 0;
-                y = 0;
+                x = 2;
+                y = 2;
                 color = 0;
                 object = 0;
             }
@@ -86,42 +89,28 @@ void reading(int level, value_case def_case[10][20]) {
         }
     }
 
-    printf("Pos is %d %d\n", SnoopX, SnoopY);
 
-    for (int i = 0; i < 2; i++) {
-        for (int a = 0; a < 3; a++) {
-            printf(
-                    "Struct with %d %d %d %d\n",
-                    def_case[i][a].x, def_case[i][a].y, def_case[i][a].color, def_case[i][a].object
-            );
-        }
-    }
+    *X = SnoopX;
+    *Y = SnoopY;
+    *timer = tim;
 }
 
 
-void sauve(value_case def_case[10][20], int x, int y) {
-    FILE* fptr = fopen("data.txt", "w");
-    fputchar(x);
-    fputs(" ", fptr);
-    fputchar(y);
-    fputs("\n",fptr);
+void sauve(value_case def_case[10][20], int x, int y, long long timer) {
+    FILE* fptr = fopen("..\\stockage\\data.txt", "w");
+    fprintf(fptr, "# %d ",x);
+    fprintf(fptr, "%d ",y);
+    fprintf(fptr, "%lld ", timer);
+    fprintf(fptr, "\n");
     for (int i = 0; i < 10; i++) {
         for (int j = 0; j < 20; j++) {
-            fputs(" ", fptr);
-            fputchar(def_case[i][j].x);
-            fputs(" ", fptr);
-            fputchar(def_case[i][j].y);
-            fputs(" ", fptr);
-            fputchar(def_case[i][j].color);
-            fputs(" ", fptr);
-            fputchar(def_case[i][j].object);
-            fputs(" ", fptr);
+            fprintf(fptr, "%d ", def_case[i][j].x);
+            fprintf(fptr, "%d ", def_case[i][j].y);
+            fprintf(fptr, "%d ", def_case[i][j].color);
+            fprintf(fptr, "%d |", def_case[i][j].object);
         }
-        fputs("|", fptr);
-
+        fprintf(fptr, "\n");
     }
-    fputs("\n", fptr);
-
 
     //Close file to save file data
     fclose(fptr);
