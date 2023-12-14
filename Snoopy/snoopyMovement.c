@@ -81,7 +81,7 @@ void Movement(value_case def_case[10][20], char k, int* x, int* y/*, int* valeur
                 *x=*x+3;
                 valeur = def_case[*y-2][(*x-2)/3].color;
                 gotoXY(*x-3, *y);
-                if (valeur != 1) {
+                if (valeur == 1) {
                     colorPrintf(newAttr(2, 2), "   ");
                 }
                 else {
@@ -125,7 +125,7 @@ void Movement(value_case def_case[10][20], char k, int* x, int* y/*, int* valeur
                 *y=*y+1;
                 valeur = def_case[*y-2][(*x-2)/3].color;
                 gotoXY(*x, *y-1);
-                if (valeur != 1) {
+                if (valeur == 1) {
                     colorPrintf(newAttr(2, 2), "   ");
                 }
                 else {
@@ -169,14 +169,14 @@ void Movement(value_case def_case[10][20], char k, int* x, int* y/*, int* valeur
                 *y=*y-1;
                 valeur = def_case[*y-2][(*x-2)/3].color;
                 gotoXY(*x, *y+1);
-                if (valeur != 1) {
+                if (valeur== 1) {
                     colorPrintf(newAttr(2, 2), "   ");
                 }
                 else {
                     colorPrintf(newAttr(1, 1), "   ");
                 }
                 gotoXY(*x, *y);
-                afficherSnoopy(def_case[*y-2][(*x-2)/3].color);
+                afficherSnoopy(def_case[*y-2][(*x-2)/3].color );
             }
         }
         if (k == 'q') {
@@ -213,7 +213,7 @@ void Movement(value_case def_case[10][20], char k, int* x, int* y/*, int* valeur
                 *x = *x - 3;
                 valeur = def_case[*y-2][(*x-2)/3].color;
                 gotoXY(*x+3, *y);
-                if (valeur != 1) {
+                if (valeur == 1) {
                     colorPrintf(newAttr(2, 2), "   ");
                 }
                 else {
