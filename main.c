@@ -10,30 +10,24 @@
 #include "menu/mainmenu.h"
 #include "score\score.h"
 
-#define max_x  60
-#define max_y  12
-#define min_x  0
-#define min_y  1
-
-
-
 int launchGame(int level){
     system("cls");
 
     int variable = 0;
     int x = 2, y = 2;
-    int valeur = 1;
+    // int valeur = 1;
     int info_mdp = 0;
     value_case def_case[10][20];
 
 
-    grille(def_case);
 
     time_t time_left = 120, variable_timer;
 
-    display(def_case);
-
     reading(level, def_case, &x, &y, &time_left);
+
+    grille(def_case);
+
+    display(def_case);
 
     gotoXY(x,y);
     afficherSnoopy(def_case[y-2][(x-2)/3].color);
@@ -53,7 +47,7 @@ int launchGame(int level){
                 kps.shouldStop = 1;
                 break;
             }
-            Movement(def_case, keyToChar(kps.k), &x, &y, &valeur);
+            Movement(def_case, keyToChar(kps.k), &x, &y/*, &valeur*/);
             updateElement(x, y, def_case, None);
             kps.k = none;
         }
@@ -73,8 +67,6 @@ int launchGame(int level){
 int main(){
     int a = menu();
     launchGame(a);
-
-
 
 }
 

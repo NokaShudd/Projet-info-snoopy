@@ -5,7 +5,6 @@
 #include "..\utils\size.h"
 #include "..\elements\elements.h"
 
-int couleur_case[10][20];
 
 #define max_x  60
 #define max_y  12
@@ -19,37 +18,33 @@ void afficherSnoopy(int valeur){
 
 
 void grille(value_case def_case[10][20]){
-    int valeur = 1, variable = 0;
+    int variable = 0;
     value_case toutes_valeur_case;
     for (int i = 0; i < 10; i++) {
         for (int j = 0; j < 20; j+=1) {
-            variable = variable + 2;
+            variable += 2;
             gotoXY(j+variable, i + 2);
-            toutes_valeur_case.color = valeur;
+            // toutes_valeur_case.color = valeur;
             toutes_valeur_case.x = j+variable;
             toutes_valeur_case.y = i+2;
-            def_case[i][j] = toutes_valeur_case;
-            colorPrintf(newAttr(valeur, valeur), "   ");
-            if (valeur == 1  ) {
-                valeur = 2;
-            }
-            else {
-                valeur = 1;
-            }
+            def_case[i][j].x = j+variable;
+            def_case[i][j].y = i+2;
+            colorPrintf(newAttr(white, def_case[i][j].color), "   ");
+          
         }
         variable = 0;
-        if (valeur == 1  ) {
-            valeur = 2;
-        }
-        else {
-            valeur = 1;
-        }
     }
+
+
+
+    
+
 }
 
-void Movement(value_case def_case[10][20], char k, int* x, int* y, int* valeur){  //value_case
+void Movement(value_case def_case[10][20], char k, int* x, int* y/*, int* valeur*/){  //value_case
     // toute les couleur
     //colorPrintf(newAttr(red,black),"%c",k);
+    int valeur = 4;
     int action;
         if (k == 'd'){
             if (*x+3 < max_x) {
@@ -81,16 +76,16 @@ void Movement(value_case def_case[10][20], char k, int* x, int* y, int* valeur){
                         //gagner une vie
                 }
                 *x=*x+3;
-                *valeur = def_case[*y-2][(*x-2)/3].color;
+                valeur = def_case[*y-2][(*x-2)/3].color;
                 gotoXY(*x-3, *y);
-                if (*valeur == 1) {
+                if (valeur != 1) {
                     colorPrintf(newAttr(2, 2), "   ");
                 }
                 else {
                     colorPrintf(newAttr(1, 1), "   ");
                 }
                 gotoXY(*x, *y);
-                afficherSnoopy(*valeur);
+                afficherSnoopy(def_case[*y-2][(*x-2)/3].color);
             }
         }
         if (k == 's'){
@@ -123,16 +118,16 @@ void Movement(value_case def_case[10][20], char k, int* x, int* y, int* valeur){
                         //gagner une vie
                 }
                 *y=*y+1;
-                *valeur = def_case[*y-2][(*x-2)/3].color;
+                valeur = def_case[*y-2][(*x-2)/3].color;
                 gotoXY(*x, *y-1);
-                if (*valeur == 1) {
+                if (valeur != 1) {
                     colorPrintf(newAttr(2, 2), "   ");
                 }
                 else {
                     colorPrintf(newAttr(1, 1), "   ");
                 }
                 gotoXY(*x, *y);
-                afficherSnoopy(*valeur);
+                afficherSnoopy(def_case[*y-2][(*x-2)/3].color);
             }
         }
         if (k == 'z'){
@@ -165,16 +160,16 @@ void Movement(value_case def_case[10][20], char k, int* x, int* y, int* valeur){
                         //gagner une vie
                 }
                 *y=*y-1;
-                *valeur = def_case[*y-2][(*x-2)/3].color;
+                valeur = def_case[*y-2][(*x-2)/3].color;
                 gotoXY(*x, *y+1);
-                if (*valeur == 1) {
+                if (valeur != 1) {
                     colorPrintf(newAttr(2, 2), "   ");
                 }
                 else {
                     colorPrintf(newAttr(1, 1), "   ");
                 }
                 gotoXY(*x, *y);
-                afficherSnoopy(*valeur);
+                afficherSnoopy(def_case[*y-2][(*x-2)/3].color);
             }
         }
         if (k == 'q') {
@@ -207,16 +202,16 @@ void Movement(value_case def_case[10][20], char k, int* x, int* y, int* valeur){
                         //gagner une vie
                 }
                 *x = *x - 3;
-                *valeur = def_case[*y-2][(*x-2)/3].color;
+                valeur = def_case[*y-2][(*x-2)/3].color;
                 gotoXY(*x+3, *y);
-                if (*valeur == 1) {
+                if (valeur != 1) {
                     colorPrintf(newAttr(2, 2), "   ");
                 }
                 else {
                     colorPrintf(newAttr(1, 1), "   ");
                 }
                 gotoXY(*x, *y);
-                afficherSnoopy(*valeur);
+                afficherSnoopy(def_case[*y-2][(*x-2)/3].color);
             }
         }
 

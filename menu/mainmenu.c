@@ -131,7 +131,7 @@ menu:
                 case 0:
                     return 0; 
                 case 1:
-                int mdp=0;
+                int mdp = 0;
                 choisirNiveau(mdp);
                 switch (mdp) {
                     case 1:

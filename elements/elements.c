@@ -90,11 +90,11 @@ void drawElement(int x, int y, int object, int color){
         return;
         
         case BlinkingWall0:
-            colorPrintf(newAttr(blue, color),"%c%c%c", 0xB2, 0xB2, 0xB2);
+            colorPrintf(newAttr(white, color),"%c%c%c", 0xB2, 0xB2, 0xB2);
         return;
 
         case BlinkingWall1:
-            colorPrintf(newAttr(cyan, color),"%c%c%c", 0xB0, 0xB0, 0xB0);
+            colorPrintf(newAttr(white, color),"%c%c%c", 0xB1, 0xB1, 0xB1);
         return;
 
         case BombWall:
@@ -131,18 +131,13 @@ void drawElement(int x, int y, int object, int color){
         return;
         
         case MouvableWall:
-            colorPrintf(newAttr(white, white), " %c ", 0x09);
+            colorPrintf(newAttr(white, white), " %c ", 0xB1);
         return;
 
         
         case Bird:
             colorPrintf(newAttr(yellow, color), " %c ", 0x0F);
         return;
-
-
-
-        default:
-            break;
     }
 }
 
@@ -205,8 +200,7 @@ void changeBlinkState(value_case *grille[10][20]){
             }
             else if ((*grille[i][j]).object == BlinkingWall1) {
                 (*grille[i][j]).object = BlinkingWall0;
-                gotoXY((*grille[i][j]).x, (*grille[i][j]).y);
-                colorPrintf(newAttr(white, white), "   ");
+                drawCase(*grille[i][j]);            
             }
         }
     }
@@ -221,7 +215,7 @@ DWORD WINAPI changeAfterInterval(LPVOID lparam) {
     while (1){
         sleep_ms(500);
         
-        moveBall(geneDef_case);
+        //moveBall(geneDef_case);
 
         if (numb == 3) changeBlinkState(geneDef_case);
 
@@ -247,6 +241,8 @@ HANDLE startIntervals(value_case def_case[10][20]) {
 
 
 void updateElement(int x, int y, value_case def_case[10][20], int action){
+    x = (x - 2) / 3;
+    y-=2;
     if (action == Punch) {
         for (int i = -1; i <= 1; i++) {
             for (int j = -1; j <= 1; j++) {

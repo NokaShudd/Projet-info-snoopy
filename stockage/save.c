@@ -33,8 +33,8 @@ void reading(int level, value_case def_case[10][20],int*X,int *Y, long long * ti
     char letter;
     int previous = -1;
 
-    int x, y;
-    int color, object;
+    int x = 2, y = 2;
+    int color = 3, object = 0;
 
     int ind = 0;
 
@@ -75,12 +75,12 @@ void reading(int level, value_case def_case[10][20],int*X,int *Y, long long * ti
                 previous = -1;
             } else if (letter == '|') {
                 def_case[pos10][pos20++] = (value_case) {
-                        x, y, color, object
+                    x, y, color, object
                 };
                 x = 2;
                 y = 2;
-                color = 0;
-                object = 0;
+                color = 3;
+                object = 10;
             }
         }
         if (text[0] != '#') {
@@ -93,6 +93,9 @@ void reading(int level, value_case def_case[10][20],int*X,int *Y, long long * ti
     *X = SnoopX;
     *Y = SnoopY;
     *timer = tim;
+
+
+
 }
 
 
