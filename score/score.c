@@ -32,5 +32,5 @@ HANDLE Start_timer(long long * time_left){
 
 void affichage_vie(int vie_restante){
     gotoXY(70,10);
-    colorPrintf(newAttr(white,magenta),"%d",vie_restante);
+    colorPrintf(newAttr(white,magenta),"nombre de vie : %d",vie_restante);
 }
