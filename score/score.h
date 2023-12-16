@@ -8,5 +8,6 @@
 
 void* Start_timer(long long *);
 void affichage_vie(int);
+int affichage_oiseau(int);
 
 #endif //GAME_SCORE_H

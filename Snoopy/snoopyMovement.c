@@ -43,7 +43,7 @@ void grille(value_case def_case[10][20]){
 
 }
 
-void Movement(value_case def_case[10][20], char k, int* x, int* y/*, int* valeur*/){  //value_case
+void Movement(value_case def_case[10][20], char k, int* x, int* y/*, int* valeur*/, int * oiseau){  //value_case
     // toute les couleur
     //colorPrintf(newAttr(red,black),"%c",k);
     int valeur = 4;
@@ -76,7 +76,10 @@ void Movement(value_case def_case[10][20], char k, int* x, int* y/*, int* valeur
                     case 14 :
                         //conveyor right
                     case 16 :
-                        //gagne 1 bird
+                        *oiseau += 1;
+                        gotoXY(70,12);
+                        colorPrintf(newAttr(white,magenta),"nombre d'oiseau : %d",*oiseau);
+
                 }
                 *x=*x+3;
                 valeur = def_case[*y-2][(*x-2)/3].color;
@@ -107,7 +110,6 @@ void Movement(value_case def_case[10][20], char k, int* x, int* y/*, int* valeur
                     case 7 :
                     case 8 :
                     case 9 :
-                    case 10 :
                         vie = vie - 1;
                         affichage_vie(vie) ;
                         goto feur;
@@ -120,7 +122,10 @@ void Movement(value_case def_case[10][20], char k, int* x, int* y/*, int* valeur
                     case 14 :
                         //conveyor right
                     case 16 :
-                        //gagner une vie
+                        *oiseau += 1;
+                        gotoXY(70,12);
+                        colorPrintf(newAttr(white,magenta),"nombre d'oiseau : %d",*oiseau);
+
                 }
                 *y=*y+1;
                 valeur = def_case[*y-2][(*x-2)/3].color;
@@ -137,21 +142,20 @@ void Movement(value_case def_case[10][20], char k, int* x, int* y/*, int* valeur
         }
         if (k == 'z'){
             if (*y-1>min_y) {
-                switch (def_case[*y-1-2][(*x+3-2)/3].object) {
+                switch (def_case[*y-1-2][((*x+3-2)/3)-1].object) {
                     case 0 :
                     case 1 :
                     case 3:
                         goto feur;
                     case 2 :
                         action = MoveWallUp;
-                        updateElement((*x+3-2)/3,*y-1-2,def_case,action);
+                        updateElement(((*x+3-2)/3)-1,*y-1-2,def_case,action);
                     case 4 :
                     case 5 :
                     case 6 :
                     case 7 :
                     case 8 :
                     case 9 :
-                    case 10 :
                         vie = vie - 1;
                         affichage_vie(vie) ;
                         goto feur;
@@ -164,7 +168,10 @@ void Movement(value_case def_case[10][20], char k, int* x, int* y/*, int* valeur
                     case 14 :
                         //conveyor right
                     case 16 :
-                        //gagner une vie
+                        *oiseau += 1;
+                        gotoXY(70,12);
+                        colorPrintf(newAttr(white,magenta),"nombre d'oiseau : %d",*oiseau);
+
                 }
                 *y=*y-1;
                 valeur = def_case[*y-2][(*x-2)/3].color;
@@ -195,12 +202,15 @@ void Movement(value_case def_case[10][20], char k, int* x, int* y/*, int* valeur
                     case 7 :
                     case 8 :
                     case 9 :
-                    case 10 :
                         vie = vie - 1;
                         affichage_vie(vie) ;
                         goto feur;
                     case 11 :
-                        //conveyor up
+                        switch (def_case[*y-2-1][(*x-3-2)/3].object){
+                            case 10 :
+                            case 1 :
+
+                        }
                     case 12 :
                         //conveyor left
                     case 13 :
@@ -208,7 +218,10 @@ void Movement(value_case def_case[10][20], char k, int* x, int* y/*, int* valeur
                     case 14 :
                         //conveyor right
                     case 16 :
-                        //gagner une vie
+                        *oiseau += 1;
+                        gotoXY(70,12);
+                        colorPrintf(newAttr(white,magenta),"nombre d'oiseau : %d",*oiseau);
+
                 }
                 *x = *x - 3;
                 valeur = def_case[*y-2][(*x-2)/3].color;

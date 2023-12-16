@@ -13,15 +13,30 @@
 int launchGame(int level){
     system("cls");
 
+
     int variable = 0;
     int x = 2, y = 2;
     // int valeur = 1;
     int info_mdp = 0;
     value_case def_case[10][20];
-
-
+    int oiseau = 0;
 
     time_t time_left = 120, variable_timer;
+
+    kpStruct kps = {none, 0};
+    void* hT = getAsyncKey(&kps);
+
+    key oldval = none;
+
+    if (1 == 0){
+        //gestion victoire
+        start :
+        variable = 0;
+        x = 2, y = 2;
+        oiseau = 0;
+        level += 1;
+        time_left = 120;
+    }
 
     reading(level, def_case, &x, &y, &time_left);
 
@@ -33,11 +48,6 @@ int launchGame(int level){
     afficherSnoopy(def_case[y-2][(x-2)/3].color);
     startIntervals(def_case);
 
-    kpStruct kps = {none, 0};
-    void* hT = getAsyncKey(&kps);
-
-    key oldval = none;
-
     affichage_vie(3);
     Start_timer(&time_left);
 
@@ -45,29 +55,23 @@ int launchGame(int level){
         if (kps.k != none) {
             if (kps.k == p) {
                 kps.shouldStop = 1;
+                sauve(def_case, x, y, time_left);
                 break;
             }
-            Movement(def_case, keyToChar(kps.k), &x, &y/*, &valeur*/);
+            Movement(def_case, keyToChar(kps.k), &x, &y/*, &valeur*/,&oiseau);
             updateElement(x, y, def_case, None);
             kps.k = none;
         }
-
-
-
-        //gestion defaite => supprimer fichier de jeu
-        // remove (data.txt)
-
-
+        if (affichage_oiseau(oiseau)==1){
+            //supprime data.txt
+            goto start;
+        }
     }
     system("cls");
-    sauve(def_case, x, y, time_left);
 }
-
 
 int main(){
     int a = menu();
     launchGame(a);
 
 }
-
-

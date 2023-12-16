@@ -33,4 +33,23 @@ HANDLE Start_timer(long long * time_left){
 void affichage_vie(int vie_restante){
     gotoXY(70,10);
     colorPrintf(newAttr(white,magenta),"nombre de vie : %d",vie_restante);
+    if (vie_restante == 0){
+        system("cls");
+        gotoXY(10,10);
+        printf("game over");
+        sleep_ms(1000);
+        //supprimer le fichier data.txt
+        abort();
+    }
+}
+
+int affichage_oiseau(int oiseau){
+    if (oiseau == 4){
+        system("cls");
+        gotoXY(10,10);
+        printf("Win");
+        sleep_ms(1000);
+        return 1;
+    }
+    return 0;
 }
