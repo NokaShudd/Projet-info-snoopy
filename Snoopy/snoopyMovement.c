@@ -204,14 +204,10 @@ void Movement(value_case def_case[10][20], char k, int* x, int* y/*, int* valeur
                     case 8 :
                     case 9 :
                         vie = vie - 1;
-                        affichage_vie(vie) ;
+                        affichage_vie(vie);
                         goto feur;
                     case 11 :
-                        switch (def_case[*y-2-1][(*x-3-2)/3].object){
-                            case 10 :
-                            case 1 :
 
-                        }
                     case 12 :
                         //conveyor left
                     case 13 :

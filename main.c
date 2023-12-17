@@ -38,7 +38,7 @@ int launchGame(int level){
         time_left = 120;
     }
 
-    FILE * fichier = fopen("stockage\\data.txt", "r+");
+    FILE * fichier = fopen("stockage\\data.txt", "r");
 
     if (fichier == NULL) {
         level = 1;
@@ -69,7 +69,7 @@ int launchGame(int level){
             kps.k = none;
         }
         if (affichage_oiseau(oiseau)==1){
-            //supprime data.txt
+            remove("stockage\\data.txt");
             goto start;
         }
     }
