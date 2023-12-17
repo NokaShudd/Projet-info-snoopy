@@ -46,6 +46,12 @@ void grille(value_case def_case[10][20]){
 void Movement(value_case def_case[10][20], char k, int* x, int* y/*, int* valeur*/, int * oiseau){  //value_case
     // toute les couleur
     //colorPrintf(newAttr(red,black),"%c",k);
+    /*if (def_case[*y-2][(*x+3-2)/3].object == 1){
+        vie = vie -1;
+        affichage_vie(vie);
+        goto feur;
+
+    }*/
     int valeur = 4;
     int action;
         if (k == 'd'){
@@ -68,7 +74,7 @@ void Movement(value_case def_case[10][20], char k, int* x, int* y/*, int* valeur
                         affichage_vie(vie) ;
                         goto feur;
                     case 11 :
-
+                        *y = *y -1;
                     case 12 :
                         //conveyor left
                     case 13 :
@@ -114,7 +120,7 @@ void Movement(value_case def_case[10][20], char k, int* x, int* y/*, int* valeur
                         affichage_vie(vie) ;
                         goto feur;
                     case 11 :
-                        //conveyor up
+                        *y = *y -1;
                     case 12 :
                         //conveyor left
                     case 13 :
@@ -146,6 +152,9 @@ void Movement(value_case def_case[10][20], char k, int* x, int* y/*, int* valeur
                     case 0 :
                     case 1 :
                     case 3:
+                        *oiseau += 1;
+                        gotoXY(70,12);
+                        colorPrintf(newAttr(white,magenta),"nombre d'oiseau : %d",*oiseau);
                         goto feur;
                     case 2 :
                         action = MoveWallUp;
@@ -160,7 +169,7 @@ void Movement(value_case def_case[10][20], char k, int* x, int* y/*, int* valeur
                         affichage_vie(vie) ;
                         goto feur;
                     case 11 :
-                        //conveyor up
+                        *y = *y -1;
                     case 12 :
                         //conveyor left
                     case 13 :
@@ -207,7 +216,7 @@ void Movement(value_case def_case[10][20], char k, int* x, int* y/*, int* valeur
                         affichage_vie(vie);
                         goto feur;
                     case 11 :
-
+                        *y = *y -1;
                     case 12 :
                         //conveyor left
                     case 13 :

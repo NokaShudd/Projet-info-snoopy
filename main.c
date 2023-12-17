@@ -14,6 +14,18 @@ int launchGame(int level){
     system("cls");
 
 
+
+
+
+
+
+    //rajouter stockage vie + oiseau recuperer
+
+
+
+
+
+
     int variable = 0;
     int x = 2, y = 2;
     // int valeur = 1;
@@ -28,22 +40,14 @@ int launchGame(int level){
 
     key oldval = none;
 
-    if (1 == 0){
-        //gestion victoire
-        start :
-        variable = 0;
-        x = 2, y = 2;
-        oiseau = 0;
-        level += 1;
-        time_left = 120;
-    }
-
-    FILE * fichier = fopen("stockage\\data.txt", "r");
-
-    if (fichier == NULL) {
+    FILE *fptr = fopen("..\\stockage\\data.txt", "r");
+    if( fgetc(fptr) == EOF ) {
         level = 1;
     }
-    fclose(fichier);
+    fclose(fptr);
+    start :
+
+
     reading(level, def_case, &x, &y, &time_left);
 
     grille(def_case);
@@ -55,6 +59,8 @@ int launchGame(int level){
     startIntervals(def_case);
 
     affichage_vie(3);
+    gotoXY(70,12);
+    colorPrintf(newAttr(white,magenta),"nombre d'oiseau : %d",oiseau);
     Start_timer(&time_left);
 
     while(1) {
@@ -70,6 +76,11 @@ int launchGame(int level){
         }
         if (affichage_oiseau(oiseau)==1){
             remove("stockage\\data.txt");
+            variable = 0;
+            x = 2, y = 2;
+            oiseau = 0;
+            level += 1;
+            time_left = 120;
             goto start;
         }
     }
