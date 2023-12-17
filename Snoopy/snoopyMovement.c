@@ -173,6 +173,7 @@ void Movement(value_case def_case[10][20], char k, int* x, int* y/*, int* valeur
                         colorPrintf(newAttr(white,magenta),"nombre d'oiseau : %d",*oiseau);
 
                 }
+
                 *y=*y-1;
                 valeur = def_case[*y-2][(*x-2)/3].color;
                 gotoXY(*x, *y+1);

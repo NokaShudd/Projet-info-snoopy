@@ -38,6 +38,12 @@ int launchGame(int level){
         time_left = 120;
     }
 
+    FILE * fichier = fopen("stockage\\data.txt", "r+");
+
+    if (fichier == NULL) {
+        level = 1;
+    }
+    fclose(fichier);
     reading(level, def_case, &x, &y, &time_left);
 
     grille(def_case);
