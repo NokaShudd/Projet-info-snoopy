@@ -320,28 +320,33 @@ void updateElement(int x, int y, value_case def_case[10][20], int action){
 
                 if (def_case[y+i][x+j].object == BrakableWall) {
                     def_case[y+i][x+j].object = Air;
+                    drawCase(def_case[y+1][x+j]);
                 }
             }
             
         }
         
-        return;
     }
     switch (def_case[y][x].object) {
         case Bird:
             def_case[y][x].object = Air;
             break;
         case MouvableWall:
-            if (action == MoveWallUp) {
-                drawElement(def_case[y-1][x].x, def_case[y-1][x].y, Wall, def_case[y-1][x].color);
+            if (action == MoveWallUp && y > 0) { 
+                def_case[y-1][x].object = Wall;
+                drawCase(def_case[y-1][x]);
             } else if (action == MoveWallDown){ 
-                drawElement(def_case[y+1][x].x, def_case[y+1][x].y, Wall, def_case[y+1][x].color);
-            } else if (action == MoveWallRight) {
-                drawElement(def_case[y][x+1].x, def_case[y][x+1].y, Wall, def_case[y][x+1].color);
-            } else {
-                drawElement(def_case[y][x-1].x, def_case[y][x-1].y, Wall, def_case[y][x-1].color);
+                def_case[y+1][x].object = Wall;
+                drawCase(def_case[y+1][x]);
+            } else if (action == MoveWallRight) { 
+                def_case[y+1][x].object = Wall;
+                drawCase(def_case[y][x+1]);
+            } else { 
+                def_case[y+1][x].object = Wall;
+                drawCase(def_case[y][x-1]);
             }
             def_case[y][x].object = Air;
+            // drawCase(def_case[y][x]);
             break;
     }
 };
