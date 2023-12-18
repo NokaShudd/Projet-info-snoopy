@@ -38,7 +38,7 @@ void affichage_vie(int vie_restante){
         gotoXY(10,10);
         printf("game over");
         sleep_ms(1000);
-        remove("..\\stockage\\data.txt");
+        FILE *fptr = fopen("..\\stockage\\data.txt", "w");
         abort();
     }
 }
