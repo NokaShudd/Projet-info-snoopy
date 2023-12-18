@@ -156,9 +156,6 @@ void Movement(value_case def_case[10][20], char k, int* x, int* y/*, int* valeur
                 case 0 :
                 case 1 :
                 case 3:
-                    *oiseau += 1;
-                    gotoXY(70,12);
-                    colorPrintf(newAttr(white,magenta),"nombre d'oiseau : %d",*oiseau);
                     goto feur;
                 case 2 :
                     action = MoveWallUp;
@@ -259,8 +256,13 @@ void Movement(value_case def_case[10][20], char k, int* x, int* y/*, int* valeur
             gotoXY(*x, *y);
             afficherSnoopy(def_case[*y-2][(*x-2)/3].color);
         }
+
     }
     feur :
+    if  (k == " "){
+        action = Punch;
+        updateElement(*x,*y,def_case,action, x, y);
+    }
 }
 
 /* recupere valeur de la case puis switch pour chaque différente case (par exemple bloc => il faut le deplacé*/
