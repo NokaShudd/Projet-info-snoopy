@@ -53,7 +53,7 @@ void reading(int level, value_case def_case[10][20],int*X,int *Y, long long * ti
             if (letter < (char) 58 && letter > (char) 47) {
                 if (previous >= 0) previous = previous * 10 + (int) letter - 48;
                 else previous = (int) letter - 48;
-            } else if (letter == ' ' && previous >= 0) {
+            } else if ((letter == ' '|| letter == '\n') && previous >= 0) {
                 if (text[0] == '#') {
                     if (SnoopX < 0) SnoopX = previous;
                     else if (SnoopY < 0) SnoopY = previous;
