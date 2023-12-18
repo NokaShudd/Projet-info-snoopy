@@ -7,6 +7,7 @@
 
 
 value_case *geneDef_case[10][20];
+int *snoopx, *snoopy;
 
 int setBallDirection(value_case *grille[10][20], int x, int y, int iteration) {
     if (iteration == 5) return Ball4;
@@ -155,7 +156,7 @@ void drawCase(value_case kase){
     );
 }
 
-void moveBall(value_case *grille[10][20]){
+void moveBall(value_case *grille[10][20], int snoopx, int snoopy){
     int xBuffer[200];
     int yBuffer[200];
     int numbPair = 0;
@@ -173,27 +174,27 @@ void moveBall(value_case *grille[10][20]){
 
 
     for (int i = 0; i < numbPair; i++) {
-        int a = setBallDirection(grille, xBuffer[i], yBuffer[i], 1);
-        switch (a) {
+        switch (setBallDirection(grille, xBuffer[i], yBuffer[i], 1)) {
             case Ball0:
                 grille[yBuffer[i]-1][xBuffer[i]-1]->object = Ball0;
                 drawCase(*grille[yBuffer[i]-1][xBuffer[i]-1]);
-                break;
+            break;
             case Ball1:
                 grille[yBuffer[i]+1][xBuffer[i]-1]->object = Ball1;
                 drawCase(*grille[yBuffer[i]+1][xBuffer[i]-1]);
-                break;
+            break;
             case Ball2:
                 grille[yBuffer[i]+1][xBuffer[i]+1]->object = Ball2;
                 drawCase(*grille[yBuffer[i]+1][xBuffer[i]+1]);
-                break;
+            break;
             case Ball3:
                 grille[yBuffer[i]-1][xBuffer[i]+1]->object = Ball3;
                 drawCase(*grille[yBuffer[i]-1][xBuffer[i]+1]);
-                break;
+            break;
         }
         if (grille[yBuffer[i]][xBuffer[i]]->object != Ball4) {
             grille[yBuffer[i]][xBuffer[i]]->object = Air;
+            if (snoopx == xBuffer[i] * 3 + 2 && snoopy == yBuffer[i] + 2)
             drawCase(*grille[yBuffer[i]][xBuffer[i]]);
         }
     }
@@ -226,7 +227,7 @@ DWORD WINAPI changeAfterInterval(LPVOID lparam) {
     while (1){
         sleep_ms(500);
 
-        moveBall(geneDef_case);
+        moveBall(geneDef_case, &snoopx, &snoopy);
 
         if (numb == 3) changeBlinkState(geneDef_case);
 
@@ -237,7 +238,8 @@ DWORD WINAPI changeAfterInterval(LPVOID lparam) {
 }
 
 
-HANDLE startIntervals(value_case def_case[10][20]) {
+HANDLE startIntervals(value_case def_case[10][20], int* x, int* y) {
+    snoopx = x; snoopy = y;
     for (int i = 0; i < 10; i++) {
         for (int j = 0; j < 20; j++) {
             geneDef_case[i][j] = &def_case[i][j]; 
@@ -253,7 +255,7 @@ HANDLE startIntervals(value_case def_case[10][20]) {
 
 void updateElement(int x, int y, value_case def_case[10][20], int action){
     x = (x - 2) / 3;
-    y-=2;
+    y -= 2;
     if (action == Punch) {
         for (int i = -1; i <= 1; i++) {
             for (int j = -1; j <= 1; j++) {
