@@ -214,10 +214,8 @@ void Movement(value_case def_case[10][20], char k, int* x, int* y/*, int* valeur
                 case 2 :
                     action = MoveWallLeft;
                     updateElement((*x-2)/3-1,*y-2,def_case,action, x, y);
+                    
                     goto feur;
-
-                    break;
-
                 case 4 :
                 case 5 :
                 case 6 :
