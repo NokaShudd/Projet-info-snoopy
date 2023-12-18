@@ -10,73 +10,75 @@ value_case *geneDef_case[10][20];
 
 int setBallDirection(value_case *grille[10][20], int x, int y){
     if (
-        (*grille[y][x-1]).object < 10 && 
-        (*grille[y][x+1]).object < 10 && 
-        (*grille[y-1][x]).object < 10 && 
-        (*grille[y+1][x]).object < 10 
+        grille[y][x-1]->object < 10 && 
+        grille[y][x+1]->object < 10 && 
+        grille[y-1][x]->object < 10 && 
+        grille[y+1][x]->object < 10 
         ){
-        (*grille[y][x]).object = Ball4;
-        return 0;
+        grille[y][x]->object = Ball4;
+        return Ball4;
     }
-    switch ((*grille[y][x]).object) {
+    switch (grille[y][x]->object) {
         case Ball0:
-            if (x == 0 || (*grille[y][x-1]).object < 10) {
-                (*grille[y][x]).object = Ball3;
+            if (x == 0 || grille[y][x-1]->object < 10) {
+                grille[y][x]->object = Ball3;
                 return setBallDirection(grille, x, y);
             } 
-            if (y == 0 || (*grille[y-1][x]).object < 10){
-                (*grille[y][x]).object = Ball1;
+            if (y == 0 || grille[y-1][x]->object < 10){
+                grille[y][x]->object = Ball1;
                 return setBallDirection(grille, x, y);
             }
-            if ((*grille[y-1][x-1]).object < 10) {
-                (*grille[y][x]).object = Ball2;
+            if (grille[y-1][x-1]->object < 10) {
+                grille[y][x]->object = Ball2;
+                return Ball2;
             }
-            break;
+        break;
+        
         case Ball1:
-            if (x == 0 || (*grille[y][x-1]).object < 10) {
-                (*grille[y][x]).object = Ball2;
+            if (x == 0 || grille[y][x-1]->object < 10) {
+                grille[y][x]->object = Ball2;
                 return setBallDirection(grille, x, y);
             } 
-            if (y == 9 || (*grille[y+1][x]).object < 10){
-                (*grille[y][x]).object = Ball0;
+            if (y == 9 || grille[y+1][x]->object < 10){
+                grille[y][x]->object = Ball0;
                 return setBallDirection(grille, x, y);
             }
-            if ((*grille[y+1][x-1]).object < 10) {
-                (*grille[y][x]).object = Ball3;
+            if (grille[y+1][x-1]->object < 10) {
+                grille[y][x]->object = Ball3;
+                return Ball3;
             }
-            break;
+        break;
             
         case Ball2:
-            if (x == 19 || (*grille[y][x+1]).object < 10) {
-                (*grille[y][x]).object = Ball1;
+            if (x == 19 || grille[y][x+1]->object < 10) {
+                grille[y][x]->object = Ball1;
                 return setBallDirection(grille, x, y);
             } 
-            if (y == 9 || (*grille[y+1][x]).object < 10){
-                (*grille[y][x]).object = Ball3;
+            if (y == 9 || grille[y+1][x]->object < 10){
+                grille[y][x]->object = Ball3;
                 return setBallDirection(grille, x, y);
             }
             
-            if ((*grille[y+1][x+1]).object < 10) {
-                (*grille[y][x]).object = Ball0;
+            if (grille[y+1][x+1]->object < 10) {
+                grille[y][x]->object = Ball0;
+                return Ball0;
             }
-            break;
+        break;
             
         case Ball3:
-            if (x == 19 || (*grille[y][x+1]).object < 10) {
-                (*grille[y][x]).object = Ball0;
+            if (x == 19 || grille[y][x+1]->object < 10) {
+                grille[y][x]->object = Ball0;
                 return setBallDirection(grille, x, y);
             } 
-            if (y == 0 || (*grille[y-1][x]).object < 10){
-                (*grille[y][x]).object = Ball2;
+            if (y == 0 || grille[y-1][x]->object < 10){
+                grille[y][x]->object = Ball2;
                 return setBallDirection(grille, x, y);
             }
-            if ((*grille[y-1][x+1]).object < 10) {
-                (*grille[y][x]).object = Ball1;
+            if (grille[y-1][x+1]->object < 10) {
+                grille[y][x]->object = Ball1;
+                return Ball1;
             }
-            break;
-        
-        default:
-            break;
+        break;
     }
 }
 
@@ -153,37 +155,40 @@ void moveBall(value_case *grille[10][20]){
     int yBuffer[200];
     int numbPair = 0;
 
+
     for (int i = 0; i < 10; i++) {
         for (int j = 0; j < 20; j++) {
-            if ((*grille[i][j]).object > 4 && (*grille[i][j]).object < 10) {
-                xBuffer[numbPair]   = (*grille[i][j]).x;
-                yBuffer[numbPair++] = (*grille[i][j]).y;
+            if (grille[i][j]->object > 4 && grille[i][j]->object < 10) {
+                xBuffer[numbPair]   = j;
+                yBuffer[numbPair++] = i;
             }
         }
         
     }
 
+
     for (int i = 0; i < numbPair; i++) {
-        setBallDirection(grille, xBuffer[i], yBuffer[i]);
-        switch ((*grille[yBuffer[i]][xBuffer[i]]).object) {
+        int a = setBallDirection(grille, xBuffer[i] * 3 + 2, yBuffer[i] + 2);
+        printf("%d", a);
+        switch (grille[yBuffer[i]][xBuffer[i]]->object) {
             case Ball0:
-                (*grille[yBuffer[i]-1][xBuffer[i]-1]).object = Ball0;
+                grille[yBuffer[i]-1][xBuffer[i]-1]->object = Ball0;
                 drawCase(*grille[yBuffer[i]-1][xBuffer[i]-1]);
                 break;
             case Ball1:
-                (*grille[yBuffer[i]+1][xBuffer[i]-1]).object = Ball1;
+                grille[yBuffer[i]+1][xBuffer[i]-1]->object = Ball1;
                 drawCase(*grille[yBuffer[i]+1][xBuffer[i]-1]);
                 break;
             case Ball2:
-                (*grille[yBuffer[i]+1][xBuffer[i]+1]).object = Ball2;
+                grille[yBuffer[i]+1][xBuffer[i]+1]->object = Ball2;
                 drawCase(*grille[yBuffer[i]+1][xBuffer[i]+1]);
                 break;
             case Ball3:
-                (*grille[yBuffer[i]-1][xBuffer[i]+1]).object = Ball3;
+                grille[yBuffer[i]-1][xBuffer[i]+1]->object = Ball3;
                 drawCase(*grille[yBuffer[i]-1][xBuffer[i]+1]);
                 break;
         }
-        if ((*grille[yBuffer[i]][xBuffer[i]]).object != Ball4) (*grille[yBuffer[i]][xBuffer[i]]).object = Air;
+        if (grille[yBuffer[i]][xBuffer[i]]->object != Ball4) grille[yBuffer[i]][xBuffer[i]]->object = Air;
         drawCase(*grille[yBuffer[i]][xBuffer[i]]);
     }
     
@@ -214,8 +219,8 @@ DWORD WINAPI changeAfterInterval(LPVOID lparam) {
 
     while (1){
         sleep_ms(500);
-        
-        //moveBall(geneDef_case);
+
+        moveBall(geneDef_case);
 
         if (numb == 3) changeBlinkState(geneDef_case);
 
