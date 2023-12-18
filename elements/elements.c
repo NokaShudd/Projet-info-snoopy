@@ -305,10 +305,30 @@ void onConvoyer(int* x, int* y){
     }
 }
 
-void updateElement(int x, int y, value_case def_case[10][20], int* action, int* snoopx, int* snoopy) {
-    // int x = (X - 2) / 3;
-    // int y = Y - 2;
-    // gotoXY(x, y);
+void updateElement(int x, int y, value_case def_case[10][20], int action, int* snoopx, int* snoopy) {
+    
+    if (action == Punch) {
+        for (int i = -1; i <= 1; i++) {
+            for (int j = -1; j <= 1; j++) {
+                if (y+i < 0)    continue;
+                if (y+i >= 10)  continue;
+                if (x+j < 0)    continue;
+                if (x+j >= 20)  continue;
+
+                if (def_case[y+i][x+j].object == BrakableWall) {
+                    def_case[y+i][x+j].object = Air;
+                    drawElement(
+                        def_case[y+i][x+j].x,
+                        def_case[y+i][x+j].y,
+                        Air,
+                        def_case[y+i][x+j].color
+                    );
+                }
+            }
+            
+        }
+        
+    }
 
     switch (def_case[y][x].object) {
         case Bird:
@@ -317,7 +337,7 @@ void updateElement(int x, int y, value_case def_case[10][20], int* action, int* 
 
             break;
         case MouvableWall:
-            if (*action == MoveWallUp && y > 0 && geneDef_case[y-1][x].object >= 5) { 
+            if (action == MoveWallUp && y > 0 && geneDef_case[y-1][x].object >= 5) { 
                 def_case[y-1][x].object = Wall;
                 drawCase(def_case[y-1][x]);
                 def_case[y][x].object = Air;
@@ -326,7 +346,7 @@ void updateElement(int x, int y, value_case def_case[10][20], int* action, int* 
                 *snoopy--;
                 afficherSnoopy(def_case[y][x].color);
             } 
-            if (*action == MoveWallDown && y < 9 && geneDef_case[y+1][x].object >= 5){ 
+            if (action == MoveWallDown && y < 9 && geneDef_case[y+1][x].object >= 5){ 
                 def_case[y+1][x].object = Wall;
                 drawCase(def_case[y+1][x]);
                 def_case[y][x].object = Air;
@@ -335,7 +355,7 @@ void updateElement(int x, int y, value_case def_case[10][20], int* action, int* 
                 gotoXY(def_case[y][x].x, def_case[y][x].y);
                 afficherSnoopy(def_case[y][x].color);
             } 
-            if (*action == MoveWallRight && x < 19 && geneDef_case[y][x+1].object >= 5) { 
+            if (action == MoveWallRight && x < 19 && geneDef_case[y][x+1].object >= 5) { 
                 def_case[y][x+1].object = Wall;
                 drawCase(def_case[y][x+1]);
                 def_case[y][x].object = Air;
@@ -344,7 +364,7 @@ void updateElement(int x, int y, value_case def_case[10][20], int* action, int* 
                 gotoXY(def_case[y][x].x, def_case[y][x].y);
                 afficherSnoopy(def_case[y][x].color);
             } 
-            if (*action == MoveWallLeft && x > 0 && geneDef_case[y][x-1].object >= 5) { 
+            if (action == MoveWallLeft && x > 0 && geneDef_case[y][x-1].object >= 5) { 
                 def_case[y][x-1].object = Wall;
                 drawCase(def_case[y][x-1]);
                 def_case[y][x].object = Air;

@@ -57,7 +57,7 @@ void Movement(value_case def_case[10][20], char k, int* x, int* y/*, int* valeur
                     goto feur;
                 case 2 :
                     action = MoveWallRight;
-                    updateElement((*x-2)/3+1,*y-2,def_case,&action, x, y);
+                    updateElement((*x-2)/3+1,*y-2,def_case,action, x, y);
                     goto feur;
                     break;
                 case 4 :
@@ -109,7 +109,7 @@ void Movement(value_case def_case[10][20], char k, int* x, int* y/*, int* valeur
                 case 2 :
                     action = MoveWallDown;
                     // printf("%d", action);
-                    updateElement((*x-2)/3, *y+1-2, def_case, &action, x, y);
+                    updateElement((*x-2)/3, *y+1-2, def_case, action, x, y);
                     goto feur;
                 case 4 :
                 case 5 :
@@ -159,7 +159,7 @@ void Movement(value_case def_case[10][20], char k, int* x, int* y/*, int* valeur
                     goto feur;
                 case 2 :
                     action = MoveWallUp;
-                    updateElement(((*x-2)/3),*y-1-2,def_case,&action, x, y);
+                    updateElement(((*x-2)/3),*y-1-2,def_case, action, x, y);
                     goto feur;
 
                     break;
@@ -213,7 +213,7 @@ void Movement(value_case def_case[10][20], char k, int* x, int* y/*, int* valeur
                     goto feur;
                 case 2 :
                     action = MoveWallLeft;
-                    updateElement((*x-2)/3-1,*y-2,def_case,&action, x, y);
+                    updateElement((*x-2)/3-1,*y-2,def_case,action, x, y);
                     goto feur;
 
                     break;
@@ -259,9 +259,9 @@ void Movement(value_case def_case[10][20], char k, int* x, int* y/*, int* valeur
 
     }
     feur :
-    if  (k == " "){
+    if  (k == ' '){
         action = Punch;
-        updateElement(*x,*y,def_case,action, x, y);
+        updateElement((*x - 2) / 3,*y - 2,def_case, action, x, y);
     }
 }
 
