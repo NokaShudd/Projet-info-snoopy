@@ -255,6 +255,10 @@ void Movement(value_case def_case[10][20], char k, int* x, int* y/*, int* valeur
 
     }
     feur :
+    if  (k == " "){
+        action = Punch;
+        updateElement(*x,*y,def_case,action);
+    }
 }
 
 /* recupere valeur de la case puis switch pour chaque différente case (par exemple bloc => il faut le deplacé*/

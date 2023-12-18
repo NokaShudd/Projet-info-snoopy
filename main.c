@@ -50,7 +50,7 @@ int launchGame(int level){
 
     Start_timer(&time_left);
 
-    switch (info_mdp) {
+    switch (level) {
         case 2:
             level = 2;
             break;
