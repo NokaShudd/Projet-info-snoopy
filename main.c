@@ -50,8 +50,19 @@ int launchGame(int level){
 
     Start_timer(&time_left);
 
-    start :
+    switch (info_mdp) {
+        case 2:
+            level = 2;
+            break;
+        case 3:
+            level = 3;
+            break;
+        case 4 :
+            level = 4;
+            break;
+    }
 
+    start :
 
     reading(level, def_case, &x, &y, &time_left);
 
@@ -103,7 +114,7 @@ int launchGame(int level){
         if (time_left==0){
             FILE *fptr = fopen("..\\stockage\\data.txt", "w");
             fclose(fptr);
-            colorPrintf(newAttr(black,black),"");
+            colorPrintf(newAttr(black,black)," ");
             system("cls");
             gotoXY(10,10);
             printf("Game Over");

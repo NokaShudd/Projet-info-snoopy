@@ -211,7 +211,7 @@ void changeBlinkState(value_case *grille[10][20]){
 DWORD WINAPI changeAfterInterval(LPVOID lparam) {
     int numb = 0;
 
-    sleep_ms(14);
+    sleep_ms(800);
 
 
     while (1){

@@ -62,6 +62,7 @@ void Movement(value_case def_case[10][20], char k, int* x, int* y/*, int* valeur
                 case 2 :
                     action = MoveWallRight;
                     updateElement((*x+3-2)/3,*y-2,def_case,action);
+                    break;
                 case 4 :
                 case 5 :
                 case 6 :
@@ -111,6 +112,7 @@ void Movement(value_case def_case[10][20], char k, int* x, int* y/*, int* valeur
                 case 2 :
                     action = MoveWallDown;
                     updateElement((*x-2)/3,*y+1-2,def_case,action);
+                    break;
                 case 4 :
                 case 5 :
                 case 6 :
@@ -156,13 +158,11 @@ void Movement(value_case def_case[10][20], char k, int* x, int* y/*, int* valeur
                 case 0 :
                 case 1 :
                 case 3:
-                    *oiseau += 1;
-                    gotoXY(70,12);
-                    colorPrintf(newAttr(white,magenta),"nombre d'oiseau : %d",*oiseau);
                     goto feur;
                 case 2 :
                     action = MoveWallUp;
                     updateElement(((*x+3-2)/3)-1,*y-1-2,def_case,action);
+                    break;
                 case 4 :
                 case 5 :
                 case 6 :
@@ -213,6 +213,7 @@ void Movement(value_case def_case[10][20], char k, int* x, int* y/*, int* valeur
                 case 2 :
                     action = MoveWallLeft;
                     updateElement((*x-3-2)/3,*y-2,def_case,action);
+                    break;
                 case 4 :
                 case 5 :
                 case 6 :
@@ -251,6 +252,7 @@ void Movement(value_case def_case[10][20], char k, int* x, int* y/*, int* valeur
             gotoXY(*x, *y);
             afficherSnoopy(def_case[*y-2][(*x-2)/3].color);
         }
+
     }
     feur :
 }
