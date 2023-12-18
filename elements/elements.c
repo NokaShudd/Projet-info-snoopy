@@ -186,6 +186,7 @@ void moveBall(value_case grille[10][20], int snoopx, int snoopy){
                 stillDef_case[yBuffer[i]][xBuffer[i]].object,
                 grille[yBuffer[i]][xBuffer[i]].color
             );
+            drawCase(grille[yBuffer[i]][xBuffer[i]]);
         }
     }
     
@@ -211,15 +212,13 @@ void changeBlinkState(value_case *grille[10][20]){
 DWORD WINAPI changeAfterInterval(LPVOID lparam) {
     int numb = 0;
 
-    sleep_ms(14);
+    sleep_ms(65);
 
 
     while (1){
         sleep_ms(500);
 
         moveBall(geneDef_case, *snoopx, *snoopy);
-
-        // if (numb == 3) changeBlinkState(&geneDef_case);
 
         numb = ++numb % 4;
     }
@@ -250,7 +249,7 @@ void onConvoyer(int* x, int* y){
     gotoXY(*x, *y);
     afficherSnoopy(stillDef_case[*y-2][(*x-2)/3].color);
     drawCase(stillDef_case[*y-2][(*x-2)/3]);
-    sleep_ms(100);
+    sleep_ms(500);
     switch (stillDef_case[*y-2][(*x-2)/3].object) {
         case ConveyorBeltUp:
             *y++;
@@ -306,11 +305,67 @@ void onConvoyer(int* x, int* y){
     }
 }
 
+void updateElement(int x, int y, value_case def_case[10][20], int* action, int* snoopx, int* snoopy) {
+    // int x = (X - 2) / 3;
+    // int y = Y - 2;
+    // gotoXY(x, y);
 
-void updateElement(int x, int y, value_case def_case[10][20], int action){
-    x = (x - 2) / 3;
-    y -= 2;
-    if (action == Punch) {
+    switch (def_case[y][x].object) {
+        case Bird:
+            def_case[y][x].object = Air;
+            drawCase(def_case[y][x]);
+
+            break;
+        case MouvableWall:
+            if (*action == MoveWallUp && y > 0 && geneDef_case[y-1][x].object >= 5) { 
+                def_case[y-1][x].object = Wall;
+                drawCase(def_case[y-1][x]);
+                def_case[y][x].object = Air;
+                drawCase(def_case[y][x]);
+                gotoXY(def_case[y][x].x, def_case[y][x].y);
+                *snoopy--;
+                afficherSnoopy(def_case[y][x].color);
+            } 
+            if (*action == MoveWallDown && y < 9 && geneDef_case[y+1][x].object >= 5){ 
+                def_case[y+1][x].object = Wall;
+                drawCase(def_case[y+1][x]);
+                def_case[y][x].object = Air;
+                drawCase(def_case[y][x]);
+                *snoopy++;
+                gotoXY(def_case[y][x].x, def_case[y][x].y);
+                afficherSnoopy(def_case[y][x].color);
+            } 
+            if (*action == MoveWallRight && x < 19 && geneDef_case[y][x+1].object >= 5) { 
+                def_case[y][x+1].object = Wall;
+                drawCase(def_case[y][x+1]);
+                def_case[y][x].object = Air;
+                drawCase(def_case[y][x]);
+                *snoopx++;
+                gotoXY(def_case[y][x].x, def_case[y][x].y);
+                afficherSnoopy(def_case[y][x].color);
+            } 
+            if (*action == MoveWallLeft && x > 0 && geneDef_case[y][x-1].object >= 5) { 
+                def_case[y][x-1].object = Wall;
+                drawCase(def_case[y][x-1]);
+                def_case[y][x].object = Air;
+                drawCase(def_case[y][x]);
+                *snoopx--;
+                gotoXY(def_case[y][x].x, def_case[y][x].y);
+                afficherSnoopy(def_case[y][x].color);
+            }
+
+            break;
+        
+        default:
+            break;
+    }
+
+
+}
+/*void updateElement(int X, int Y, value_case def_case[10][20], int* action){
+    int x = (X - 2) / 3;
+    int y = Y - 2;
+    if (*action == Punch) {
         for (int i = -1; i <= 1; i++) {
             for (int j = -1; j <= 1; j++) {
                 if (y+i < 0)    continue;
@@ -332,24 +387,27 @@ void updateElement(int x, int y, value_case def_case[10][20], int action){
             def_case[y][x].object = Air;
             break;
         case MouvableWall:
-            if (action == MoveWallUp && y > 0) { 
+            if (*action == MoveWallUp && !(y < 0 || geneDef_case[y-1][x].object < 5)) { 
                 def_case[y-1][x].object = Wall;
                 drawCase(def_case[y-1][x]);
-            } else if (action == MoveWallDown){ 
+            } 
+            if (*action == MoveWallDown && !(y > 9 || geneDef_case[y+1][x].object < 5)){ 
                 def_case[y+1][x].object = Wall;
                 drawCase(def_case[y+1][x]);
-            } else if (action == MoveWallRight) { 
-                def_case[y+1][x].object = Wall;
+            } 
+            if (*action == MoveWallRight && !(x > 19 || geneDef_case[y][x+1].object < 5)) { 
+                def_case[y][x+1].object = Wall;
                 drawCase(def_case[y][x+1]);
-            } else { 
-                def_case[y+1][x].object = Wall;
+            } 
+            if (*action == MoveWallLeft && !(x < 0 || geneDef_case[y][x-1].object < 5)) { 
+                def_case[y][x-1].object = Wall;
                 drawCase(def_case[y][x-1]);
             }
             def_case[y][x].object = Air;
-            // drawCase(def_case[y][x]);
             break;
     }
-};
+    drawCase(def_case[y][x]);
+};*/
 
 
 void display(value_case grille[10][20]){

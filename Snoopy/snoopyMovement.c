@@ -35,10 +35,6 @@ void grille(value_case def_case[10][20]){
         variable = 0;
     }
 
-
-
-
-
 }
 
 void Movement(value_case def_case[10][20], char k, int* x, int* y/*, int* valeur*/, int * oiseau, int * vie){  //value_case
@@ -51,17 +47,19 @@ void Movement(value_case def_case[10][20], char k, int* x, int* y/*, int* valeur
 
     }*/
     int valeur = 4;
-    int action;
+    int action = 0;
     if (k == 'd'){
         if (*x+3 < max_x) {
-            switch (def_case[*y-2][(*x+3-2)/3].object) {
+            switch (def_case[*y-2][(*x-2)/3+1].object) {
                 case 0 :
                 case 1 :
                 case 3 :
                     goto feur;
                 case 2 :
                     action = MoveWallRight;
-                    updateElement((*x+3-2)/3,*y-2,def_case,action);
+                    updateElement((*x-2)/3+1,*y-2,def_case,&action, x, y);
+                    goto feur;
+                    break;
                 case 4 :
                 case 5 :
                 case 6 :
@@ -110,7 +108,9 @@ void Movement(value_case def_case[10][20], char k, int* x, int* y/*, int* valeur
                     goto feur;
                 case 2 :
                     action = MoveWallDown;
-                    updateElement((*x-2)/3,*y+1-2,def_case,action);
+                    // printf("%d", action);
+                    updateElement((*x-2)/3, *y+1-2, def_case, &action, x, y);
+                    goto feur;
                 case 4 :
                 case 5 :
                 case 6 :
@@ -152,7 +152,7 @@ void Movement(value_case def_case[10][20], char k, int* x, int* y/*, int* valeur
     }
     if (k == 'z'){
         if (*y-1>min_y) {
-            switch (def_case[*y-1-2][((*x+3-2)/3)-1].object) {
+            switch (def_case[*y-1-2][((*x-2)/3)].object) {
                 case 0 :
                 case 1 :
                 case 3:
@@ -162,7 +162,11 @@ void Movement(value_case def_case[10][20], char k, int* x, int* y/*, int* valeur
                     goto feur;
                 case 2 :
                     action = MoveWallUp;
-                    updateElement(((*x+3-2)/3)-1,*y-1-2,def_case,action);
+                    updateElement(((*x-2)/3),*y-1-2,def_case,&action, x, y);
+                    goto feur;
+
+                    break;
+
                 case 4 :
                 case 5 :
                 case 6 :
@@ -205,14 +209,18 @@ void Movement(value_case def_case[10][20], char k, int* x, int* y/*, int* valeur
     }
     if (k == 'q') {
         if (*x-3>min_x) {
-            switch (def_case[*y-2][(*x-3-2)/3].object) {
+            switch (def_case[*y-2][(*x-2)/3-1].object) {
                 case 0 :
                 case 1 :
                 case 3:
                     goto feur;
                 case 2 :
                     action = MoveWallLeft;
-                    updateElement((*x-3-2)/3,*y-2,def_case,action);
+                    updateElement((*x-2)/3-1,*y-2,def_case,&action, x, y);
+                    goto feur;
+
+                    break;
+
                 case 4 :
                 case 5 :
                 case 6 :

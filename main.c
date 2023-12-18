@@ -76,7 +76,7 @@ int launchGame(int level){
                 break;
             }
             Movement(def_case, keyToChar(kps.k), &x, &y/*, &valeur*/,&oiseau, &vie);
-            updateElement(x, y, def_case, None);
+            updateElement(x, y, def_case, None, &x, &y);
             kps.k = none;
         }
         if (affichage_oiseau(oiseau)==1){
