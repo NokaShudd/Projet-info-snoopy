@@ -6,80 +6,63 @@
 #include <windows.h>
 
 
-value_case *geneDef_case[10][20];
+value_case geneDef_case[10][20];
+value_case stillDef_case[10][20];
+int *snoopx, *snoopy;
 
-int setBallDirection(value_case *grille[10][20], int x, int y){
-    if (
-        grille[y][x-1]->object < 10 && 
-        grille[y][x+1]->object < 10 && 
-        grille[y-1][x]->object < 10 && 
-        grille[y+1][x]->object < 10 
-        ){
-        grille[y][x]->object = Ball4;
-        return Ball4;
-    }
-    switch (grille[y][x]->object) {
+int setBallDirection(value_case grille[10][20], int x, int y, int iteration) {
+    if (iteration == 5) return Ball4;
+    switch (grille[y][x].object) {
+        case Ball4 : return Ball4;
         case Ball0:
-            if (x == 0 || grille[y][x-1]->object < 10) {
-                grille[y][x]->object = Ball3;
-                return setBallDirection(grille, x, y);
-            } 
-            if (y == 0 || grille[y-1][x]->object < 10){
-                grille[y][x]->object = Ball1;
-                return setBallDirection(grille, x, y);
+            if (y == 0 ) {
+                grille[y][x].object = Ball1;
+                return setBallDirection(grille, x, y, ++iteration);
             }
-            if (grille[y-1][x-1]->object < 10) {
-                grille[y][x]->object = Ball2;
-                return Ball2;
+            if (x == 0 ) {
+                grille[y][x].object = Ball3;
+                return setBallDirection(grille, x, y, ++iteration);
             }
+            return Ball0;
         break;
         
         case Ball1:
-            if (x == 0 || grille[y][x-1]->object < 10) {
-                grille[y][x]->object = Ball2;
-                return setBallDirection(grille, x, y);
-            } 
-            if (y == 9 || grille[y+1][x]->object < 10){
-                grille[y][x]->object = Ball0;
-                return setBallDirection(grille, x, y);
+            if (y == 9 ) {
+                grille[y][x].object = Ball0;
+                return setBallDirection(grille, x, y, ++iteration);
             }
-            if (grille[y+1][x-1]->object < 10) {
-                grille[y][x]->object = Ball3;
-                return Ball3;
+            if (x == 0 ) {
+                grille[y][x].object = Ball2;
+                return setBallDirection(grille, x, y, ++iteration);
             }
+            return Ball1;
         break;
             
         case Ball2:
-            if (x == 19 || grille[y][x+1]->object < 10) {
-                grille[y][x]->object = Ball1;
-                return setBallDirection(grille, x, y);
-            } 
-            if (y == 9 || grille[y+1][x]->object < 10){
-                grille[y][x]->object = Ball3;
-                return setBallDirection(grille, x, y);
+            if (y == 9 ) {
+                grille[y][x].object = Ball3;
+                return setBallDirection(grille, x, y, ++iteration);
             }
-            
-            if (grille[y+1][x+1]->object < 10) {
-                grille[y][x]->object = Ball0;
-                return Ball0;
+            if (x == 19 ) {
+                grille[y][x].object = Ball1;
+                return setBallDirection(grille, x, y, ++iteration);
             }
+            return Ball2;
         break;
             
         case Ball3:
-            if (x == 19 || grille[y][x+1]->object < 10) {
-                grille[y][x]->object = Ball0;
-                return setBallDirection(grille, x, y);
-            } 
-            if (y == 0 || grille[y-1][x]->object < 10){
-                grille[y][x]->object = Ball2;
-                return setBallDirection(grille, x, y);
+            if (y == 0 ) {
+                grille[y][x].object = Ball2;
+                return setBallDirection(grille, x, y, ++iteration);
             }
-            if (grille[y-1][x+1]->object < 10) {
-                grille[y][x]->object = Ball1;
-                return Ball1;
+            if (x == 19 ) {
+                grille[y][x].object = Ball0;
+                return setBallDirection(grille, x, y, ++iteration);
             }
+            return Ball3;
         break;
     }
+
 }
 
 
@@ -121,19 +104,27 @@ void drawElement(int x, int y, int object, int color){
         return;
 
         case BrakableWall:
-            colorPrintf(newAttr(yellow, color), "%c%c%c", 0xB1, 0xB1, 0xB1);
+            colorPrintf(newAttr(yellow, color), " %c ", 0xB1);
         return;
         
         case Ball0:
+            colorPrintf(newAttr(red, color), " o ");
+            return;
         case Ball1:
+            colorPrintf(newAttr(red, color), " o ");
+            return;
         case Ball2:
+            colorPrintf(newAttr(red, color), " o ");
+            return;
         case Ball3:
+            colorPrintf(newAttr(red, color), " o ");
+            return;
         case Ball4:
             colorPrintf(newAttr(red, color), " o ");
         return;
         
         case MouvableWall:
-            colorPrintf(newAttr(white, white), " %c ", 0xB1);
+            colorPrintf(newAttr(white, white), " %c ", 0xCF);
         return;
 
         
@@ -150,7 +141,7 @@ void drawCase(value_case kase){
     );
 }
 
-void moveBall(value_case *grille[10][20]){
+void moveBall(value_case grille[10][20], int snoopx, int snoopy){
     int xBuffer[200];
     int yBuffer[200];
     int numbPair = 0;
@@ -158,7 +149,7 @@ void moveBall(value_case *grille[10][20]){
 
     for (int i = 0; i < 10; i++) {
         for (int j = 0; j < 20; j++) {
-            if (grille[i][j]->object > 4 && grille[i][j]->object < 10) {
+            if (grille[i][j].object > 4 && grille[i][j].object < 10) {
                 xBuffer[numbPair]   = j;
                 yBuffer[numbPair++] = i;
             }
@@ -168,28 +159,34 @@ void moveBall(value_case *grille[10][20]){
 
 
     for (int i = 0; i < numbPair; i++) {
-        int a = setBallDirection(grille, xBuffer[i] * 3 + 2, yBuffer[i] + 2);
-        printf("%d", a);
-        switch (grille[yBuffer[i]][xBuffer[i]]->object) {
+        switch (setBallDirection(grille, xBuffer[i], yBuffer[i], 1)) {
             case Ball0:
-                grille[yBuffer[i]-1][xBuffer[i]-1]->object = Ball0;
-                drawCase(*grille[yBuffer[i]-1][xBuffer[i]-1]);
-                break;
+                grille[yBuffer[i]-1][xBuffer[i]-1].object = Ball0;
+                drawCase(grille[yBuffer[i]-1][xBuffer[i]-1]);
+            break;
             case Ball1:
-                grille[yBuffer[i]+1][xBuffer[i]-1]->object = Ball1;
-                drawCase(*grille[yBuffer[i]+1][xBuffer[i]-1]);
-                break;
+                grille[yBuffer[i]+1][xBuffer[i]-1].object = Ball1;
+                drawCase(grille[yBuffer[i]+1][xBuffer[i]-1]);
+            break;
             case Ball2:
-                grille[yBuffer[i]+1][xBuffer[i]+1]->object = Ball2;
-                drawCase(*grille[yBuffer[i]+1][xBuffer[i]+1]);
-                break;
+                grille[yBuffer[i]+1][xBuffer[i]+1].object = Ball2;
+                drawCase(grille[yBuffer[i]+1][xBuffer[i]+1]);
+            break;
             case Ball3:
-                grille[yBuffer[i]-1][xBuffer[i]+1]->object = Ball3;
-                drawCase(*grille[yBuffer[i]-1][xBuffer[i]+1]);
-                break;
+                grille[yBuffer[i]-1][xBuffer[i]+1].object = Ball3;
+                drawCase(grille[yBuffer[i]-1][xBuffer[i]+1]);
+            break;
         }
-        if (grille[yBuffer[i]][xBuffer[i]]->object != Ball4) grille[yBuffer[i]][xBuffer[i]]->object = Air;
-        drawCase(*grille[yBuffer[i]][xBuffer[i]]);
+        if (grille[yBuffer[i]][xBuffer[i]].object != Ball4) {
+            grille[yBuffer[i]][xBuffer[i]].object = stillDef_case[yBuffer[i]][xBuffer[i]].object;
+            // if (snoopx == xBuffer[i] * 3 + 2 && snoopy == yBuffer[i] + 2)
+            drawElement(
+                grille[yBuffer[i]][xBuffer[i]].x,
+                grille[yBuffer[i]][xBuffer[i]].y,
+                stillDef_case[yBuffer[i]][xBuffer[i]].object,
+                grille[yBuffer[i]][xBuffer[i]].color
+            );
+        }
     }
     
     
@@ -214,15 +211,15 @@ void changeBlinkState(value_case *grille[10][20]){
 DWORD WINAPI changeAfterInterval(LPVOID lparam) {
     int numb = 0;
 
-    sleep_ms(14);
+    sleep_ms(800);
 
 
     while (1){
         sleep_ms(500);
 
-        moveBall(geneDef_case);
+        moveBall(geneDef_case, *snoopx, *snoopy);
 
-        if (numb == 3) changeBlinkState(geneDef_case);
+        // if (numb == 3) changeBlinkState(&geneDef_case);
 
         numb = ++numb % 4;
     }
@@ -231,10 +228,16 @@ DWORD WINAPI changeAfterInterval(LPVOID lparam) {
 }
 
 
-HANDLE startIntervals(value_case def_case[10][20]) {
+HANDLE startIntervals(value_case def_case[10][20], int* x, int* y) {
+    snoopx = x; snoopy = y;
     for (int i = 0; i < 10; i++) {
         for (int j = 0; j < 20; j++) {
-            geneDef_case[i][j] = &def_case[i][j]; 
+            geneDef_case[i][j] = def_case[i][j];
+            stillDef_case[i][j] = def_case[i][j];
+            
+            if (stillDef_case[i][j].object >= Ball0 || stillDef_case[i][j].object <= Ball4) {
+                stillDef_case[i][j].object = Air; 
+            }
         }
     }
     
@@ -243,11 +246,70 @@ HANDLE startIntervals(value_case def_case[10][20]) {
     );
 }
 
+void onConvoyer(int* x, int* y){
+    gotoXY(*x, *y);
+    afficherSnoopy(stillDef_case[*y-2][(*x-2)/3].color);
+    drawCase(stillDef_case[*y-2][(*x-2)/3]);
+    sleep_ms(100);
+    switch (stillDef_case[*y-2][(*x-2)/3].object) {
+        case ConveyorBeltUp:
+            *y++;
+            gotoXY(*x, *y);            
+            if (stillDef_case[*y-2][(*x-2)/3].object >= ConveyorBeltUp && stillDef_case[*y-2][(*x-2)/3].object <= ConveyorBeltRight) {
+                afficherSnoopy(stillDef_case[*y-2][(*x-2)/3].color);
+                onConvoyer(x, y);
+
+            } else {
+                afficherSnoopy(stillDef_case[*y-2][(*x-2)/3].color);
+                drawCase(stillDef_case[*y-1][(*x-2)/3]);
+            }
+            break;
+        case ConveyorBeltDown:
+            *y--;
+            gotoXY(*x, *y);
+ 
+            if (stillDef_case[*y-2][(*x-2)/3].object >= ConveyorBeltUp && stillDef_case[*y-2][(*x-2)/3].object <= ConveyorBeltRight) {
+                afficherSnoopy(stillDef_case[*y-2][(*x-2)/3].color);
+                onConvoyer(x, y);
+            } else {
+                afficherSnoopy(stillDef_case[*y-2][(*x-2)/3].color);
+                drawCase(stillDef_case[*y-3][(*x-2)/3]);
+            }
+            break;
+        case ConveyorBeltLeft:
+            *x+=3;
+            gotoXY(*x, *y);
+ 
+            if (stillDef_case[*y-2][(*x-2)/3].object >= ConveyorBeltUp && stillDef_case[*y-2][(*x-2)/3].object <= ConveyorBeltRight) {
+                afficherSnoopy(stillDef_case[*y-2][(*x-2)/3].color);
+                onConvoyer(x, y);
+            } else {
+                afficherSnoopy(stillDef_case[*y-2][(*x-2)/3].color);
+                drawCase(stillDef_case[*y-2][(*x+1)/3]);
+                
+            }
+            break;
+        case ConveyorBeltRight:
+ 
+            *x-=3;
+            gotoXY(*x, *y);
+ 
+            if (stillDef_case[*y-2][(*x-2)/3].object >= ConveyorBeltUp && stillDef_case[*y-2][(*x-2)/3].object <= ConveyorBeltRight) {
+                afficherSnoopy(stillDef_case[*y-2][(*x-2)/3].color);
+                onConvoyer(x, y);
+            } else {
+                afficherSnoopy(stillDef_case[*y-2][(*x-2)/3].color);
+                drawCase(stillDef_case[*y-2][(*x-5)/3]);
+            }
+            break;
+        
+    }
+}
 
 
 void updateElement(int x, int y, value_case def_case[10][20], int action){
     x = (x - 2) / 3;
-    y-=2;
+    y -= 2;
     if (action == Punch) {
         for (int i = -1; i <= 1; i++) {
             for (int j = -1; j <= 1; j++) {
@@ -258,28 +320,33 @@ void updateElement(int x, int y, value_case def_case[10][20], int action){
 
                 if (def_case[y+i][x+j].object == BrakableWall) {
                     def_case[y+i][x+j].object = Air;
+                    drawCase(def_case[y+1][x+j]);
                 }
             }
             
         }
         
-        return;
     }
     switch (def_case[y][x].object) {
         case Bird:
             def_case[y][x].object = Air;
             break;
         case MouvableWall:
-            if (action == MoveWallUp) {
-                drawElement(def_case[y-1][x].x, def_case[y-1][x].y, Wall, def_case[y-1][x].color);
+            if (action == MoveWallUp && y > 0) { 
+                def_case[y-1][x].object = Wall;
+                drawCase(def_case[y-1][x]);
             } else if (action == MoveWallDown){ 
-                drawElement(def_case[y+1][x].x, def_case[y+1][x].y, Wall, def_case[y+1][x].color);
-            } else if (action == MoveWallRight) {
-                drawElement(def_case[y][x+1].x, def_case[y][x+1].y, Wall, def_case[y][x+1].color);
-            } else {
-                drawElement(def_case[y][x-1].x, def_case[y][x-1].y, Wall, def_case[y][x-1].color);
+                def_case[y+1][x].object = Wall;
+                drawCase(def_case[y+1][x]);
+            } else if (action == MoveWallRight) { 
+                def_case[y+1][x].object = Wall;
+                drawCase(def_case[y][x+1]);
+            } else { 
+                def_case[y+1][x].object = Wall;
+                drawCase(def_case[y][x-1]);
             }
             def_case[y][x].object = Air;
+            // drawCase(def_case[y][x]);
             break;
     }
 };

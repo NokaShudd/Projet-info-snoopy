@@ -32,6 +32,8 @@ int launchGame(int level){
     int info_mdp = 0;
     value_case def_case[10][20];
     int oiseau = 0;
+    long long score_total = 0 ;
+    int vie = 3;
 
     time_t time_left = 120, variable_timer;
 
@@ -45,8 +47,22 @@ int launchGame(int level){
         level = 1;
     }
     fclose(fptr);
-    start :
 
+    Start_timer(&time_left);
+
+    switch (info_mdp) {
+        case 2:
+            level = 2;
+            break;
+        case 3:
+            level = 3;
+            break;
+        case 4 :
+            level = 4;
+            break;
+    }
+
+    start :
 
     reading(level, def_case, &x, &y, &time_left);
 
@@ -56,12 +72,12 @@ int launchGame(int level){
 
     gotoXY(x,y);
     afficherSnoopy(def_case[y-2][(x-2)/3].color);
-    startIntervals(def_case);
+    startIntervals(def_case, &x, &y);
 
     affichage_vie(3);
     gotoXY(70,12);
     colorPrintf(newAttr(white,magenta),"nombre d'oiseau : %d",oiseau);
-    Start_timer(&time_left);
+
 
     while(1) {
         if (kps.k != none) {
@@ -70,18 +86,40 @@ int launchGame(int level){
                 sauve(def_case, x, y, time_left);
                 break;
             }
-            Movement(def_case, keyToChar(kps.k), &x, &y/*, &valeur*/,&oiseau);
+            Movement(def_case, keyToChar(kps.k), &x, &y/*, &valeur*/,&oiseau, &vie);
             updateElement(x, y, def_case, None);
             kps.k = none;
         }
         if (affichage_oiseau(oiseau)==1){
-            remove("stockage\\data.txt");
+            score_total = score_total + time_left;
+            FILE *fptr = fopen("..\\stockage\\data.txt", "w");
+            fclose(fptr);
+            colorPrintf(newAttr(black,black),"");
+            system("cls");
+            gotoXY(10,10);
+            printf("WIN");
+            gotoXY(10,11);
+            printf("score total : %lld", score_total*100);
+            sleep_ms(1000);
             variable = 0;
             x = 2, y = 2;
             oiseau = 0;
             level += 1;
             time_left = 120;
+            if (level == 4 ){
+                abort();
+            }
             goto start;
+        }
+        if (time_left==0){
+            FILE *fptr = fopen("..\\stockage\\data.txt", "w");
+            fclose(fptr);
+            colorPrintf(newAttr(black,black)," ");
+            system("cls");
+            gotoXY(10,10);
+            printf("Game Over");
+            sleep_ms(1000);
+            abort();
         }
     }
     system("cls");

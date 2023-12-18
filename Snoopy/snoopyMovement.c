@@ -6,8 +6,6 @@
 #include "..\elements\elements.h"
 #include "..\score\score.h"
 
-int vie = 3;
-
 #define max_x  60
 #define max_y  12
 #define min_x  0
@@ -32,18 +30,18 @@ void grille(value_case def_case[10][20]){
             def_case[i][j].x = j+variable;
             def_case[i][j].y = i+2;
             colorPrintf(newAttr(white, def_case[i][j].color), "   ");
-          
+
         }
         variable = 0;
     }
 
 
 
-    
+
 
 }
 
-void Movement(value_case def_case[10][20], char k, int* x, int* y/*, int* valeur*/, int * oiseau){  //value_case
+void Movement(value_case def_case[10][20], char k, int* x, int* y/*, int* valeur*/, int * oiseau, int * vie){  //value_case
     // toute les couleur
     //colorPrintf(newAttr(red,black),"%c",k);
     /*if (def_case[*y-2][(*x+3-2)/3].object == 1){
@@ -54,194 +52,208 @@ void Movement(value_case def_case[10][20], char k, int* x, int* y/*, int* valeur
     }*/
     int valeur = 4;
     int action;
-        if (k == 'd'){
-            if (*x+3 < max_x) {
-                switch (def_case[*y-2][(*x+3-2)/3].object) {
-                    case 0 :
-                    case 1 :
-                    case 3 :
-                        goto feur;
-                    case 2 :
-                        action = MoveWallRight;
-                        updateElement((*x+3-2)/3,*y-2,def_case,action);
-                    case 4 :
-                    case 5 :
-                    case 6 :
-                    case 7 :
-                    case 8 :
-                    case 9 :
-                        vie = vie - 1;
-                        affichage_vie(vie) ;
-                        goto feur;
-                    case 11 :
-                        *y = *y -1;
-                    case 12 :
-                        //conveyor left
-                    case 13 :
-                        //conveyor down
-                    case 14 :
-                        //conveyor right
-                    case 16 :
-                        *oiseau += 1;
-                        gotoXY(70,12);
-                        colorPrintf(newAttr(white,magenta),"nombre d'oiseau : %d",*oiseau);
+    if (k == 'd'){
+        if (*x+3 < max_x) {
+            switch (def_case[*y-2][(*x+3-2)/3].object) {
+                case 0 :
+                case 1 :
+                case 3 :
+                    goto feur;
+                case 2 :
+                    action = MoveWallRight;
+                    updateElement((*x+3-2)/3,*y-2,def_case,action);
+                    break;
+                case 4 :
+                case 5 :
+                case 6 :
+                case 7 :
+                case 8 :
+                case 9 :
+                    *vie = *vie - 1;
+                    affichage_vie(*vie) ;
+                    goto feur;
+                case 11 :
+                    break;
+                case 12 :
+                    break;
+                    //conveyor left
+                case 13 :
+                    break;
+                    //conveyor down
+                case 14 :
+                    break;
+                    //conveyor right
+                case 16 :
+                    *oiseau += 1;
+                    gotoXY(70,12);
+                    colorPrintf(newAttr(white,magenta),"nombre d'oiseau : %d",*oiseau);
 
-                }
-                *x=*x+3;
-                valeur = def_case[*y-2][(*x-2)/3].color;
-                gotoXY(*x-3, *y);
-                if (valeur == 1) {
-                    colorPrintf(newAttr(2, 2), "   ");
-                }
-                else {
-                    colorPrintf(newAttr(1, 1), "   ");
-                }
-                gotoXY(*x, *y);
-                afficherSnoopy(def_case[*y-2][(*x-2)/3].color);
             }
-        }
-        if (k == 's'){
-            if (*y+1<max_y) {
-                switch (def_case[*y+1-2][(*x-2)/3].object) {
-                    case 0 :
-                    case 1 :
-                    case 3:
-                        goto feur;
-                    case 2 :
-                        action = MoveWallDown;
-                        updateElement((*x-2)/3,*y+1-2,def_case,action);
-                    case 4 :
-                    case 5 :
-                    case 6 :
-                    case 7 :
-                    case 8 :
-                    case 9 :
-                        vie = vie - 1;
-                        affichage_vie(vie) ;
-                        goto feur;
-                    case 11 :
-                        *y = *y -1;
-                    case 12 :
-                        //conveyor left
-                    case 13 :
-                        //conveyor down
-                    case 14 :
-                        //conveyor right
-                    case 16 :
-                        *oiseau += 1;
-                        gotoXY(70,12);
-                        colorPrintf(newAttr(white,magenta),"nombre d'oiseau : %d",*oiseau);
-
-                }
-                *y=*y+1;
-                valeur = def_case[*y-2][(*x-2)/3].color;
-                gotoXY(*x, *y-1);
-                if (valeur == 1) {
-                    colorPrintf(newAttr(2, 2), "   ");
-                }
-                else {
-                    colorPrintf(newAttr(1, 1), "   ");
-                }
-                gotoXY(*x, *y);
-                afficherSnoopy(def_case[*y-2][(*x-2)/3].color);
+            *x=*x+3;
+            valeur = def_case[*y-2][(*x-2)/3].color;
+            gotoXY(*x-3, *y);
+            if (valeur == 1) {
+                colorPrintf(newAttr(2, 2), "   ");
             }
-        }
-        if (k == 'z'){
-            if (*y-1>min_y) {
-                switch (def_case[*y-1-2][((*x+3-2)/3)-1].object) {
-                    case 0 :
-                    case 1 :
-                    case 3:
-                        *oiseau += 1;
-                        gotoXY(70,12);
-                        colorPrintf(newAttr(white,magenta),"nombre d'oiseau : %d",*oiseau);
-                        goto feur;
-                    case 2 :
-                        action = MoveWallUp;
-                        updateElement(((*x+3-2)/3)-1,*y-1-2,def_case,action);
-                    case 4 :
-                    case 5 :
-                    case 6 :
-                    case 7 :
-                    case 8 :
-                    case 9 :
-                        vie = vie - 1;
-                        affichage_vie(vie) ;
-                        goto feur;
-                    case 11 :
-                        *y = *y -1;
-                    case 12 :
-                        //conveyor left
-                    case 13 :
-                        //conveyor down
-                    case 14 :
-                        //conveyor right
-                    case 16 :
-                        *oiseau += 1;
-                        gotoXY(70,12);
-                        colorPrintf(newAttr(white,magenta),"nombre d'oiseau : %d",*oiseau);
-
-                }
-
-                *y=*y-1;
-                valeur = def_case[*y-2][(*x-2)/3].color;
-                gotoXY(*x, *y+1);
-                if (valeur== 1) {
-                    colorPrintf(newAttr(2, 2), "   ");
-                }
-                else {
-                    colorPrintf(newAttr(1, 1), "   ");
-                }
-                gotoXY(*x, *y);
-                afficherSnoopy(def_case[*y-2][(*x-2)/3].color );
+            else {
+                colorPrintf(newAttr(1, 1), "   ");
             }
+            gotoXY(*x, *y);
+            afficherSnoopy(def_case[*y-2][(*x-2)/3].color);
         }
-        if (k == 'q') {
-            if (*x-3>min_x) {
-                switch (def_case[*y-2][(*x-3-2)/3].object) {
-                    case 0 :
-                    case 1 :
-                    case 3:
-                        goto feur;
-                    case 2 :
-                        action = MoveWallLeft;
-                        updateElement((*x-3-2)/3,*y-2,def_case,action);
-                    case 4 :
-                    case 5 :
-                    case 6 :
-                    case 7 :
-                    case 8 :
-                    case 9 :
-                        vie = vie - 1;
-                        affichage_vie(vie);
-                        goto feur;
-                    case 11 :
-                        *y = *y -1;
-                    case 12 :
-                        //conveyor left
-                    case 13 :
-                        //conveyor down
-                    case 14 :
-                        //conveyor right
-                    case 16 :
-                        *oiseau += 1;
-                        gotoXY(70,12);
-                        colorPrintf(newAttr(white,magenta),"nombre d'oiseau : %d",*oiseau);
+    }
+    if (k == 's'){
+        if (*y+1<max_y) {
+            switch (def_case[*y+1-2][(*x-2)/3].object) {
+                case 0 :
+                case 1 :
+                case 3:
+                    goto feur;
+                case 2 :
+                    action = MoveWallDown;
+                    updateElement((*x-2)/3,*y+1-2,def_case,action);
+                    break;
+                case 4 :
+                case 5 :
+                case 6 :
+                case 7 :
+                case 8 :
+                case 9 :
+                    *vie = *vie - 1;
+                    affichage_vie(*vie) ;
+                    goto feur;
+                case 11 :
+                    break;
+                case 12 :
+                    break;
+                    //conveyor left
+                case 13 :
+                    break;
+                    //conveyor down
+                case 14 :
+                    break;
+                    //conveyor right
+                case 16 :
+                    *oiseau += 1;
+                    gotoXY(70,12);
+                    colorPrintf(newAttr(white,magenta),"nombre d'oiseau : %d",*oiseau);
 
-                }
-                *x = *x - 3;
-                valeur = def_case[*y-2][(*x-2)/3].color;
-                gotoXY(*x+3, *y);
-                if (valeur == 1) {
-                    colorPrintf(newAttr(2, 2), "   ");
-                }
-                else {
-                    colorPrintf(newAttr(1, 1), "   ");
-                }
-                gotoXY(*x, *y);
-                afficherSnoopy(def_case[*y-2][(*x-2)/3].color);
             }
+            *y=*y+1;
+            valeur = def_case[*y-2][(*x-2)/3].color;
+            gotoXY(*x, *y-1);
+            if (valeur == 1) {
+                colorPrintf(newAttr(2, 2), "   ");
+            }
+            else {
+                colorPrintf(newAttr(1, 1), "   ");
+            }
+            gotoXY(*x, *y);
+            afficherSnoopy(def_case[*y-2][(*x-2)/3].color);
         }
+    }
+    if (k == 'z'){
+        if (*y-1>min_y) {
+            switch (def_case[*y-1-2][((*x+3-2)/3)-1].object) {
+                case 0 :
+                case 1 :
+                case 3:
+                    goto feur;
+                case 2 :
+                    action = MoveWallUp;
+                    updateElement(((*x+3-2)/3)-1,*y-1-2,def_case,action);
+                    break;
+                case 4 :
+                case 5 :
+                case 6 :
+                case 7 :
+                case 8 :
+                case 9 :
+                    *vie = *vie - 1;
+                    affichage_vie(*vie) ;
+                    goto feur;
+                case 11 :
+                    break;
+                case 12 :
+                    break;
+                    //conveyor left
+                case 13 :
+                    break;
+                    //conveyor down
+                case 14 :
+                    break;
+                    //conveyor right
+                case 16 :
+                    *oiseau += 1;
+                    gotoXY(70,12);
+                    colorPrintf(newAttr(white,magenta),"nombre d'oiseau : %d",*oiseau);
+
+            }
+
+            *y=*y-1;
+            valeur = def_case[*y-2][(*x-2)/3].color;
+            gotoXY(*x, *y+1);
+            if (valeur== 1) {
+                colorPrintf(newAttr(2, 2), "   ");
+            }
+            else {
+                colorPrintf(newAttr(1, 1), "   ");
+            }
+            gotoXY(*x, *y);
+            afficherSnoopy(def_case[*y-2][(*x-2)/3].color );
+        }
+    }
+    if (k == 'q') {
+        if (*x-3>min_x) {
+            switch (def_case[*y-2][(*x-3-2)/3].object) {
+                case 0 :
+                case 1 :
+                case 3:
+                    goto feur;
+                case 2 :
+                    action = MoveWallLeft;
+                    updateElement((*x-3-2)/3,*y-2,def_case,action);
+                    break;
+                case 4 :
+                case 5 :
+                case 6 :
+                case 7 :
+                case 8 :
+                case 9 :
+                    *vie = *vie - 1;
+                    affichage_vie(*vie);
+                    goto feur;
+                case 11 :
+                    break;
+                case 12 :
+                    break;
+                    //conveyor left
+                case 13 :
+                    break;
+                    //conveyor down
+                case 14 :
+                    break;
+                    //conveyor right
+                case 16 :
+                    *oiseau += 1;
+                    gotoXY(70,12);
+                    colorPrintf(newAttr(white,magenta),"nombre d'oiseau : %d",*oiseau);
+
+            }
+            *x = *x - 3;
+            valeur = def_case[*y-2][(*x-2)/3].color;
+            gotoXY(*x+3, *y);
+            if (valeur == 1) {
+                colorPrintf(newAttr(2, 2), "   ");
+            }
+            else {
+                colorPrintf(newAttr(1, 1), "   ");
+            }
+            gotoXY(*x, *y);
+            afficherSnoopy(def_case[*y-2][(*x-2)/3].color);
+        }
+
+    }
     feur :
 }
 
