@@ -14,7 +14,7 @@ typedef struct value_case{
 } value_case;
 
 void afficherSnoopy();
-void Movement(value_case[10][20], char k, int*, int*,int *);
+void Movement(value_case[10][20], char k, int*, int*,int *,int *);
 void grille(value_case[10][20]);
 
 
