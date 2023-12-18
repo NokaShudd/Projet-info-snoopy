@@ -8,78 +8,75 @@
 
 value_case *geneDef_case[10][20];
 
-int setBallDirection(value_case *grille[10][20], int x, int y){
-    if (
-        grille[y][x-1]->object < 10 && 
-        grille[y][x+1]->object < 10 && 
-        grille[y-1][x]->object < 10 && 
-        grille[y+1][x]->object < 10 
-        ){
-        grille[y][x]->object = Ball4;
-        return Ball4;
-    }
+int setBallDirection(value_case *grille[10][20], int x, int y, int iteration) {
+    if (iteration == 5) return Ball4;
     switch (grille[y][x]->object) {
+        case Ball4 : return Ball4;
         case Ball0:
-            if (x == 0 || grille[y][x-1]->object < 10) {
-                grille[y][x]->object = Ball3;
-                return setBallDirection(grille, x, y);
-            } 
-            if (y == 0 || grille[y-1][x]->object < 10){
+            if (y == 0 || (grille[y-1][x]->object <= 14 && grille[y-1][x]->object != 10)) {
                 grille[y][x]->object = Ball1;
-                return setBallDirection(grille, x, y);
+                return setBallDirection(grille, x, y, ++iteration);
             }
-            if (grille[y-1][x-1]->object < 10) {
+            if (x == 0 || (grille[y][x-1]->object <= 14 && grille[y][x-1]->object != 10)) {
+                grille[y][x]->object = Ball3;
+                return setBallDirection(grille, x, y, ++iteration);
+            }
+            if (grille[y-1][x-1]->object <= 14 && grille[y-1][x-1]->object != 10) {
                 grille[y][x]->object = Ball2;
                 return Ball2;
             }
+            return Ball0;
         break;
         
         case Ball1:
-            if (x == 0 || grille[y][x-1]->object < 10) {
-                grille[y][x]->object = Ball2;
-                return setBallDirection(grille, x, y);
-            } 
-            if (y == 9 || grille[y+1][x]->object < 10){
+            if (y == 9 || (grille[y+1][x]->object <= 14 && grille[y+1][x]->object != 10)) {
                 grille[y][x]->object = Ball0;
-                return setBallDirection(grille, x, y);
+                return setBallDirection(grille, x, y, ++iteration);
             }
-            if (grille[y+1][x-1]->object < 10) {
+            if (x == 0 || (grille[y][x-1]->object <= 14 && grille[y][x-1]->object != 10)) {
+                grille[y][x]->object = Ball2;
+                return setBallDirection(grille, x, y, ++iteration);
+            }
+            if (grille[y+1][x-1]->object <= 14 && grille[y+1][x-1]->object != 10) {
                 grille[y][x]->object = Ball3;
                 return Ball3;
             }
+            return Ball1;
         break;
             
         case Ball2:
-            if (x == 19 || grille[y][x+1]->object < 10) {
-                grille[y][x]->object = Ball1;
-                return setBallDirection(grille, x, y);
-            } 
-            if (y == 9 || grille[y+1][x]->object < 10){
+            if (y == 9 || (grille[y+1][x]->object <= 14 && grille[y+1][x]->object != 10)) {
                 grille[y][x]->object = Ball3;
-                return setBallDirection(grille, x, y);
+                return setBallDirection(grille, x, y, ++iteration);
             }
-            
-            if (grille[y+1][x+1]->object < 10) {
+            if (x == 19 || (grille[y][x+1]->object <= 14 && grille[y][x+1]->object != 10)) {
+                grille[y][x]->object = Ball1;
+                return setBallDirection(grille, x, y, ++iteration);
+            }
+            if (grille[y+1][x+1]->object <= 14 && grille[y+1][x+1]->object != 10) {
                 grille[y][x]->object = Ball0;
                 return Ball0;
             }
+            return Ball2;
         break;
             
         case Ball3:
-            if (x == 19 || grille[y][x+1]->object < 10) {
-                grille[y][x]->object = Ball0;
-                return setBallDirection(grille, x, y);
-            } 
-            if (y == 0 || grille[y-1][x]->object < 10){
+            if (y == 0 || (grille[y-1][x]->object <= 14 && grille[y-1][x]->object != 10)) {
                 grille[y][x]->object = Ball2;
-                return setBallDirection(grille, x, y);
+                return setBallDirection(grille, x, y, ++iteration);
             }
-            if (grille[y-1][x+1]->object < 10) {
+            if (x == 19 || (grille[y][x+1]->object <= 14 && grille[y][x+1]->object != 10)) {
+                grille[y][x]->object = Ball0;
+                return setBallDirection(grille, x, y, ++iteration);
+            }
+            if (grille[y-1][x+1]->object <= 14 && grille[y-1][x+1]->object != 10) {
                 grille[y][x]->object = Ball1;
                 return Ball1;
             }
+            return Ball3;
         break;
     }
+
 }
 
 
@@ -121,19 +118,27 @@ void drawElement(int x, int y, int object, int color){
         return;
 
         case BrakableWall:
-            colorPrintf(newAttr(yellow, color), "%c%c%c", 0xB1, 0xB1, 0xB1);
+            colorPrintf(newAttr(yellow, color), " %c ", 0xB1);
         return;
         
         case Ball0:
+            colorPrintf(newAttr(red, color), " o ");
+            return;
         case Ball1:
+            colorPrintf(newAttr(red, color), " o ");
+            return;
         case Ball2:
+            colorPrintf(newAttr(red, color), " o ");
+            return;
         case Ball3:
+            colorPrintf(newAttr(red, color), " o ");
+            return;
         case Ball4:
             colorPrintf(newAttr(red, color), " o ");
         return;
         
         case MouvableWall:
-            colorPrintf(newAttr(white, white), " %c ", 0xB1);
+            colorPrintf(newAttr(white, white), " %c ", 0xCF);
         return;
 
         
@@ -168,9 +173,8 @@ void moveBall(value_case *grille[10][20]){
 
 
     for (int i = 0; i < numbPair; i++) {
-        int a = setBallDirection(grille, xBuffer[i] * 3 + 2, yBuffer[i] + 2);
-        printf("%d", a);
-        switch (grille[yBuffer[i]][xBuffer[i]]->object) {
+        int a = setBallDirection(grille, xBuffer[i], yBuffer[i], 1);
+        switch (a) {
             case Ball0:
                 grille[yBuffer[i]-1][xBuffer[i]-1]->object = Ball0;
                 drawCase(*grille[yBuffer[i]-1][xBuffer[i]-1]);
@@ -188,8 +192,10 @@ void moveBall(value_case *grille[10][20]){
                 drawCase(*grille[yBuffer[i]-1][xBuffer[i]+1]);
                 break;
         }
-        if (grille[yBuffer[i]][xBuffer[i]]->object != Ball4) grille[yBuffer[i]][xBuffer[i]]->object = Air;
-        drawCase(*grille[yBuffer[i]][xBuffer[i]]);
+        if (grille[yBuffer[i]][xBuffer[i]]->object != Ball4) {
+            grille[yBuffer[i]][xBuffer[i]]->object = Air;
+            drawCase(*grille[yBuffer[i]][xBuffer[i]]);
+        }
     }
     
     
