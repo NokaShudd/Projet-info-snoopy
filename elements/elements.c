@@ -245,60 +245,67 @@ HANDLE startIntervals(value_case def_case[10][20], int* x, int* y) {
     );
 }
 
-void onConvoyer(int* x, int* y){
+void onConvoyer(int* x, int* y, value_case def_case[10][20]){
     gotoXY(*x, *y);
-    afficherSnoopy(stillDef_case[*y-2][(*x-2)/3].color);
-    drawCase(stillDef_case[*y-2][(*x-2)/3]);
-    sleep_ms(500);
-    switch (stillDef_case[*y-2][(*x-2)/3].object) {
+    afficherSnoopy(def_case[*y-2][(*x-2)/3].color);
+    sleep_ms(900);
+    drawCase(def_case[*y-2][(*x-2)/3]);
+    switch (def_case[*y-2][(*x-2)/3].object) {
         case ConveyorBeltUp:
-            *y++;
-            gotoXY(*x, *y);            
-            if (stillDef_case[*y-2][(*x-2)/3].object >= ConveyorBeltUp && stillDef_case[*y-2][(*x-2)/3].object <= ConveyorBeltRight) {
-                afficherSnoopy(stillDef_case[*y-2][(*x-2)/3].color);
-                onConvoyer(x, y);
+            *y = def_case[*y-3][(*x-2)/3].y;
+            gotoXY(*x, *y);  
+
+                      
+            if (def_case[*y-2][(*x-2)/3].object >= ConveyorBeltUp && def_case[*y-2][(*x-2)/3].object <= ConveyorBeltRight) {
+                afficherSnoopy(def_case[*y-2][(*x-2)/3].color);
+                onConvoyer(x, y, def_case);
 
             } else {
-                afficherSnoopy(stillDef_case[*y-2][(*x-2)/3].color);
-                drawCase(stillDef_case[*y-1][(*x-2)/3]);
+                afficherSnoopy(def_case[*y-2][(*x-2)/3].color);
+                drawCase(def_case[*y-1][(*x-2)/3]);
+                return;
             }
             break;
         case ConveyorBeltDown:
-            *y--;
+            *y = def_case[*y-1][(*x-2)/3].y;
+
             gotoXY(*x, *y);
  
-            if (stillDef_case[*y-2][(*x-2)/3].object >= ConveyorBeltUp && stillDef_case[*y-2][(*x-2)/3].object <= ConveyorBeltRight) {
-                afficherSnoopy(stillDef_case[*y-2][(*x-2)/3].color);
-                onConvoyer(x, y);
+            if (def_case[*y-2][(*x-2)/3].object >= ConveyorBeltUp && def_case[*y-2][(*x-2)/3].object <= ConveyorBeltRight) {
+                onConvoyer(x, y, def_case);
             } else {
-                afficherSnoopy(stillDef_case[*y-2][(*x-2)/3].color);
-                drawCase(stillDef_case[*y-3][(*x-2)/3]);
+                afficherSnoopy(def_case[*y-2][(*x-2)/3].color);
+                drawCase(def_case[*y-3][(*x-2)/3]);
+                return;
             }
             break;
         case ConveyorBeltLeft:
-            *x+=3;
+            *x = def_case[*y-2][(*x-2)/3 + 1].x;
+            
             gotoXY(*x, *y);
  
-            if (stillDef_case[*y-2][(*x-2)/3].object >= ConveyorBeltUp && stillDef_case[*y-2][(*x-2)/3].object <= ConveyorBeltRight) {
-                afficherSnoopy(stillDef_case[*y-2][(*x-2)/3].color);
-                onConvoyer(x, y);
+            if (def_case[*y-2][(*x-2)/3].object >= ConveyorBeltUp && def_case[*y-2][(*x-2)/3].object <= ConveyorBeltRight) {
+                onConvoyer(x, y, def_case);
             } else {
-                afficherSnoopy(stillDef_case[*y-2][(*x-2)/3].color);
-                drawCase(stillDef_case[*y-2][(*x+1)/3]);
+                afficherSnoopy(def_case[*y-2][(*x-2)/3].color);
+                drawCase(def_case[*y-2][(*x-2)/3 - 1]);
+                return;
                 
             }
             break;
         case ConveyorBeltRight:
  
-            *x-=3;
+            *x = def_case[*y-2][(*x-2)/3 - 1].x;
+
             gotoXY(*x, *y);
  
-            if (stillDef_case[*y-2][(*x-2)/3].object >= ConveyorBeltUp && stillDef_case[*y-2][(*x-2)/3].object <= ConveyorBeltRight) {
-                afficherSnoopy(stillDef_case[*y-2][(*x-2)/3].color);
-                onConvoyer(x, y);
+            if (def_case[*y-2][(*x-2)/3].object >= ConveyorBeltUp && def_case[*y-2][(*x-2)/3].object <= ConveyorBeltRight) {
+                afficherSnoopy(def_case[*y-2][(*x-2)/3].color);
+                onConvoyer(x, y, def_case);
             } else {
-                afficherSnoopy(stillDef_case[*y-2][(*x-2)/3].color);
-                drawCase(stillDef_case[*y-2][(*x-5)/3]);
+                afficherSnoopy(def_case[*y-2][(*x-2)/3].color);
+                drawCase(def_case[*y-2][(*x-2)/3 + 1]);
+                return;
             }
             break;
         

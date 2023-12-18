@@ -70,16 +70,17 @@ void Movement(value_case def_case[10][20], char k, int* x, int* y/*, int* valeur
                     affichage_vie(*vie) ;
                     goto feur;
                 case 11 :
-                    break;
                 case 12 :
-                    break;
-                    //conveyor left
                 case 13 :
-                    break;
-                    //conveyor down
                 case 14 :
+                
+                    gotoXY(*x, *y);
+                    colorPrintf(newAttr(2, def_case[*y-2][(*x-2)/3].color), "   ");
+                    *x+=3;
+                    onConvoyer(x, y, def_case);
+                    goto feur;
+                    
                     break;
-                    //conveyor right
                 case 16 :
                     *oiseau += 1;
                     gotoXY(70,12);
@@ -108,7 +109,6 @@ void Movement(value_case def_case[10][20], char k, int* x, int* y/*, int* valeur
                     goto feur;
                 case 2 :
                     action = MoveWallDown;
-                    // printf("%d", action);
                     updateElement((*x-2)/3, *y+1-2, def_case, action, x, y);
                     goto feur;
                 case 4 :
@@ -121,16 +121,16 @@ void Movement(value_case def_case[10][20], char k, int* x, int* y/*, int* valeur
                     affichage_vie(*vie) ;
                     goto feur;
                 case 11 :
-                    break;
                 case 12 :
-                    break;
-                    //conveyor left
                 case 13 :
-                    break;
-                    //conveyor down
                 case 14 :
+                    gotoXY(*x, *y);
+                    colorPrintf(newAttr(2, def_case[*y-2][(*x-2)/3].color), "   ");
+                    *y = *y + 1;
+                    onConvoyer(x, y, def_case);
+                    goto feur;
+                    
                     break;
-                    //conveyor right
                 case 16 :
                     *oiseau += 1;
                     gotoXY(70,12);
@@ -174,16 +174,17 @@ void Movement(value_case def_case[10][20], char k, int* x, int* y/*, int* valeur
                     affichage_vie(*vie) ;
                     goto feur;
                 case 11 :
-                    break;
                 case 12 :
-                    break;
-                    //conveyor left
                 case 13 :
-                    break;
-                    //conveyor down
                 case 14 :
+                
+                    gotoXY(*x, *y);
+                    colorPrintf(newAttr(2, def_case[*y-2][(*x-2)/3].color), "   ");
+                    *y = *y - 1;
+
+                    onConvoyer(x, y, def_case);
+                    goto feur;
                     break;
-                    //conveyor right
                 case 16 :
                     *oiseau += 1;
                     gotoXY(70,12);
@@ -226,16 +227,16 @@ void Movement(value_case def_case[10][20], char k, int* x, int* y/*, int* valeur
                     affichage_vie(*vie);
                     goto feur;
                 case 11 :
-                    break;
                 case 12 :
-                    break;
-                    //conveyor left
                 case 13 :
-                    break;
-                    //conveyor down
                 case 14 :
+                    gotoXY(*x, *y);
+                    colorPrintf(newAttr(2, def_case[*y-2][(*x-2)/3].color), "   ");
+                    *x-=3;
+                    onConvoyer(x, y, def_case);
+                    goto feur;
+                    
                     break;
-                    //conveyor right
                 case 16 :
                     *oiseau += 1;
                     gotoXY(70,12);

@@ -39,6 +39,6 @@ void    updateElement   (int, int, value_case[10][20], int, int*, int*);
 void    display             (value_case[10][20]);
 void*   startIntervals      (value_case[10][20], int*, int*);
 
-void    onConvoyer          (int* ,int*);
+void    onConvoyer          (int* ,int*, value_case[10][20]);
 
 #endif
