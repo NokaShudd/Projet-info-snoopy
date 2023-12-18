@@ -53,7 +53,8 @@ key charToKey(unsigned char letter){
         case 'x' :  return x;         
         case 'y' :  return y;         
         case 'z' :  return z;
-        case '\r':  return enter; 
+        case '\r':  return enter;
+        case ' ' :  return space; 
 
         default:
             return none;
@@ -94,7 +95,8 @@ char keyToChar(key k_){
         case x          :  return 'x';         
         case y          :  return 'y';         
         case z          :  return 'z';
-        case enter      :  return '\n';   
+        case enter      :  return '\n';
+        case space      :  return ' ';
 
         default:
             return ' ';
