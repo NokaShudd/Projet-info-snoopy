@@ -10,6 +10,8 @@
 #include "menu/mainmenu.h"
 #include "score\score.h"
 
+int main();
+
 int launchGame(int level){
     system("cls");
     //rajouter stockage vie + oiseau recuperer
@@ -78,29 +80,29 @@ int launchGame(int level){
 
     
 
-    affichage_vie(3, &time_left);
+    affichage_vie(3, &tpS, &stop);
     gotoXY(70,12);
     colorPrintf(newAttr(white,magenta),"nombre d'oiseau : %d",oiseau);
 
 
     while(1) {
         if (kps.k != none) {
-            stop = 1;
             if (kps.k == p) {
+                stop = 1;
                 kps.shouldStop = 1;
                 long long score = score_total;
                 sauve(def_case, x, y, time_left, (score_total + time_left)*100,vie, level,oiseau);
                 break;
             }
-            Movement(def_case, keyToChar(kps.k), &x, &y, &oiseau, &vie, &time_left);
+            Movement(def_case, keyToChar(kps.k), &x, &y, &oiseau, &vie, &tpS, &stop);
             updateElement(x, y, def_case, None, &x, &y);
             kps.k = none;
         }
         if (affichage_oiseau(oiseau)==1){
-            FILE *fptr = fopen("..\\stockage\\data.txt", "w");
-            score_total = score_total + time_left;
             stop = 1;
+            FILE *fptr = fopen("..\\stockage\\data.txt", "w");
             fclose(fptr);
+            score_total = score_total + time_left;
             colorPrintf(newAttr(black,black),"");
             sleep_ms(100);
             system("cls");
@@ -120,11 +122,12 @@ int launchGame(int level){
             time_left = 120;
             Start_timer(&tpS);
             if (level == 4){
-                abort();
+                main();
             }
             goto start;
         }
         if (time_left==0){
+            tpS.shouldStop = 1;
             stop = 1;
             FILE *fptr = fopen("..\\stockage\\data.txt", "w");
             fclose(fptr);
@@ -133,7 +136,7 @@ int launchGame(int level){
             gotoXY(10,10);
             printf("GAME OVER");
             sleep_ms(1000);
-            abort();
+            main();
         }
 
     }

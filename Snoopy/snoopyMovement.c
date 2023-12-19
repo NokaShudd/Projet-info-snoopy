@@ -37,7 +37,7 @@ void grille(value_case def_case[10][20]){
 
 }
 
-void Movement(value_case def_case[10][20], char k, int* x, int* y/*, int* valeur*/, int * oiseau, int * vie, long long * timer){  //value_case
+void Movement(value_case def_case[10][20], char k, int* x, int* y/*, int* valeur*/, int * oiseau, int * vie, tmStruct* tps , int * stop){  //value_case
     // toute les couleur
     //colorPrintf(newAttr(red,black),"%c",k);
     /*if (def_case[*y-2][(*x+3-2)/3].object == 1){
@@ -67,7 +67,7 @@ void Movement(value_case def_case[10][20], char k, int* x, int* y/*, int* valeur
                 case 8 :
                 case 9 :
                     *vie = *vie - 1;
-                    affichage_vie(*vie, &*timer) ;
+                    affichage_vie(*vie, tps, stop) ;
                     goto feur;
                 case 11 :
                 case 12 :
@@ -118,7 +118,7 @@ void Movement(value_case def_case[10][20], char k, int* x, int* y/*, int* valeur
                 case 8 :
                 case 9 :
                     *vie = *vie - 1;
-                    affichage_vie(*vie,&*timer) ;
+                    affichage_vie(*vie,tps, stop) ;
                     goto feur;
                 case 11 :
                 case 12 :
@@ -171,7 +171,7 @@ void Movement(value_case def_case[10][20], char k, int* x, int* y/*, int* valeur
                 case 8 :
                 case 9 :
                     *vie = *vie - 1;
-                    affichage_vie(*vie,&*timer) ;
+                    affichage_vie(*vie,tps, stop) ;
                     goto feur;
                 case 11 :
                 case 12 :
@@ -181,7 +181,6 @@ void Movement(value_case def_case[10][20], char k, int* x, int* y/*, int* valeur
                     gotoXY(*x, *y);
                     colorPrintf(newAttr(2, def_case[*y-2][(*x-2)/3].color), "   ");
                     *y = *y - 1;
-
                     onConvoyer(x, y, def_case);
                     goto feur;
                     break;
@@ -224,7 +223,7 @@ void Movement(value_case def_case[10][20], char k, int* x, int* y/*, int* valeur
                 case 8 :
                 case 9 :
                     *vie = *vie - 1;
-                    affichage_vie(*vie,&*timer);
+                    affichage_vie(*vie,tps, stop);
                     goto feur;
                 case 11 :
                 case 12 :
