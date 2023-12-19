@@ -4,7 +4,7 @@
 #include <unistd.h>
 #include "save.h"
 
-void reading(int *level, value_case def_case[10][20],int*X,int *Y, long long * timer, long long *score) {
+void reading(int *level, value_case def_case[10][20],int*X,int *Y, int* vie, long long * timer, long long *score) {
     //test partie enregistré sinon lancé sur partie 1
     char info[25];
 
@@ -47,6 +47,7 @@ void reading(int *level, value_case def_case[10][20],int*X,int *Y, long long * t
     long long tim = -1;
 
     *score = -1;
+    int svie = -1;
 
     while (fgets(text, res, fptr)) {
         ind = 0;
@@ -61,9 +62,10 @@ void reading(int *level, value_case def_case[10][20],int*X,int *Y, long long * t
                     else if (SnoopY < 0) SnoopY = previous;
                     else if (tim < 0) tim = previous; 
                     else if (*score < 0) *score = previous; 
+                    else if (svie < 0) svie = previous;
                     else if (*level == 0) *level = previous;
                     previous = -1;
-                    if (tim != -1) break;
+                    // if (*level != -1) break;
                     continue;
                 }
                 if (ind == 0) {
@@ -97,6 +99,11 @@ void reading(int *level, value_case def_case[10][20],int*X,int *Y, long long * t
     *X = SnoopX;
     *Y = SnoopY;
     *timer = tim;
+    *vie = svie;
+
+    printf("%d", svie);
+
+    if (*vie < 0) *vie = 3;
 
     if (*score == -1) *score = 0;
 
@@ -107,12 +114,13 @@ void reading(int *level, value_case def_case[10][20],int*X,int *Y, long long * t
 }
 
 
-void sauve(value_case def_case[10][20], int x, int y, long long timer, long long score, int level) {
+void sauve(value_case def_case[10][20], int x, int y, long long timer, long long score,int vie, int level) {
     FILE* fptr = fopen("..\\stockage\\data.txt", "w");
     fprintf(fptr, "# %d ",x);
     fprintf(fptr, "%d ",y);
     fprintf(fptr, "%lld ", timer);
     fprintf(fptr, "%lld ", score);
+    fprintf(fptr, "%d ", vie);
     fprintf(fptr, "%d ", level);
     fprintf(fptr, "\n");
     for (int i = 0; i < 10; i++) {

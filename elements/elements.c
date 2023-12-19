@@ -161,7 +161,13 @@ void moveBall(value_case grille[10][20], int snoopx, int snoopy, int *vie){
 
 
     for (int i = 0; i < numbPair; i++) {
+        if (snoopx == grille[yBuffer[i]][xBuffer[i]].x && snoopy == grille[yBuffer[i]][xBuffer[i]].y) {
+            *vie = *vie - 1;
+            affichage_vie(*vie);
+        }
+
         stillDef_case[yBuffer[i]-1][xBuffer[i]-1].object = grille[yBuffer[i]-1][xBuffer[i]-1].object;
+        
         switch (setBallDirection(grille, xBuffer[i], yBuffer[i], 1)) {
             case Ball0:
                 grille[yBuffer[i]-1][xBuffer[i]-1].object = Ball0;
@@ -169,22 +175,23 @@ void moveBall(value_case grille[10][20], int snoopx, int snoopy, int *vie){
             break;
             case Ball1:
                 grille[yBuffer[i]+1][xBuffer[i]-1].object = Ball1;
+                
                 drawCase(grille[yBuffer[i]+1][xBuffer[i]-1]);
             break;
             case Ball2:
                 grille[yBuffer[i]+1][xBuffer[i]+1].object = Ball2;
+               
                 drawCase(grille[yBuffer[i]+1][xBuffer[i]+1]);
             break;
             case Ball3:
                 grille[yBuffer[i]-1][xBuffer[i]+1].object = Ball3;
+                
                 drawCase(grille[yBuffer[i]-1][xBuffer[i]+1]);
             break;
         }
-        if (snoopx == xBuffer[i] * 3 + 2 && snoopy == yBuffer[i] + 2) {
-            
-            affichage_vie(*vie);
-        }
+      
         grille[yBuffer[i]][xBuffer[i]].object = stillDef_case[yBuffer[i]][xBuffer[i]].object;
+
 
 
         drawElement(
@@ -193,6 +200,11 @@ void moveBall(value_case grille[10][20], int snoopx, int snoopy, int *vie){
             stillDef_case[yBuffer[i]][xBuffer[i]].object,
             grille[yBuffer[i]][xBuffer[i]].color
         );
+
+        if (snoopx == grille[yBuffer[i]][xBuffer[i]].x && snoopy == grille[yBuffer[i]][xBuffer[i]].y) {
+            gotoXY(snoopx, snoopy);
+            afficherSnoopy(grille[yBuffer[i]][xBuffer[i]].color);
+        } 
     }
     
     
