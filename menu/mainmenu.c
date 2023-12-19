@@ -192,7 +192,7 @@ menu:
             kps.k=none;
             switch (choix) {
                 case 0:
-                    return 0;
+                    return 1;
                 case 1:
                     mdp = choisirNiveau(mdp);
                     switch (mdp) {

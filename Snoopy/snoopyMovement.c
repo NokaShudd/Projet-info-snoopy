@@ -48,7 +48,7 @@ void Movement(value_case def_case[10][20], char k, int* x, int* y/*, int* valeur
     }*/
     int valeur = 4;
     int action = 0;
-    if (k == 'd'){
+    if (k == 'd' || k == '>'){
         if (*x+3 < max_x) {
             switch (def_case[*y-2][(*x-2)/3+1].object) {
                 case 0 :
@@ -102,7 +102,7 @@ void Movement(value_case def_case[10][20], char k, int* x, int* y/*, int* valeur
             afficherSnoopy(def_case[*y-2][(*x-2)/3].color);
         }
     }
-    if (k == 's'){
+    if (k == 's' || k == 'v'){
         if (*y+1<max_y) {
             switch (def_case[*y+1-2][(*x-2)/3].object) {
                 case 0 :
@@ -154,7 +154,7 @@ void Movement(value_case def_case[10][20], char k, int* x, int* y/*, int* valeur
             afficherSnoopy(def_case[*y-2][(*x-2)/3].color);
         }
     }
-    if (k == 'z'){
+    if (k == 'z' || k == '^'){
         if (*y-1>min_y) {
             switch (def_case[*y-1-2][((*x-2)/3)].object) {
                 case 0 :
@@ -210,7 +210,7 @@ void Movement(value_case def_case[10][20], char k, int* x, int* y/*, int* valeur
             afficherSnoopy(def_case[*y-2][(*x-2)/3].color );
         }
     }
-    if (k == 'q') {
+    if (k == 'q' || k == '<') {
         if (*x-3>min_x) {
             switch (def_case[*y-2][(*x-2)/3-1].object) {
                 case 0 :
