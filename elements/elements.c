@@ -93,20 +93,20 @@ void drawElement(int x, int y, int object, int color){
         return;
         
         case ConveyorBeltDown:
-            colorPrintf(newAttr(cyan, color), " %c ", 0x1F);
+            colorPrintf(newAttr(red, color), " %c ", 0x1F);
         return;
         case ConveyorBeltUp:
-            colorPrintf(newAttr(cyan, color), " %c ", 0x1E);
+            colorPrintf(newAttr(red, color), " %c ", 0x1E);
         return;
         case ConveyorBeltLeft:
-            colorPrintf(newAttr(cyan, color), " %c ", 0x10);
+            colorPrintf(newAttr(red, color), " %c ", 0x10);
         return;
         case ConveyorBeltRight:
-            colorPrintf(newAttr(cyan, color), " %c ", 0x11);
+            colorPrintf(newAttr(red, color), " %c ", 0x11);
         return;
 
         case BrakableWall:
-            colorPrintf(newAttr(yellow, color), " %c ", 0xB1);
+            colorPrintf(newAttr(black, black), " %c ", "   ");
         return;
         
         case Ball0:
@@ -126,7 +126,7 @@ void drawElement(int x, int y, int object, int color){
         return;
         
         case MouvableWall:
-            colorPrintf(newAttr(white, white), " %c ", 0xCF);
+            colorPrintf(newAttr(yellow, yellow), " %c ", "   ");
         return;
 
         
@@ -179,7 +179,7 @@ void moveBall(value_case grille[10][20], int snoopx, int snoopy, int *vie){
     for (int i = 0; i < numbPair; i++) {
         if (snoopx == grille[yBuffer[i]][xBuffer[i]].x && snoopy == grille[yBuffer[i]][xBuffer[i]].y) {
             *vie = *vie - 1;
-            affichage_vie(*vie);
+            //affichage_vie(*vie, &*timer);
         }
 
         stillDef_case[yBuffer[i]-1][xBuffer[i]-1].object = grille[yBuffer[i]-1][xBuffer[i]-1].object;
