@@ -32,7 +32,7 @@ int launchGame(int level){
 
     long long scores[3];
 
-    setContour();
+
 
     time_t time_left = 120, variable_timer;
     tmStruct tpS={&time_left, 0};
@@ -69,7 +69,7 @@ int launchGame(int level){
 
     reading(&level, def_case, &x, &y, &vie, &time_left, &newScore, &oiseau);
 
-
+    setContour(level);
     tpS.time_left = &time_left;
 
     Start_timer(&tpS);
@@ -139,7 +139,7 @@ int launchGame(int level){
             tpS.shouldStop=1;
             sleep_ms(3000);
             tpS.shouldStop=0;
-            setContour();
+            setContour(level);
             time_left = 120;
             Start_timer(&tpS);
             if (level == 4){

@@ -7,7 +7,7 @@
 #include "..\utils\sleep.h"
 #include "..\utils\size.h"
 
-void setContour(){
+void setContour(int level){
     for(int j=1; j<=3; j++){
     for (int i = 1; i<=62 ; ++i) {
         gotoXY(i, 1);
@@ -30,6 +30,10 @@ void setContour(){
     colorPrintf(newAttr(blue, cyan), "SNOOPY'S");
     gotoXY(54,1);
     colorPrintf(newAttr(blue, cyan), "REVENGE");
+    gotoXY(3,12);
+    colorPrintf(newAttr(blue, cyan), "Team AI");
+    gotoXY(54, 12);
+    colorPrintf(newAttr(red,cyan), "LEVEL %d", level);
 }
 
 void affichage_vie(int vie_restante, tmStruct *tps, int  * stop){
