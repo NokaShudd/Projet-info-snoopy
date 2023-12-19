@@ -32,10 +32,11 @@ void setContour(){
     colorPrintf(newAttr(blue, cyan), "REVENGE");
 }
 
-void affichage_vie(int vie_restante){
+void affichage_vie(int vie_restante, long long *timer){
     gotoXY(70,10);
     colorPrintf(newAttr(white,magenta),"Nombre de vies : %d",vie_restante);
     if (vie_restante == 0){
+        *timer = 0;
         system("cls");
         gotoXY(10,10);
         printf("Game Over");

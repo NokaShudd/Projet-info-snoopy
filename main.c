@@ -17,7 +17,7 @@ int launchGame(int level){
 
 
     int stop;
-    
+
     int variable = 0;
     int x = 2, y = 2;
     // int valeur = 1;
@@ -26,9 +26,7 @@ int launchGame(int level){
     int oiseau = 0;
     long long score_total = 0 ;
     int vie = 3;
-
-    long long scores[3];
-
+    long long newScore = 0;
     setContour();
 
     time_t time_left = 120, variable_timer;
@@ -60,10 +58,10 @@ int launchGame(int level){
             break;
     }
 
+
     start :
 
     stop = 0;
-    long long newScore = 0;
 
     reading(&level, def_case, &x, &y, &vie, &time_left, &newScore, &oiseau);
 
@@ -80,7 +78,7 @@ int launchGame(int level){
 
     
 
-    affichage_vie(3);
+    affichage_vie(3, &time_left);
     gotoXY(70,12);
     colorPrintf(newAttr(white,magenta),"nombre d'oiseau : %d",oiseau);
 
@@ -94,7 +92,7 @@ int launchGame(int level){
                 sauve(def_case, x, y, time_left, (score_total + time_left)*100,vie, level,oiseau);
                 break;
             }
-            Movement(def_case, keyToChar(kps.k), &x, &y, &oiseau, &vie);
+            Movement(def_case, keyToChar(kps.k), &x, &y, &oiseau, &vie, &time_left);
             updateElement(x, y, def_case, None, &x, &y);
             kps.k = none;
         }
