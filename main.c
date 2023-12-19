@@ -48,7 +48,6 @@ int launchGame(int level){
     }
     fclose(fptr);
 
-    Start_timer(&tpS);
 
     switch (level) {
         case 2:
@@ -68,6 +67,12 @@ int launchGame(int level){
     long long newScore = 0;
 
     reading(&level, def_case, &x, &y, &vie, &time_left, &newScore, &oiseau);
+
+
+    tpS.time_left = &time_left;
+
+    Start_timer(&tpS);
+
 
     score_total += newScore;
 
@@ -101,7 +106,6 @@ int launchGame(int level){
         }
         if (affichage_oiseau(oiseau)==1){
             stop = 1;
-            sauve(def_case, x, y, time_left, (score_total+time_left)*100,vie, level,oiseau);
             FILE *fptr = fopen("..\\stockage\\data.txt", "w");
             fclose(fptr);
             score_total = score_total + time_left;

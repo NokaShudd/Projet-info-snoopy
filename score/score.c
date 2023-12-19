@@ -66,60 +66,61 @@ DWORD WINAPI timer_score (LPVOID timeur){
     attr.underscore = 1;
     attr.fInt = 1;
     int i;
-
+    
 //COMMENCEMENT DE LA PARTIE
-for (i = 12; i <= 51; ++i) {
-    if (tpS->shouldStop==0){
-        gotoXY(i, 1);
-        colorPrintf(newAttr(blue, white), "-");
-        gotoXY(i, 1);
-        colorPrintf(newAttr(blue, white), "-");
-        sleep_ms(1000);
-        --(*tpS->time_left);
+
+    for (i = 12; i <= 51; ++i) {
+        if (tpS->shouldStop==0){
+            gotoXY(i, 1);
+            colorPrintf(newAttr(blue, white), "-");
+            gotoXY(i, 1);
+            colorPrintf(newAttr(blue, white), "-");
+            sleep_ms(1000);
+            --(*tpS->time_left);
 
 
+        }
+        else return (DWORD)0;
     }
-    else return (DWORD)0;
-    }
-for (i = 2; i <= 11; ++i){
-    if (tpS->shouldStop==0){
-        gotoXY(62, i);
-        colorPrintf(newAttr(blue, white), "|");
-        sleep_ms(1000);
-        --(*tpS->time_left);
-        sleep_ms(1000);
-        --(*tpS->time_left);
-    }
-    else return (DWORD)0;
-    }
-    if (tpS->shouldStop==0){
-        gotoXY(70,5);
-        colorPrintf(newAttr(white, cyan), "HALF TIME");
-        sleep_ms(1000);
-        --(*tpS->time_left);
-    }
-    else return (DWORD)0;
+    for (i = 2; i <= 11; ++i){
+        if (tpS->shouldStop==0){
+            gotoXY(62, i);
+            colorPrintf(newAttr(blue, white), "|");
+            sleep_ms(1000);
+            --(*tpS->time_left);
+            sleep_ms(1000);
+            --(*tpS->time_left);
+        }
+        else return (DWORD)0;
+        }
+        if (tpS->shouldStop==0){
+            gotoXY(70,5);
+            colorPrintf(newAttr(white, cyan), "HALF TIME");
+            sleep_ms(1000);
+            --(*tpS->time_left);
+        }
+        else return (DWORD)0;
 
 
-for (i = 51; i >= 12; --i) {
-    if (tpS->shouldStop==0){
-        gotoXY(i, 12);
-        colorPrintf(newAttr(blue, white), "-");
-        sleep_ms(1000);
-        --(*tpS->time_left);
+    for (i = 51; i >= 12; --i) {
+        if (tpS->shouldStop==0){
+            gotoXY(i, 12);
+            colorPrintf(newAttr(blue, white), "-");
+            sleep_ms(1000);
+            --(*tpS->time_left);
+        }
+        else return (DWORD)0;
     }
-    else return (DWORD)0;
-}
-for (i = 11; i >= 2; --i) {
-    if (tpS->shouldStop==0){
-        gotoXY(1, i);
-        colorPrintf(newAttr(blue, white), "|");
-        sleep_ms(1000);
-        --(*tpS->time_left);
-        sleep_ms(1000);
-        --(*tpS->time_left);
-    }
-    else return (DWORD)0;
+    for (i = 11; i >= 2; --i) {
+        if (tpS->shouldStop==0){
+            gotoXY(1, i);
+            colorPrintf(newAttr(blue, white), "|");
+            sleep_ms(1000);
+            --(*tpS->time_left);
+            sleep_ms(1000);
+            --(*tpS->time_left);
+        }
+        else return (DWORD)0;
     }
 }
 

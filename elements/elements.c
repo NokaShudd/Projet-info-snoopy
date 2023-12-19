@@ -291,7 +291,6 @@ void onConvoyer(int* x, int* y, value_case def_case[10][20]){
             *y = def_case[*y-3][(*x-2)/3].y;
             gotoXY(*x, *y);  
 
-                      
             if (def_case[*y-2][(*x-2)/3].object >= ConveyorBeltUp && def_case[*y-2][(*x-2)/3].object <= ConveyorBeltRight) {
                 afficherSnoopy(def_case[*y-2][(*x-2)/3].color);
                 onConvoyer(x, y, def_case);
@@ -380,7 +379,6 @@ void updateElement(int x, int y, value_case def_case[10][20], int action, int* s
             def_case[y][x].object = Air;
             stillDef_case[y][x].object = Air;
             drawCase(def_case[y][x]);
-
             break;
         case MouvableWall:
             if (action == MoveWallUp && y > 0 && def_case[y-1][x].object >= 5) { 
