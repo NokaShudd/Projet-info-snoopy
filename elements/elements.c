@@ -438,7 +438,8 @@ void updateElement(int x, int y, value_case def_case[10][20], int action, int* s
 
 
 }
-/*void updateElement(int X, int Y, value_case def_case[10][20], int* action){
+/*
+void updateElement(int X, int Y, value_case def_case[10][20], int* action){
     int x = (X - 2) / 3;
     int y = Y - 2;
     if (*action == Punch) {
@@ -484,7 +485,7 @@ void updateElement(int x, int y, value_case def_case[10][20], int action, int* s
     }
 
 
-}
+}*/
 
 
 
