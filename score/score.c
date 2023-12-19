@@ -32,11 +32,12 @@ void setContour(){
     colorPrintf(newAttr(blue, cyan), "REVENGE");
 }
 
-void affichage_vie(int vie_restante, long long *timer){
+void affichage_vie(int vie_restante, tmStruct *tps, int  * stop){
     gotoXY(70,10);
     colorPrintf(newAttr(white,magenta),"Nombre de vies : %d",vie_restante);
     if (vie_restante == 0){
-        *timer = 0;
+        tps-> shouldStop = 1;
+        *stop = 1;
         system("cls");
         gotoXY(10,10);
         printf("Game Over");
@@ -65,6 +66,7 @@ DWORD WINAPI timer_score (LPVOID timeur){
     attr.underscore = 1;
     attr.fInt = 1;
     int i;
+
 //COMMENCEMENT DE LA PARTIE
 for (i = 12; i <= 51; ++i) {
     if (tpS->shouldStop==0){
@@ -74,6 +76,8 @@ for (i = 12; i <= 51; ++i) {
         colorPrintf(newAttr(blue, white), "-");
         sleep_ms(1000);
         --(*tpS->time_left);
+
+
     }
     else return (DWORD)0;
     }

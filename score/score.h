@@ -7,7 +7,7 @@ typedef struct timerStruct{
 }tmStruct;
 
 void* Start_timer(tmStruct *);
-void affichage_vie(int, long long *);
+void affichage_vie(int, tmStruct*, int *);
 int affichage_oiseau(int);
 void setContour();
 

@@ -248,7 +248,7 @@ DWORD WINAPI changeAfterInterval(LPVOID lparam) {
 }
 
 
-HANDLE startIntervals(int *x, int *y, int *v, value_case def_casep[10][20], int *stop) {
+HANDLE startIntervals(int *x, int *y, int *v, value_case def_casep[10][20], int *stop, tmStruct *tpS) {
     snoopx = x;
     snoopy = y;
     vie = v;

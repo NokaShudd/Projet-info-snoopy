@@ -1,4 +1,5 @@
 #include "..\Snoopy\snoopyMovement.h"
+#include "..\score\score.h"
 
 #ifndef ELEMENTS
 #define ELEMENTS
@@ -38,7 +39,7 @@ void    checkElements   (int[10][20], int, int, char, char, int);
 void    updateElement   (int, int, value_case[10][20], int, int*, int*);
 // temporaire, mais necessaire
 void    display             (value_case[10][20]);
-void*   startIntervals      (int*, int*, int*, value_case[10][20], int*, long long*);
+void*   startIntervals      (int*, int*, int*, value_case[10][20], int*, tmStruct*);
 
 void    onConvoyer          (int* ,int*, value_case[10][20]);
 
