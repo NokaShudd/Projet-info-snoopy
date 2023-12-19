@@ -62,9 +62,15 @@ int launchGame(int level){
             break;
     }
 
+
     start :
 
-    reading(level, def_case, &x, &y, &time_left);
+    int stop = 0;
+    long long newScore = 0;
+
+    reading(&level, def_case, &x, &y, &time_left, &newScore);
+
+    score_total += newScore;
 
     grille(def_case);
 
@@ -73,8 +79,9 @@ int launchGame(int level){
     gotoXY(x,y);
     afficherSnoopy(def_case[y-2][(x-2)/3].color);
 
+    startIntervals(&x, &y, &vie, def_case, &stop);
+
     
-    startIntervals(&x, &y, &vie, def_case);
 
     affichage_vie(3);
     gotoXY(70,12);
@@ -83,20 +90,23 @@ int launchGame(int level){
 
     while(1) {
         if (kps.k != none) {
+
             if (kps.k == p) {
                 kps.shouldStop = 1;
-                sauve(def_case, x, y, time_left);
+                sauve(def_case, x, y, time_left, (score_total + time_left)*100, level);
                 break;
             }
-            Movement(def_case, keyToChar(kps.k), &x, &y/*, &valeur*/,&oiseau, &vie);
+            Movement(def_case, keyToChar(kps.k), &x, &y, &oiseau, &vie);
             updateElement(x, y, def_case, None, &x, &y);
             kps.k = none;
         }
         if (affichage_oiseau(oiseau)==1){
-            score_total = score_total + time_left;
             FILE *fptr = fopen("..\\stockage\\data.txt", "w");
+            score_total = score_total + time_left;
+            stop = 1;
             fclose(fptr);
             colorPrintf(newAttr(black,black),"");
+            sleep_ms(100);
             system("cls");
             gotoXY(10,10);
             printf("WIN");
@@ -108,12 +118,13 @@ int launchGame(int level){
             oiseau = 0;
             level += 1;
             time_left = 120;
-            if (level == 4 ){
+            if (level == 4){
                 abort();
             }
             goto start;
         }
         if (time_left==0){
+            stop = 1;
             FILE *fptr = fopen("..\\stockage\\data.txt", "w");
             fclose(fptr);
             colorPrintf(newAttr(black,black)," ");

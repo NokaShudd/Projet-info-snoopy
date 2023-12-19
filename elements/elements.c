@@ -203,10 +203,12 @@ void moveBall(value_case grille[10][20], int snoopx, int snoopy, int *vie){
 DWORD WINAPI changeAfterInterval(LPVOID lparam) {
     int numb = 0;
 
+    int* stop = (int *)lparam;
+
     sleep_ms(499);
 
 
-    while (1){
+    while (!(*stop)){
         sleep_ms(500);
 
         moveBall(def_case, *snoopx, *snoopy, vie);
@@ -218,7 +220,7 @@ DWORD WINAPI changeAfterInterval(LPVOID lparam) {
 }
 
 
-HANDLE startIntervals(int *x, int *y, int *v, value_case def_casep[10][20]) {
+HANDLE startIntervals(int *x, int *y, int *v, value_case def_casep[10][20], int *stop) {
     snoopx = x;
     snoopy = y;
     vie = v;
@@ -239,7 +241,7 @@ HANDLE startIntervals(int *x, int *y, int *v, value_case def_casep[10][20]) {
     }
     
     return CreateThread(
-        NULL, 0, changeAfterInterval, NULL, 0, NULL
+        NULL, 0, changeAfterInterval, (void*)stop, 0, NULL
     );
 }
 

@@ -4,21 +4,21 @@
 #include <unistd.h>
 #include "save.h"
 
-void reading(int level, value_case def_case[10][20],int*X,int *Y, long long * timer) {
+void reading(int *level, value_case def_case[10][20],int*X,int *Y, long long * timer, long long *score) {
     //test partie enregistré sinon lancé sur partie 1
     char info[25];
 
-    if (level == 0) {
+    if (*level == 0) {
         strncpy(info, "..\\stockage\\data.txt", 25);
     }
-    if (level == 1) {
+    if (*level == 1) {
         strncpy(info, "..\\stockage\\level1.txt", 25);
     }
-    if (level == 2) {
+    if (*level == 2) {
         strncpy(info, "..\\stockage\\level2.txt", 25);
     }
 
-    if (level == 3) {
+    if (*level == 3) {
         strncpy(info, "..\\stockage\\level3.txt", 25);
     }
 
@@ -46,6 +46,8 @@ void reading(int level, value_case def_case[10][20],int*X,int *Y, long long * ti
     int SnoopY = -1;
     long long tim = -1;
 
+    *score = -1;
+
     while (fgets(text, res, fptr)) {
         ind = 0;
         for (int i = 0; text[i] != '\0'; i++) {
@@ -57,7 +59,9 @@ void reading(int level, value_case def_case[10][20],int*X,int *Y, long long * ti
                 if (text[0] == '#') {
                     if (SnoopX < 0) SnoopX = previous;
                     else if (SnoopY < 0) SnoopY = previous;
-                    else tim = previous; 
+                    else if (tim < 0) tim = previous; 
+                    else if (*score < 0) *score = previous; 
+                    else if (*level == 0) *level = previous;
                     previous = -1;
                     if (tim != -1) break;
                     continue;
@@ -94,16 +98,22 @@ void reading(int level, value_case def_case[10][20],int*X,int *Y, long long * ti
     *Y = SnoopY;
     *timer = tim;
 
+    if (*score == -1) *score = 0;
+
+    *score = *score;
+
 
 
 }
 
 
-void sauve(value_case def_case[10][20], int x, int y, long long timer) {
+void sauve(value_case def_case[10][20], int x, int y, long long timer, long long score, int level) {
     FILE* fptr = fopen("..\\stockage\\data.txt", "w");
     fprintf(fptr, "# %d ",x);
     fprintf(fptr, "%d ",y);
     fprintf(fptr, "%lld ", timer);
+    fprintf(fptr, "%lld ", score);
+    fprintf(fptr, "%d ", level);
     fprintf(fptr, "\n");
     for (int i = 0; i < 10; i++) {
         for (int j = 0; j < 20; j++) {
