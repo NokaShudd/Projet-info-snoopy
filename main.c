@@ -25,6 +25,7 @@ int launchGame(int level){
 
 
 
+    int stop;
     
     int variable = 0;
     int x = 2, y = 2;
@@ -34,8 +35,11 @@ int launchGame(int level){
     int oiseau = 0;
     long long score_total = 0 ;
     int vie = 3;
+    setContour();
 
     time_t time_left = 120, variable_timer;
+    tmStruct tpS={&time_left, 0};
+
 
     kpStruct kps = {none, 0};
     void* hT = getAsyncKey(&kps);
@@ -48,7 +52,7 @@ int launchGame(int level){
     }
     fclose(fptr);
 
-    Start_timer(&time_left);
+    Start_timer(&tpS);
 
     switch (level) {
         case 2:
@@ -62,10 +66,9 @@ int launchGame(int level){
             break;
     }
 
-
     start :
 
-    int stop = 0;
+    stop = 0;
     long long newScore = 0;
 
     reading(&level, def_case, &x, &y, &vie, &time_left, &newScore, &oiseau);
@@ -118,7 +121,12 @@ int launchGame(int level){
             x = 2, y = 2;
             oiseau = 0;
             level += 1;
+            tpS.shouldStop=1;
+            sleep_ms(3000);
+            tpS.shouldStop=0;
+            setContour();
             time_left = 120;
+            Start_timer(&tpS);
             if (level == 4){
                 abort();
             }
@@ -131,10 +139,11 @@ int launchGame(int level){
             colorPrintf(newAttr(black,black)," ");
             system("cls");
             gotoXY(10,10);
-            printf("Game Over");
+            printf("GAME OVER");
             sleep_ms(1000);
             abort();
         }
+
     }
     system("cls");
 }
