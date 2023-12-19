@@ -11,6 +11,8 @@ value_case def_case[10][20];
 value_case stillDef_case[10][20];
 int *snoopx, *snoopy;
 int *vie;
+tmStruct *tpS;
+int *loopStop = 0;
 
 int setBallDirection(value_case grille[10][20], int x, int y, int iteration) {
     if (iteration == 5) return Ball4;
@@ -106,7 +108,7 @@ void drawElement(int x, int y, int object, int color){
         return;
 
         case BrakableWall:
-            colorPrintf(newAttr(black, black), " %c ", "   ");
+            colorPrintf(newAttr(black, black), " %c ");
         return;
         
         case Ball0:
@@ -161,7 +163,11 @@ void drawBall(value_case kase) {
 
 }
 
-void moveBall(value_case grille[10][20], int snoopx, int snoopy, int *vie){
+int realBall(int y, int x){
+    return def_case[y][x].object >= Ball0 && def_case[y][x].object <= Ball4;
+}
+
+void moveBall(value_case grille[10][20], int snoopx, int snoopy, int *vie, int first){
     int xBuffer[200];
     int yBuffer[200];
     int numbPair = 0;
@@ -179,8 +185,10 @@ void moveBall(value_case grille[10][20], int snoopx, int snoopy, int *vie){
 
 
     for (int i = 0; i < numbPair; i++) {
+
         if (snoopx == grille[yBuffer[i]][xBuffer[i]].x && snoopy == grille[yBuffer[i]][xBuffer[i]].y) {
             *vie = *vie - 1;
+            affichage_vie(*vie, tpS, loopStop);
         }
 
         
@@ -208,8 +216,6 @@ void moveBall(value_case grille[10][20], int snoopx, int snoopy, int *vie){
         grille[yBuffer[i]][xBuffer[i]].object = stillDef_case[yBuffer[i]][xBuffer[i]].object;
 
 
-
-
         drawElement(
             grille[yBuffer[i]][xBuffer[i]].x,
             grille[yBuffer[i]][xBuffer[i]].y,
@@ -220,8 +226,10 @@ void moveBall(value_case grille[10][20], int snoopx, int snoopy, int *vie){
         if (snoopx == grille[yBuffer[i]][xBuffer[i]].x && snoopy == grille[yBuffer[i]][xBuffer[i]].y) {
             gotoXY(snoopx, snoopy);
             afficherSnoopy(grille[yBuffer[i]][xBuffer[i]].color);
-        } 
+        }
+
     }
+
     
     
 }
@@ -231,27 +239,27 @@ void moveBall(value_case grille[10][20], int snoopx, int snoopy, int *vie){
 DWORD WINAPI changeAfterInterval(LPVOID lparam) {
     int numb = 0;
 
-    int* stop = (int *)lparam;
-
     sleep_ms(499);
 
 
-    while (!(*stop)){
+    while (!(*loopStop)){
         sleep_ms(498);
 
-        moveBall(def_case, *snoopx, *snoopy, vie);
+        moveBall(def_case, *snoopx, *snoopy, vie, !numb);
 
-        numb = ++numb % 4;
+        if (!numb) numb++;
     }
     
     return 0;
 }
 
 
-HANDLE startIntervals(int *x, int *y, int *v, value_case def_casep[10][20], int *stop, tmStruct *tpS) {
+HANDLE startIntervals(int *x, int *y, int *v, value_case def_casep[10][20], int *stop, tmStruct *tpSp) {
     snoopx = x;
     snoopy = y;
     vie = v;
+    tpS = tpSp;
+    loopStop = stop;
 
     for (int i = 0; i < 10; i++) {
         for (int j = 0; j < 20; j++) {

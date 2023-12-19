@@ -42,5 +42,5 @@ void    display             (value_case[10][20]);
 void*   startIntervals      (int*, int*, int*, value_case[10][20], int*, tmStruct*);
 
 void    onConvoyer          (int* ,int*, value_case[10][20]);
-
+int realBall(int y, int x);
 #endif
