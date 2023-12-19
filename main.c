@@ -19,7 +19,7 @@ int launchGame(int level){
 
 
     int stop;
-
+    
     int variable = 0;
     int x = 2, y = 2;
     // int valeur = 1;
@@ -28,7 +28,9 @@ int launchGame(int level){
     int oiseau = 0;
     long long score_total = 0 ;
     int vie = 3;
-    long long newScore = 0;
+
+    long long scores[3];
+
     setContour();
 
     time_t time_left = 120, variable_timer;
@@ -60,10 +62,10 @@ int launchGame(int level){
             break;
     }
 
-
     start :
 
     stop = 0;
+    long long newScore = 0;
 
     reading(&level, def_case, &x, &y, &vie, &time_left, &newScore, &oiseau);
 
@@ -76,7 +78,7 @@ int launchGame(int level){
     gotoXY(x,y);
     afficherSnoopy(def_case[y-2][(x-2)/3].color);
 
-    startIntervals(&x, &y, &vie, def_case, &stop);
+    startIntervals(&x, &y, &vie, def_case, &stop, &tpS);
 
     
 

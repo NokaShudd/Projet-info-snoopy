@@ -11,6 +11,8 @@ value_case def_case[10][20];
 value_case stillDef_case[10][20];
 int *snoopx, *snoopy;
 int *vie;
+tmStruct *tpS;
+int *loopStop = 0;
 
 int setBallDirection(value_case grille[10][20], int x, int y, int iteration) {
     if (iteration == 5) return Ball4;
@@ -148,8 +150,10 @@ void drawBall(value_case kase) {
     int bgColor = kase.color;
     switch (kase.object) {
         case Wall:
-        case MouvableWall:
             bgColor = white;
+        break;
+        case MouvableWall:
+            bgColor = yellow;
         break;
         case BombWall:
             bgColor = red;
@@ -159,7 +163,11 @@ void drawBall(value_case kase) {
 
 }
 
-void moveBall(value_case grille[10][20], int snoopx, int snoopy, int *vie){
+int realBall(int y, int x){
+    return def_case[y][x].object >= Ball0 && def_case[y][x].object <= Ball4;
+}
+
+void moveBall(value_case grille[10][20], int snoopx, int snoopy, int *vie, int first){
     int xBuffer[200];
     int yBuffer[200];
     int numbPair = 0;
@@ -177,12 +185,12 @@ void moveBall(value_case grille[10][20], int snoopx, int snoopy, int *vie){
 
 
     for (int i = 0; i < numbPair; i++) {
+
         if (snoopx == grille[yBuffer[i]][xBuffer[i]].x && snoopy == grille[yBuffer[i]][xBuffer[i]].y) {
             *vie = *vie - 1;
-            //affichage_vie(*vie, &*timer);
+            affichage_vie(*vie, tpS, loopStop);
         }
 
-        stillDef_case[yBuffer[i]-1][xBuffer[i]-1].object = grille[yBuffer[i]-1][xBuffer[i]-1].object;
         
         switch (setBallDirection(grille, xBuffer[i], yBuffer[i], 1)) {
             case Ball0:
@@ -208,7 +216,6 @@ void moveBall(value_case grille[10][20], int snoopx, int snoopy, int *vie){
         grille[yBuffer[i]][xBuffer[i]].object = stillDef_case[yBuffer[i]][xBuffer[i]].object;
 
 
-
         drawElement(
             grille[yBuffer[i]][xBuffer[i]].x,
             grille[yBuffer[i]][xBuffer[i]].y,
@@ -219,9 +226,11 @@ void moveBall(value_case grille[10][20], int snoopx, int snoopy, int *vie){
         if (snoopx == grille[yBuffer[i]][xBuffer[i]].x && snoopy == grille[yBuffer[i]][xBuffer[i]].y) {
             gotoXY(snoopx, snoopy);
             afficherSnoopy(grille[yBuffer[i]][xBuffer[i]].color);
-        } 
+        }
+
     }
-    
+
+
     
 }
 
@@ -230,27 +239,27 @@ void moveBall(value_case grille[10][20], int snoopx, int snoopy, int *vie){
 DWORD WINAPI changeAfterInterval(LPVOID lparam) {
     int numb = 0;
 
-    int* stop = (int *)lparam;
-
     sleep_ms(499);
 
 
-    while (!(*stop)){
+    while (!(*loopStop)){
         sleep_ms(498);
 
-        moveBall(def_case, *snoopx, *snoopy, vie);
+        moveBall(def_case, *snoopx, *snoopy, vie, !numb);
 
-        numb = ++numb % 4;
+        if (!numb) numb++;
     }
     
     return 0;
 }
 
 
-HANDLE startIntervals(int *x, int *y, int *v, value_case def_casep[10][20], int *stop) {
+HANDLE startIntervals(int *x, int *y, int *v, value_case def_casep[10][20], int *stop, tmStruct *tpSp) {
     snoopx = x;
     snoopy = y;
     vie = v;
+    tpS = tpSp;
+    loopStop = stop;
 
     for (int i = 0; i < 10; i++) {
         for (int j = 0; j < 20; j++) {
@@ -261,7 +270,7 @@ HANDLE startIntervals(int *x, int *y, int *v, value_case def_casep[10][20], int 
             stillDef_case[i][j].y = def_casep[i][j].y;
             
             if (stillDef_case[i][j].object >= Ball0 && stillDef_case[i][j].object <= Ball4) {
-                stillDef_case[i][j].object = Air; 
+                stillDef_case[i][j].object = Air;
             }
 
         }
@@ -473,8 +482,10 @@ void updateElement(int x, int y, value_case def_case[10][20], int action, int* s
             def_case[y][x].object = Air;
             break;
     }
-    drawCase(def_case[y][x]);
-};*/
+
+
+}
+
 
 
 void display(value_case grille[10][20]){

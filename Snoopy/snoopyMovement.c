@@ -66,6 +66,7 @@ void Movement(value_case def_case[10][20], char k, int* x, int* y/*, int* valeur
                 case 7 :
                 case 8 :
                 case 9 :
+                    if (!realBall(*y-2, (*x-2)/3)) break;
                     *vie = *vie - 1;
                     affichage_vie(*vie, tps, stop) ;
                     goto feur;
@@ -117,6 +118,7 @@ void Movement(value_case def_case[10][20], char k, int* x, int* y/*, int* valeur
                 case 7 :
                 case 8 :
                 case 9 :
+                    if (!realBall(*y-2, (*x-2)/3)) break;
                     *vie = *vie - 1;
                     affichage_vie(*vie,tps, stop) ;
                     goto feur;
@@ -170,6 +172,7 @@ void Movement(value_case def_case[10][20], char k, int* x, int* y/*, int* valeur
                 case 7 :
                 case 8 :
                 case 9 :
+                    if (!realBall(*y-2, (*x-2)/3)) break;
                     *vie = *vie - 1;
                     affichage_vie(*vie,tps, stop) ;
                     goto feur;
@@ -222,6 +225,7 @@ void Movement(value_case def_case[10][20], char k, int* x, int* y/*, int* valeur
                 case 7 :
                 case 8 :
                 case 9 :
+                    if (!realBall(*y-2, (*x-2)/3)) break;
                     *vie = *vie - 1;
                     affichage_vie(*vie,tps, stop);
                     goto feur;
