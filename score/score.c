@@ -38,7 +38,7 @@ void affichage_vie(int vie_restante, tmStruct *tps, int  * stop){
     if (vie_restante == 0){
         tps->shouldStop = 1;
         *stop = 1;
-        system("cls");
+        clearToBlack();
         gotoXY(10,10);
         printf("Game Over");
         sleep_ms(1000);
@@ -49,7 +49,7 @@ void affichage_vie(int vie_restante, tmStruct *tps, int  * stop){
 
 int affichage_oiseau(int oiseau){
     if (oiseau == 4){
-        system("cls");
+        clearToBlack();
         gotoXY(10,10);
         printf("Win");
         sleep_ms(1000);

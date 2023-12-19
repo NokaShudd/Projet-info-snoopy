@@ -9,11 +9,12 @@
 #include "stockage\save.h"
 #include "menu/mainmenu.h"
 #include "score\score.h"
+#include "pause/pause.h"
 
 int main();
 
 int launchGame(int level){
-    system("cls");
+    clearToBlack();
     //rajouter stockage vie + oiseau recuperer
 
 
@@ -86,7 +87,6 @@ int launchGame(int level){
     startIntervals(&x, &y, &vie, def_case, &stop, &tpS);
 
     
-
     affichage_vie(vie, &tpS, &stop);
     gotoXY(70,12);
     colorPrintf(newAttr(white,magenta),"nombre d'oiseau : %d",oiseau);
@@ -94,9 +94,25 @@ int launchGame(int level){
 
     while(1) {
         if (kps.k != none) {
+            if (kps.k == m) {
+                stop = 1;
+                tpS.shouldStop = 1;
+                kps.shouldStop = 1;
+                sauve(def_case, x, y, time_left, score_total*100,vie, level,oiseau);
+                sleep_ms(500);
+                clearToBlack();
+                if (setPause()) abort();
+                kps.shouldStop = 0;
+                tpS.shouldStop = 0;
+                getAsyncKey(&kps);
+                goto start;
+            }
             if (kps.k == p) {
                 stop = 1;
+                tpS.shouldStop = 1;
                 kps.shouldStop = 1;
+                sleep_ms(250);
+                clearToBlack();
                 sauve(def_case, x, y, time_left, score_total*100,vie, level,oiseau);
                 break;
             }
@@ -110,13 +126,12 @@ int launchGame(int level){
             fclose(fptr);
             score_total = score_total + time_left;
             colorPrintf(newAttr(black,black),"");
-            sleep_ms(100);
-            system("cls");
+            sleep_ms(250);
+            clearToBlack();
             gotoXY(10,10);
             printf("WIN");
             gotoXY(10,11);
             printf("score total : %lld", score_total*100);
-            sleep_ms(1000);
             variable = 0;
             x = 2, y = 2;
             oiseau = 0;
@@ -138,7 +153,7 @@ int launchGame(int level){
             FILE *fptr = fopen("..\\stockage\\data.txt", "w");
             fclose(fptr);
             colorPrintf(newAttr(black,black)," ");
-            system("cls");
+            clearToBlack();
             gotoXY(10,10);
             printf("GAME OVER");
             sleep_ms(1000);
@@ -146,7 +161,7 @@ int launchGame(int level){
         }
 
     }
-    system("cls");
+    clearToBlack();
 }
 
 int main(){

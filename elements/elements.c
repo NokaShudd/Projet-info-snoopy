@@ -230,8 +230,6 @@ void moveBall(value_case grille[10][20], int snoopx, int snoopy, int *vie, int f
 
     }
 
-    
-    
 }
 
 
@@ -243,11 +241,12 @@ DWORD WINAPI changeAfterInterval(LPVOID lparam) {
 
 
     while (!(*loopStop)){
-        sleep_ms(498);
 
         moveBall(def_case, *snoopx, *snoopy, vie, !numb);
 
         if (!numb) numb++;
+        
+        sleep_ms(498);
     }
     
     return 0;

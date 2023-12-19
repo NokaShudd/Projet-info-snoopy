@@ -74,6 +74,16 @@ void stringFromAttr(wTxtAtt attr, char *str){
 
 #endif
 
+
+void clearToColor(int color) {
+    SetConsoleTextAttribute(
+        GetStdHandle(STD_OUTPUT_HANDLE),
+        wFromColor(color, 1)+wFromColor(white, 0)
+    );
+    system("cls");
+}
+void clearToBlack() {clearToColor(black);}
+
 // génère un nouvel attribut couleur
 wTxtAtt newAttr(int fColor, int bColor){
     wTxtAtt attr = {

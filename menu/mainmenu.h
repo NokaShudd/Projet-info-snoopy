@@ -7,5 +7,5 @@
 
 void voirCredit();
 int menu();
-
+void cadre(int, int);
 #endif
