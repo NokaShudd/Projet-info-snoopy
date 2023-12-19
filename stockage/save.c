@@ -48,8 +48,8 @@ void reading(int *level, value_case def_case[10][20],int*X,int *Y, int* vie, lon
 
     *score = -1;
     int svie = -1;
-
-    if (*level == 0) *oiseau = -1; 
+    *level = -1;
+    *oiseau = -1; 
 
     while (fgets(text, res, fptr)) {
         ind = 0;
@@ -65,10 +65,9 @@ void reading(int *level, value_case def_case[10][20],int*X,int *Y, int* vie, lon
                     else if (tim < 0) tim = previous; 
                     else if (*score < 0) *score = previous; 
                     else if (svie < 0) svie = previous;
+                    else if (*level < 0) *level = previous;
                     else if (*oiseau < 0) *oiseau = previous;
-                    else if (*level == 0) *level = previous;
                     previous = -1;
-                    // if (*level != -1) break;
                     continue;
                 }
                 if (ind == 0) {
@@ -80,7 +79,7 @@ void reading(int *level, value_case def_case[10][20],int*X,int *Y, int* vie, lon
                 } else if (ind == 3) {
                     object = previous;
                 }
-                ind = (ind + 1) % 4;Z
+                ind = (ind + 1) % 4;
                 previous = -1;
             } else if (letter == '|') {
                 def_case[pos10][pos20++] = (value_case) {
@@ -104,6 +103,8 @@ void reading(int *level, value_case def_case[10][20],int*X,int *Y, int* vie, lon
     *timer = tim;
     *vie = svie;
 
+
+    if (*oiseau < 0) *oiseau = 0;
 
     if (*vie < 0) *vie = 3;
 

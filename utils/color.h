@@ -15,4 +15,7 @@ wTxtAtt newAttr             (int, int);
 
 int     colorPrintf         (wTxtAtt, char*, ...);
 
+void    clearToBlack        ();
+void    clearToColor        (int color);
+
 #endif

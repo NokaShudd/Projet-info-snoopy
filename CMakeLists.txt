@@ -15,4 +15,6 @@ add_executable(
     score/score.h
     menu/mainmenu.c
     menu/mainmenu.h
+    pause/pause.c
+    pause/pause.h
 )

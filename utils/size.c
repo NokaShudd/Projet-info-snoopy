@@ -12,6 +12,12 @@
 
 #include "size.h"
 
+void setTitle(){
+    SetConsoleTitleA(
+        "Snoppy"
+    );
+}
+
 
 // fait a partir de https://stackoverflow.com/a/12642749 (windows)
 // et https://stackoverflow.com/a/1022961 (macos / linux)

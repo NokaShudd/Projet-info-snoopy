@@ -60,13 +60,13 @@ void Movement(value_case def_case[10][20], char k, int* x, int* y/*, int* valeur
                     updateElement((*x-2)/3+1,*y-2,def_case,action, x, y);
                     goto feur;
                     break;
-                case 4 :
                 case 5 :
                 case 6 :
                 case 7 :
                 case 8 :
                 case 9 :
                     if (!realBall(*y-2, (*x-2)/3)) break;
+                case 4 :
                     *vie = *vie - 1;
                     affichage_vie(*vie, tps, stop) ;
                     goto feur;
@@ -84,6 +84,7 @@ void Movement(value_case def_case[10][20], char k, int* x, int* y/*, int* valeur
                     break;
                 case 16 :
                     *oiseau += 1;
+                    def_case[*y-2][(*x-2)/3+1].object = Air;
                     gotoXY(70,12);
                     colorPrintf(newAttr(white,magenta),"nombre d'oiseau : %d",*oiseau);
 
@@ -112,15 +113,15 @@ void Movement(value_case def_case[10][20], char k, int* x, int* y/*, int* valeur
                     action = MoveWallDown;
                     updateElement((*x-2)/3, *y+1-2, def_case, action, x, y);
                     goto feur;
-                case 4 :
                 case 5 :
                 case 6 :
                 case 7 :
                 case 8 :
                 case 9 :
                     if (!realBall(*y-2, (*x-2)/3)) break;
+                case 4 :
                     *vie = *vie - 1;
-                    affichage_vie(*vie,tps, stop) ;
+                    affichage_vie(*vie, tps, stop) ;
                     goto feur;
                 case 11 :
                 case 12 :
@@ -135,6 +136,7 @@ void Movement(value_case def_case[10][20], char k, int* x, int* y/*, int* valeur
                     break;
                 case 16 :
                     *oiseau += 1;
+                    def_case[*y+1-2][(*x-2)/3].object = Air;
                     gotoXY(70,12);
                     colorPrintf(newAttr(white,magenta),"nombre d'oiseau : %d",*oiseau);
 
@@ -166,15 +168,15 @@ void Movement(value_case def_case[10][20], char k, int* x, int* y/*, int* valeur
 
                     break;
 
-                case 4 :
                 case 5 :
                 case 6 :
                 case 7 :
                 case 8 :
                 case 9 :
                     if (!realBall(*y-2, (*x-2)/3)) break;
+                case 4 :
                     *vie = *vie - 1;
-                    affichage_vie(*vie,tps, stop) ;
+                    affichage_vie(*vie, tps, stop) ;
                     goto feur;
                 case 11 :
                 case 12 :
@@ -189,6 +191,7 @@ void Movement(value_case def_case[10][20], char k, int* x, int* y/*, int* valeur
                     break;
                 case 16 :
                     *oiseau += 1;
+                    def_case[*y-2-1][(*x-2)/3].object = Air;
                     gotoXY(70,12);
                     colorPrintf(newAttr(white,magenta),"nombre d'oiseau : %d",*oiseau);
 
@@ -219,15 +222,15 @@ void Movement(value_case def_case[10][20], char k, int* x, int* y/*, int* valeur
                     updateElement((*x-2)/3-1,*y-2,def_case,action, x, y);
                     
                     goto feur;
-                case 4 :
                 case 5 :
                 case 6 :
                 case 7 :
                 case 8 :
                 case 9 :
                     if (!realBall(*y-2, (*x-2)/3)) break;
+                case 4 :
                     *vie = *vie - 1;
-                    affichage_vie(*vie,tps, stop);
+                    affichage_vie(*vie, tps, stop) ;
                     goto feur;
                 case 11 :
                 case 12 :
@@ -238,10 +241,9 @@ void Movement(value_case def_case[10][20], char k, int* x, int* y/*, int* valeur
                     *x-=3;
                     onConvoyer(x, y, def_case);
                     goto feur;
-                    
-                    break;
                 case 16 :
                     *oiseau += 1;
+                    def_case[*y-2][(*x-2)/3-1].object = Air;
                     gotoXY(70,12);
                     colorPrintf(newAttr(white,magenta),"nombre d'oiseau : %d",*oiseau);
 
