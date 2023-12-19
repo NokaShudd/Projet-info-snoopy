@@ -106,7 +106,7 @@ void drawElement(int x, int y, int object, int color){
         return;
 
         case BrakableWall:
-            colorPrintf(newAttr(black, black), " %c ", "   ");
+            colorPrintf(newAttr(white, color),"%c%c%c", 0xB2, 0xB2, 0xB2);
         return;
         
         case Ball0:

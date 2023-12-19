@@ -41,8 +41,8 @@ int launchGame(int level){
     key oldval = none;
 
     FILE *fptr = fopen("..\\stockage\\data.txt", "r");
-    if( fgetc(fptr) == EOF ) {
-        level = 1;
+    if( fgetc(fptr) != EOF) {
+        level = 0;
     }
     fclose(fptr);
 

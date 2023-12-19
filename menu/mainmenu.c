@@ -8,7 +8,6 @@
 #define couleur3 newAttr(red, black)
 
 void cadre(int longueur, int largeur){
-
     for(int i=1; i<longueur; i++){
         gotoXY(i, 0);
         colorPrintf(couleur3, "%c", 0xCD);
@@ -41,13 +40,15 @@ void rules(){
     gotoXY(2, 2);
     colorPrintf(couleur3, "Regles du jeu:");
     gotoXY(2,5);
-    colorPrintf(couleur3, "L'objectif de Snoopy est d'attraper tout les oiseaux ()");
+    colorPrintf(couleur3, "L'objectif de Snoopy est d'attraper tout les oiseaux ");
+    colorPrintf(newAttr(yellow, black), " %c ", 0x0F);
     gotoXY(2,6);
     colorPrintf(couleur3, "Vous avez 3 vies, et 120 secondes pour reussir le niveau.");
     gotoXY(2,7);
     colorPrintf(couleur3, "Si le temps est ecoule avant de recuperer les oiseaux");
     gotoXY(2,8);
-    colorPrintf(couleur3, "vous perdrez une vie, idem si vous touchez une bombe ()");
+    colorPrintf(couleur3, "vous perdrez une vie, idem si vous touchez une bombe : ");
+    colorPrintf(newAttr(red, red), "   ");
     gotoXY(2,9);
     colorPrintf(couleur3, "Plus vous finissez rapidement un niveau, plus vous obtenez");
     gotoXY(2,10);
@@ -60,14 +61,21 @@ void rules(){
     colorPrintf(couleur3, "De nombreux blocs sont disponibles sur le jeu :");
     gotoXY(2,16);
     colorPrintf(couleur3, "Le tapis roulant : ");
+    colorPrintf(newAttr(red, black), " %c ", 0x1F);
+    colorPrintf(newAttr(red, black), " %c ", 0x1E);
+    colorPrintf(newAttr(red, black), " %c ", 0x10);
+    colorPrintf(newAttr(red, black), " %c ", 0x11);
     gotoXY(2,17);
     colorPrintf(couleur3, "La Balle : ");
+    colorPrintf(newAttr(red, black), " o ");
     gotoXY(2, 18);
-    colorPrintf(couleur3, "Les blocs cassables : (), cassable avec ESPACE.");
+    colorPrintf(couleur3, "Les blocs cassables, cassable avec ESPACE : ");
+    colorPrintf(newAttr(white, black),"%c%c%c", 0xB2, 0xB2, 0xB2);
     gotoXY(2,19);
-    colorPrintf(couleur3, "Les blocs poussables une seule fois : ()");
+    colorPrintf(couleur3, "Les blocs poussables une seule fois : ");
+    colorPrintf(newAttr(yellow, yellow), " %c ", "   ");
     gotoXY(2,21);
-    colorPrintf(couleur3, "Quittez avec Q.");
+    colorPrintf(couleur3, "Quittez avec p.");
 
 
 }
@@ -103,8 +111,8 @@ int choisirNiveau(int mdp){
     colorPrintf(couleur3, "Mot de Passe:");
     gotoXY(16, 4);
     scanf("%d", &mdp);
+    printf("%d",mdp);
     return mdp;
-    mdp=0;
 }
 
 int voirScore(int score1, int score2, int score3){
@@ -129,11 +137,11 @@ int menu() {
     getAsyncKey(&kps);
     cpStruct cps = {none, 0};
 
-
+    int longueur = 45;
 menu:
 
 
-    int longueur = 45;
+
     system("cls");
     sleep_ms(100);
     gotoXY(0,2);
@@ -184,25 +192,25 @@ menu:
             kps.k=none;
             switch (choix) {
                 case 0:
-                    return 0; 
+                    return 0;
                 case 1:
-                choisirNiveau(mdp);
-                switch (mdp) {
-                    case 1:
-                        return 1;
-                    case 2:
-                        return 2;
-                    case 3:
-                        return 3;
-                    case 4:
-                        return 4;
-                    default:
-                        colorPrintf(couleur3,"Ce mot de passe est faux.");
-                        sleep_ms(1000);
-                        goto menu;
-                        mdp=1;
-                    }
-                    break;
+                    mdp = choisirNiveau(mdp);
+                    switch (mdp) {
+                        case 1:
+                            return 1;
+                        case 2:
+                            return 2;
+                        case 3:
+                            return 3;
+                        case 4:
+                            return 4;
+                        default:
+                            colorPrintf(couleur3,"Ce mot de passe est faux.");
+                            sleep_ms(1000);
+                            goto menu;
+                            mdp=1;
+                        }
+                        break;
                 case 2:
                     voirScore(12, 15, 17);
                     while (kps.k!=q)
@@ -216,7 +224,7 @@ menu:
                     break;
                 case 4:
                     rules();
-                    while (kps.k!=q)
+                    while (kps.k!=p)
                     {
                     }
                     goto menu;
