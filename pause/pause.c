@@ -19,10 +19,10 @@ int setPause(){
 
     gotoXY(30, 11);
 
-
-    key k = getKey();
-
-    if (k == q) return 1;
+    
+    char c = getChar();
+    clearToBlack();
+    if (c == 'q') return 1;
     return 0;
 
 }

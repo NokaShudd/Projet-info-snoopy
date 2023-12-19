@@ -165,6 +165,7 @@ int launchGame(int level){
 }
 
 int main(){
+    setTitle();
     int a = menu();
     launchGame(a);
 
