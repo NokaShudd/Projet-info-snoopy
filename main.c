@@ -72,7 +72,9 @@ int launchGame(int level){
 
     gotoXY(x,y);
     afficherSnoopy(def_case[y-2][(x-2)/3].color);
-    startIntervals(def_case, &x, &y);
+
+    
+    startIntervals(&x, &y, &vie, def_case);
 
     affichage_vie(3);
     gotoXY(70,12);

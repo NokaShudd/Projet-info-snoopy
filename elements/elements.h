@@ -33,11 +33,12 @@ enum    elements        {
     Bird,
 };
 
+
 void    checkElements   (int[10][20], int, int, char, char, int);
 void    updateElement   (int, int, value_case[10][20], int, int*, int*);
 // temporaire, mais necessaire
 void    display             (value_case[10][20]);
-void*   startIntervals      (value_case[10][20], int*, int*);
+void*   startIntervals      (int*, int*, int*, value_case[10][20]);
 
 void    onConvoyer          (int* ,int*, value_case[10][20]);
 
