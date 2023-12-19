@@ -82,7 +82,7 @@ int launchGame(int level){
 
     
 
-    affichage_vie(3, &tpS, &stop);
+    affichage_vie(vie, &tpS, &stop);
     gotoXY(70,12);
     colorPrintf(newAttr(white,magenta),"nombre d'oiseau : %d",oiseau);
 
@@ -92,8 +92,7 @@ int launchGame(int level){
             if (kps.k == p) {
                 stop = 1;
                 kps.shouldStop = 1;
-                long long score = score_total;
-                sauve(def_case, x, y, time_left, (score_total + time_left)*100,vie, level,oiseau);
+                sauve(def_case, x, y, time_left, score_total*100,vie, level,oiseau);
                 break;
             }
             Movement(def_case, keyToChar(kps.k), &x, &y, &oiseau, &vie, &tpS, &stop);
@@ -102,6 +101,7 @@ int launchGame(int level){
         }
         if (affichage_oiseau(oiseau)==1){
             stop = 1;
+            sauve(def_case, x, y, time_left, (score_total+time_left)*100,vie, level,oiseau);
             FILE *fptr = fopen("..\\stockage\\data.txt", "w");
             fclose(fptr);
             score_total = score_total + time_left;

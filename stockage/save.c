@@ -80,7 +80,7 @@ void reading(int *level, value_case def_case[10][20],int*X,int *Y, int* vie, lon
                 } else if (ind == 3) {
                     object = previous;
                 }
-                ind = (ind + 1) % 4;Z
+                ind = (ind + 1) % 4;
                 previous = -1;
             } else if (letter == '|') {
                 def_case[pos10][pos20++] = (value_case) {

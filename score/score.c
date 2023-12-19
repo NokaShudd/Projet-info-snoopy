@@ -36,7 +36,7 @@ void affichage_vie(int vie_restante, tmStruct *tps, int  * stop){
     gotoXY(70,10);
     colorPrintf(newAttr(white,magenta),"Nombre de vies : %d",vie_restante);
     if (vie_restante == 0){
-        tps-> shouldStop = 1;
+        tps->shouldStop = 1;
         *stop = 1;
         system("cls");
         gotoXY(10,10);
