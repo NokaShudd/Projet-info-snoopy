@@ -12,16 +12,7 @@
 
 int launchGame(int level){
     system("cls");
-
-
-
-
-
-
-
     //rajouter stockage vie + oiseau recuperer
-
-
 
 
 
@@ -35,6 +26,9 @@ int launchGame(int level){
     int oiseau = 0;
     long long score_total = 0 ;
     int vie = 3;
+
+    long long scores[3];
+
     setContour();
 
     time_t time_left = 120, variable_timer;
@@ -93,7 +87,7 @@ int launchGame(int level){
 
     while(1) {
         if (kps.k != none) {
-
+            stop = 1;
             if (kps.k == p) {
                 kps.shouldStop = 1;
                 long long score = score_total;

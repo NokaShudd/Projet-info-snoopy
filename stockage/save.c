@@ -140,3 +140,88 @@ void sauve(value_case def_case[10][20], int x, int y, long long timer, long long
     //Close file to save file data
     fclose(fptr);
 }
+
+void inv2llong(long long *var1, long long *var2) {
+    *var1 += *var2;
+    *var2 = *var1 - *var2;
+    *var1 -= *var2;
+}
+
+void getScores(long long scores[3]) {
+    FILE *fptr = fopen("..\\stockage\\bestScore.txt", "r");
+
+    fseek(fptr, 0L, SEEK_END);
+    long int res = ftell(fptr);
+    fseek(fptr, 0L, SEEK_SET);
+
+    int pos = 0;
+
+    char text[res];
+    
+
+    while (fgets(text, res, fptr)) {
+        long long number = -1;
+        for (int i = 0; text[i] != '\0'; i++) {
+            if (text[i] < (char) 58 && text[i] > (char) 47) {
+                if (number != -1) number *= 10;
+                else number = 0;
+                number += text[i] - 48;
+            }
+        }
+
+
+        if (number == -1) number = 0; 
+        scores[pos] = number;
+
+
+        pos++;
+    }
+
+    fclose(fptr);
+
+
+    // Sort
+
+    if (scores[0] < scores[1]) inv2llong(&scores[0], &scores[1]);
+    
+    if (scores[1] < scores[2]) inv2llong(&scores[1], &scores[2]);
+
+    if (scores[0] < scores[1]) inv2llong(&scores[0], &scores[1]);
+
+
+}
+
+void saveScore(long long score) {
+    long long scores[3];
+
+    getScores(scores);
+
+    int state = 0; // searching
+    long long buffer = 0;
+
+    for (int i = 0; i < 3; i++) {
+        if (state == 0) {
+            if (score > scores[i]) {
+                printf(" %lld > %lld\n", score, scores[i]);
+                state = 1;
+                buffer = score;
+                continue;
+            }
+        }
+        if (state) {
+            if (i == 2) {
+                scores[1] = buffer;
+                break;
+            } 
+            inv2llong(&buffer, &scores[i]);
+        }
+    }
+    
+
+    FILE* fptr = fopen("..\\stockage\\bestScore.txt", "w");
+    fprintf(fptr, "%lld\n", scores[0]);
+    fprintf(fptr, "%lld\n", scores[1]);
+    fprintf(fptr, "%lld", scores[2]);
+    fclose(fptr);
+
+}
