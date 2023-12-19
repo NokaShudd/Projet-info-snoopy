@@ -148,8 +148,10 @@ void drawBall(value_case kase) {
     int bgColor = kase.color;
     switch (kase.object) {
         case Wall:
-        case MouvableWall:
             bgColor = white;
+        break;
+        case MouvableWall:
+            bgColor = yellow;
         break;
         case BombWall:
             bgColor = red;
@@ -179,10 +181,8 @@ void moveBall(value_case grille[10][20], int snoopx, int snoopy, int *vie){
     for (int i = 0; i < numbPair; i++) {
         if (snoopx == grille[yBuffer[i]][xBuffer[i]].x && snoopy == grille[yBuffer[i]][xBuffer[i]].y) {
             *vie = *vie - 1;
-            //affichage_vie(*vie, &*timer);
         }
 
-        stillDef_case[yBuffer[i]-1][xBuffer[i]-1].object = grille[yBuffer[i]-1][xBuffer[i]-1].object;
         
         switch (setBallDirection(grille, xBuffer[i], yBuffer[i], 1)) {
             case Ball0:
@@ -206,6 +206,7 @@ void moveBall(value_case grille[10][20], int snoopx, int snoopy, int *vie){
         }
       
         grille[yBuffer[i]][xBuffer[i]].object = stillDef_case[yBuffer[i]][xBuffer[i]].object;
+
 
 
 
@@ -261,7 +262,7 @@ HANDLE startIntervals(int *x, int *y, int *v, value_case def_casep[10][20], int 
             stillDef_case[i][j].y = def_casep[i][j].y;
             
             if (stillDef_case[i][j].object >= Ball0 && stillDef_case[i][j].object <= Ball4) {
-                stillDef_case[i][j].object = Air; 
+                stillDef_case[i][j].object = Air;
             }
 
         }
@@ -422,59 +423,11 @@ void updateElement(int x, int y, value_case def_case[10][20], int action, int* s
             }
 
             break;
-        
-        default:
-            break;
     }
 
 
 }
-/*void updateElement(int X, int Y, value_case def_case[10][20], int* action){
-    int x = (X - 2) / 3;
-    int y = Y - 2;
-    if (*action == Punch) {
-        for (int i = -1; i <= 1; i++) {
-            for (int j = -1; j <= 1; j++) {
-                if (y+i < 0)    continue;
-                if (y+i >= 10)  continue;
-                if (x+j < 0)    continue;
-                if (x+j >= 20)  continue;
 
-                if (def_case[y+i][x+j].object == BrakableWall) {
-                    def_case[y+i][x+j].object = Air;
-                    drawCase(def_case[y+1][x+j]);
-                }
-            }
-            
-        }
-        
-    }
-    switch (def_case[y][x].object) {
-        case Bird:
-            def_case[y][x].object = Air;
-            break;
-        case MouvableWall:
-            if (*action == MoveWallUp && !(y < 0 || geneDef_case[y-1][x].object < 5)) { 
-                def_case[y-1][x].object = Wall;
-                drawCase(def_case[y-1][x]);
-            } 
-            if (*action == MoveWallDown && !(y > 9 || geneDef_case[y+1][x].object < 5)){ 
-                def_case[y+1][x].object = Wall;
-                drawCase(def_case[y+1][x]);
-            } 
-            if (*action == MoveWallRight && !(x > 19 || geneDef_case[y][x+1].object < 5)) { 
-                def_case[y][x+1].object = Wall;
-                drawCase(def_case[y][x+1]);
-            } 
-            if (*action == MoveWallLeft && !(x < 0 || geneDef_case[y][x-1].object < 5)) { 
-                def_case[y][x-1].object = Wall;
-                drawCase(def_case[y][x-1]);
-            }
-            def_case[y][x].object = Air;
-            break;
-    }
-    drawCase(def_case[y][x]);
-};*/
 
 
 void display(value_case grille[10][20]){
