@@ -4,7 +4,7 @@
 #include <unistd.h>
 #include "save.h"
 
-void reading(int *level, value_case def_case[10][20],int*X,int *Y, int* vie, long long * timer, long long *score) {
+void reading(int *level, value_case def_case[10][20],int*X,int *Y, int* vie, long long * timer, long long *score, int * oiseau) {
     //test partie enregistré sinon lancé sur partie 1
     char info[25];
 
@@ -49,6 +49,8 @@ void reading(int *level, value_case def_case[10][20],int*X,int *Y, int* vie, lon
     *score = -1;
     int svie = -1;
 
+    if (*level == 0) *oiseau = -1; 
+
     while (fgets(text, res, fptr)) {
         ind = 0;
         for (int i = 0; text[i] != '\0'; i++) {
@@ -63,6 +65,7 @@ void reading(int *level, value_case def_case[10][20],int*X,int *Y, int* vie, lon
                     else if (tim < 0) tim = previous; 
                     else if (*score < 0) *score = previous; 
                     else if (svie < 0) svie = previous;
+                    else if (*oiseau < 0) *oiseau = previous;
                     else if (*level == 0) *level = previous;
                     previous = -1;
                     // if (*level != -1) break;
@@ -114,7 +117,7 @@ void reading(int *level, value_case def_case[10][20],int*X,int *Y, int* vie, lon
 }
 
 
-void sauve(value_case def_case[10][20], int x, int y, long long timer, long long score,int vie, int level) {
+void sauve(value_case def_case[10][20], int x, int y, long long timer, long long score,int vie, int level, int oiseau) {
     FILE* fptr = fopen("..\\stockage\\data.txt", "w");
     fprintf(fptr, "# %d ",x);
     fprintf(fptr, "%d ",y);
@@ -122,6 +125,7 @@ void sauve(value_case def_case[10][20], int x, int y, long long timer, long long
     fprintf(fptr, "%lld ", score);
     fprintf(fptr, "%d ", vie);
     fprintf(fptr, "%d ", level);
+    fprintf(fptr, "%d ", oiseau);
     fprintf(fptr, "\n");
     for (int i = 0; i < 10; i++) {
         for (int j = 0; j < 20; j++) {

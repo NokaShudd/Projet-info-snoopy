@@ -143,6 +143,22 @@ void drawCase(value_case kase){
     );
 }
 
+void drawBall(value_case kase) {
+    gotoXY(kase.x, kase.y);
+    int bgColor = kase.color;
+    switch (kase.object) {
+        case Wall:
+        case MouvableWall:
+            bgColor = white;
+        break;
+        case BombWall:
+            bgColor = red;
+        break;        
+    }
+    colorPrintf(newAttr( (bgColor != red) ? red : black, bgColor), " o ");
+
+}
+
 void moveBall(value_case grille[10][20], int snoopx, int snoopy, int *vie){
     int xBuffer[200];
     int yBuffer[200];
@@ -170,23 +186,22 @@ void moveBall(value_case grille[10][20], int snoopx, int snoopy, int *vie){
         
         switch (setBallDirection(grille, xBuffer[i], yBuffer[i], 1)) {
             case Ball0:
+                drawBall(grille[yBuffer[i]-1][xBuffer[i]-1]);
                 grille[yBuffer[i]-1][xBuffer[i]-1].object = Ball0;
-                drawCase(grille[yBuffer[i]-1][xBuffer[i]-1]);
             break;
             case Ball1:
+                drawBall(grille[yBuffer[i]+1][xBuffer[i]-1]);
                 grille[yBuffer[i]+1][xBuffer[i]-1].object = Ball1;
-                
-                drawCase(grille[yBuffer[i]+1][xBuffer[i]-1]);
             break;
             case Ball2:
+                drawBall(grille[yBuffer[i]+1][xBuffer[i]+1]);
                 grille[yBuffer[i]+1][xBuffer[i]+1].object = Ball2;
                
-                drawCase(grille[yBuffer[i]+1][xBuffer[i]+1]);
             break;
             case Ball3:
+                drawBall(grille[yBuffer[i]-1][xBuffer[i]+1]);
                 grille[yBuffer[i]-1][xBuffer[i]+1].object = Ball3;
                 
-                drawCase(grille[yBuffer[i]-1][xBuffer[i]+1]);
             break;
         }
       
@@ -221,7 +236,7 @@ DWORD WINAPI changeAfterInterval(LPVOID lparam) {
 
 
     while (!(*stop)){
-        sleep_ms(500);
+        sleep_ms(498);
 
         moveBall(def_case, *snoopx, *snoopy, vie);
 

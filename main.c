@@ -68,7 +68,7 @@ int launchGame(int level){
     int stop = 0;
     long long newScore = 0;
 
-    reading(&level, def_case, &x, &y, &vie, &time_left, &newScore);
+    reading(&level, def_case, &x, &y, &vie, &time_left, &newScore, &oiseau);
 
     score_total += newScore;
 
@@ -93,7 +93,8 @@ int launchGame(int level){
 
             if (kps.k == p) {
                 kps.shouldStop = 1;
-                sauve(def_case, x, y, time_left, (score_total + time_left)*100,vie, level);
+                long long score = score_total;
+                sauve(def_case, x, y, time_left, (score_total + time_left)*100,vie, level,oiseau);
                 break;
             }
             Movement(def_case, keyToChar(kps.k), &x, &y, &oiseau, &vie);
