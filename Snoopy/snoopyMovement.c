@@ -34,6 +34,8 @@ void grille(value_case def_case[10][20]){
         }
         variable = 0;
     }
+    gotoXY(32, 11);
+    colorPrintf(newAttr(blue, blue), "   ");
 
 }
 

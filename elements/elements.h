@@ -26,10 +26,10 @@ enum    elements        {
     Ball3,          // vers Nord-Est
     Ball4,
     Air,
-    ConveyorBeltUp,
-    ConveyorBeltLeft,
-    ConveyorBeltDown,
-    ConveyorBeltRight,
+    ConveyorBeltUp,//11
+    ConveyorBeltLeft,//12
+    ConveyorBeltDown,//13
+    ConveyorBeltRight,//14
     BlinkingWall1,  // pas tangible
     Bird,
 };
