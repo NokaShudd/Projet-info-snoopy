@@ -76,7 +76,7 @@ void rules(){
     colorPrintf(couleur3, "Les blocs poussables une seule fois : ");
     colorPrintf(newAttr(yellow, yellow), " %c ", "   ");
     gotoXY(2,21);
-    colorPrintf(couleur3, "Quittez avec p.");
+    colorPrintf(couleur3, "Quittez avec p / mettez en pause avec m.");
 
 
 }

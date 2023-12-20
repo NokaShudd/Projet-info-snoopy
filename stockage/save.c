@@ -22,6 +22,11 @@ void reading(int *level, value_case def_case[10][20],int*X,int *Y, int* vie, lon
         strncpy(info, "..\\stockage\\level3.txt", 25);
     }
 
+    if (*level == 4) {
+        strncpy(info, "..\\stockage\\level4.txt", 25);
+    }
+
+
 
     FILE *fptr = fopen(info, "r");
 
