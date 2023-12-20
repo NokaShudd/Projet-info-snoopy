@@ -95,16 +95,16 @@ void drawElement(int x, int y, int object, int color){
         return;
         
         case ConveyorBeltDown:
-            colorPrintf(newAttr(red, color), " %c ", 0x1F);
+            colorPrintf(newAttr(white, color), " %c ", 0x1F);
         return;
         case ConveyorBeltUp:
-            colorPrintf(newAttr(red, color), " %c ", 0x1E);
+            colorPrintf(newAttr(white, color), " %c ", 0x1E);
         return;
         case ConveyorBeltLeft:
-            colorPrintf(newAttr(red, color), " %c ", 0x10);
+            colorPrintf(newAttr(white, color), " %c ", 0x10);
         return;
         case ConveyorBeltRight:
-            colorPrintf(newAttr(red, color), " %c ", 0x11);
+            colorPrintf(newAttr(white, color), " %c ", 0x11);
         return;
 
         case BrakableWall:
