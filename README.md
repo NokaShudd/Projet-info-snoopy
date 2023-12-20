@@ -75,9 +75,9 @@ Le jeu, en console, est limité en termes de caractères, voici ceux utilisés, 
 + Otniel $\rightarrow$ Plateau
 + Nicolas $\rightarrow$ Mouvements items
 
-- [ ] Codage
-- [ ] Relecture, homogénéisation
-- [ ] Préparation présentation finale
+- [X] Codage
+- [X] Relecture, homogénéisation
+- [X] Préparation présentation finale
 
 
 ## Groupe **AI**, composé de :

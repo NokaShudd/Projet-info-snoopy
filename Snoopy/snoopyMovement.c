@@ -80,8 +80,6 @@ void Movement(value_case def_case[10][20], char k, int* x, int* y/*, int* valeur
                     *x+=3;
                     onConvoyer(x, y, def_case);
                     goto feur;
-                    
-                    break;
                 case 16 :
                     *oiseau += 1;
                     def_case[*y-2][(*x-2)/3+1].object = Air;
