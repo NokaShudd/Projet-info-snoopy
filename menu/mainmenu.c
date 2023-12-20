@@ -4,6 +4,7 @@
 #include "../utils/color.h"
 #include "../utils/size.h"
 #include "../utils/keysHandler.h"
+#include "../stockage/save.h"
 
 #define couleur3 newAttr(red, black)
 
@@ -115,18 +116,21 @@ int choisirNiveau(int mdp){
     return mdp;
 }
 
-int voirScore(int score1, int score2, int score3){
+
+int voirScore(){
+    long long scores[3];
+    getScores(scores);
     system("cls");
     sleep_ms(100);
     cadre(30,12);
     gotoXY(2, 2);
     colorPrintf(couleur3, "Vos meilleurs scores:");
     gotoXY(2,4);
-    colorPrintf(couleur3, "1 : %d", score1);
+    colorPrintf(couleur3, "1 : %lld", scores[0]);
     gotoXY(2,6);
-    colorPrintf(couleur3, "2 : %d", score2);
+    colorPrintf(couleur3, "2 : %lld", scores[1]);
     gotoXY(2,8);
-    colorPrintf(couleur3, "3 : %d", score3);
+    colorPrintf(couleur3, "3 : %lld", scores[2]);
     gotoXY(2,10);
     colorPrintf(couleur3, "Q pour quitter.");
 }
