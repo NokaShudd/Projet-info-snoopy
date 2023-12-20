@@ -1,15 +1,5 @@
 #include <stdio.h>
-#ifdef _WIN32 
-
 #include <windows.h>
-
-#else 
-
-#include <ncurses.h>
-#include <sys/ioctl.h>
-
-#endif 
-
 #include "size.h"
 
 void setTitle(){
@@ -69,44 +59,4 @@ int gotoXY(int x, int y){
     #endif
 
     return 0;
-}
-
-int sizeTest(){
-    char rep = 'o';
-    int size[2];
-
-    getSize(size);
-
-    printf("#");
-    for (int i = 0; i < size[0]-2; i++){
-        printf("=");
-    }
-    printf(">\n");
-
-    for (int i = 0; i < size[1]-2; i++){
-        printf("|");
-
-        if (size[0] >= 34){
-            if (i == size[1] / 2 - 1){
-                printf("   Est-ce de la bonne taille ?");
-            } else if (i == size[1] / 2 ){
-                printf("   ('n' = non, defaut = oui)");
-            } else if (i == size[1] / 2 + 1){
-                printf("   (ou redim. la fenetre)");
-            }
-        }
-        printf("\n");
-    }
-
-    printf("v");
-
-    if (size[0] >= 34){
-        printf("    ");
-        scanf("%c", &rep);
-    } else {
-        printf("\nLes fleches sont-elles de la bonne taille ? \n('n' = non, défaut : oui) ");
-        scanf("%c", &rep);    
-    }
-    
-    return (rep != 'n'); 
 }

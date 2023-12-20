@@ -1,15 +1,5 @@
-#ifdef _WIN32
-
 #include <conio.h>
 #include <windows.h>
-
-#else
-
-#include <curse.h>
-#include <pthread.h>
-
-#endif
-
 #include "keysHandler.h"
 
 // donne la key correspondante au flèches
@@ -115,17 +105,7 @@ DWORD WINAPI updateCharPressedW(LPVOID lpParam){
     return 0;
 }
 
-// récupère le charactère pressé en boucle (MacOs)
-void *updateCharPressedM(void* lpParam){
-    cpStruct *arguments = (cpStruct *)lpParam;
 
-    while (!arguments->shouldStop){
-        arguments->c = (unsigned char) getch();
-        // if (arguments->c == 'q') arguments->shouldStop = 1;
-    }
-    
-    return NULL;
-}
 
 // récupère la touche pressé en boucle (Windows)
 DWORD WINAPI updateKeyPressedW(LPVOID lpParam){
@@ -140,19 +120,7 @@ DWORD WINAPI updateKeyPressedW(LPVOID lpParam){
 }
 
 
-// récupère le charactère pressé en boucle (MacOs)
-void *updateKeyPressedM(void* lpParam){
-        kpStruct *arguments = (kpStruct *)lpParam;
 
-    while (!arguments->shouldStop){
-        arguments->k =charToKey(getch());
-        // if (arguments->c == 'q') arguments->shouldStop = 1;
-    }
-    
-    return NULL;
-}
-
-#ifdef _WIN32
 
 // récupère en boucle et de façon non-bloquante les charactères rentrés
 HANDLE getAsyncChar(cpStruct* cps){
@@ -166,21 +134,6 @@ HANDLE getAsyncKey(kpStruct* kps){
         NULL, 0, updateKeyPressedW, (void *)kps, 0, NULL
     );
 }
-
-#else 
-
-void getAsyncChar(cpStruct* cps){
-    pthread_t tId;
-    pthread_create(&tId, NULL, &updateCharPressedM, (void *)cps);
-}
-
-void getAsyncKey(kpStruct* kps){
-    pthread_t tId;
-    pthread_create(&tId, NULL, &updateKeyPressedM, (void *)kps);
-}
-
-
-#endif
 
 // renvoie la touche pressée
 key getKey(){
@@ -199,9 +152,4 @@ char getChar(){
         }
     }
     return v;
-}
-
-// arrète le thread
-void closeThread(void* ht){
-    CloseHandle(ht);
 }

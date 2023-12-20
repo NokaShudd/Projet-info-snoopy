@@ -1,20 +1,10 @@
 #include <stdio.h>
 #include <stdarg.h>
-
-#ifdef _WIN32
-
 #include <windows.h>
-
-#else
-
-#include <string.h>
-
-#endif
 
 #include "color.h"
 
 
-#ifdef _WIN32
 
 // transforme une couleur en 'code couleur' 
 WORD wFromColor(int color, short isBackground){
@@ -43,38 +33,6 @@ WORD wFromColor(int color, short isBackground){
 
 
 
-#else 
-
-
-char* getColorNumber(int color, int isBackground){
-    switch(color){
-        case black:     return isBackground ? "40" : "30";
-        case red:       return isBackground ? "41" : "31";
-        case green:     return isBackground ? "42" : "32";
-        case yellow:    return isBackground ? "43" : "33";
-        case blue:      return isBackground ? "44" : "34";
-        case magenta:   return isBackground ? "45" : "35";
-        case cyan:      return isBackground ? "46" : "36";
-        default:        return isBackground ? "47" : "37";
-    }
-
-    return "47";
-}
-
-void stringFromAttr(wTxtAtt attr, char *str){
-    strcat(str, "\x1b[");
-    strcat(str, getColorNumber(attr.fColors, 0));
-    strcat(str, ";");
-    strcat(str, getColorNumber(attr.bColors, 1)); 
-    strcat(str, "m");
-
-
-    // TODO implémenter souligner et intensité
-}
-
-#endif
-
-
 void clearToColor(int color) {
     SetConsoleTextAttribute(
         GetStdHandle(STD_OUTPUT_HANDLE),
@@ -99,7 +57,6 @@ int colorPrintf(wTxtAtt attr, char* format, ...){
     va_start (args, format);
     vsprintf (buffer,format, args);
 
-    #ifdef _WIN32
 
     HANDLE hndl = GetStdHandle(STD_OUTPUT_HANDLE);
     CONSOLE_SCREEN_BUFFER_INFO consoleInfo;
@@ -124,30 +81,16 @@ int colorPrintf(wTxtAtt attr, char* format, ...){
         newAtt
     );
 
-    #else
-
-    char str[11];
-    stringFromAttr(attr, str);
-
-    printf(str);
-
-    #endif
     
     printf(buffer);
     va_end (args);
 
-    #ifdef _WIN32
 
     SetConsoleTextAttribute(
         hndl,
         oldAttribute
     );
 
-    #else 
-
-    printf("\x1b[37;40m");
-
-    #endif
 
     return 0;
 }
